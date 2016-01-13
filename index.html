@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Учет воды</title>
+<style>
+	#result {display: none;}
+</style>
+<script src="db.js"></script>
+</head>
+<body>
+<div id="values">
+	<h1>Внести показания</h1>
+	<h2>Холодная вода:</h2>
+	<p>Счетчик 1: <input type="text" name="coldCounter1" id="coldCounter1"></p>
+	Счетчик 2: <input type="text" name="coldCounter2" id="coldCounter2"></p>
+
+	<h2>Горячая вода:</h2>
+	<p>Счетчик 1: <input type="text" name="heatCounter1" id="heatCounter1"></p>
+	<p>Счетчик 2: <input type="text" name="heatCounter2" id="heatCounter2"></p>
+
+	<button type="submit" name="submit" onclick="submitValues()">Отправить</button>
+</div>
+<div id="result">
+  <h1 id="h1_res">Результат этого месяца</h1>
+	<h2>Холодная вода</h2>
+	<p id="coldRes1"></p>
+	<p id="coldRes2"></p>
+	<h2>Горячая вода</h2>
+	<p id="heatRes1"></p>
+	<p id="heatRes2"></p>
+</div>
+<div id="info">
+	<h1 id="h1_info">Результат такого-то месяца</h1>
+	<h2>Холодная вода</h2>
+	<p id="coldInfo1"></p>
+	<p id="coldInfo2"></p>
+	<h2>Горячая вода</h2>
+	<p id="heatInfo1"></p>
+	<p id="heatInfo2"></p>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
