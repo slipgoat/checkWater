@@ -1,3 +1,4 @@
+//test
 var getEntryYear = function() {
   var y = new Date();
   return y.getFullYear();
