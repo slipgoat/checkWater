@@ -1,4 +1,22 @@
-//test
+var Counter = function(counterNumber, temp, idValues, idRes, idInfo) {
+  this.counterNumber = counterNumber;
+  this.temp = temp;
+  this.idValues = idValues;
+  this.idRes = idRes;
+  this.idInfo = idInfo;
+};
+
+var coldCounter1 = new Counter
+('coldNumber1', 'cold', 'coldCounter1', 'coldRes1', 'coldInfo1');
+var coldCounter2 = new Counter
+('coldNumber2', 'cold', 'coldCounter2', 'coldRes2', 'coldInfo2');
+var hotCounter1 = new Counter
+('hotNumber1', 'hot', 'hotCounter1', 'hotRes1', 'hotInfo1');
+var hotCounter2 = new Counter
+('hotNumber2', 'hot', 'hotCounter2', 'hotRes2', 'hotInfo2');
+
+var countersList = [coldCounter1, coldCounter2, hotCounter1, hotCounter2];
+
 var getEntryYear = function() {
   var y = new Date();
   return y.getFullYear();
@@ -8,40 +26,35 @@ var getEntryMonth = function() {
   return m.getMonth();
 };
 
-var Counter = function(name) {
-  this.name = name;
-  this.retrieveValue = function() {
-    return document.getElementById(this.name).value;
-  };
-  this.addEntry = function(year, month, entry) {
-    db.transaction(function(tx) {
-      tx.executeSql
-      ('INSERT INTO ENTRIES (id, year, month, counter, entry) ' +
-      'VALUES (null, ?, ?, ?, ?)',
-      [year, month, name, entry]);
-    });
-  };
+var retrieveValue = function(idValues) {
+  return document.getElementById(idValues).value;
 };
 
-var showResult = function(counter, entry) {
-  document.getElementById('values').style.display = 'none';
-  document.getElementById('result').style.display = 'block';
-  var res = document.getElementById(counter).innerHTML = counter + ': ' + entry;
-  return res;
+var addEntry = function(year, month, counterNumber, entry) {
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('INSERT INTO ENTRIES (id, year, month, counter, entry) ' +
+    'VALUES (null, ?, ?, ?, ?)',
+    [year, month, counterNumber, entry]);
+  });
+};
+
+var showResult = function(counterNumber, idRes, entry) {
+  document.getElementById(idRes).innerHTML = 'Счетчик ' +
+  counterNumber + ': ' + entry + ' м3';
 };
 
 var submitValues = function() {
-  var counters = [];
-  var coldCounter1 = counters.push(new Counter('coldCounter1'));
-  var coldCounter2 = counters.push(new Counter('coldCounter2'));
-  var heatCounter1 = counters.push(new Counter('heatCounter1'));
-  var heatCounter2 = counters.push(new Counter('heatCounter2'));
 
-  for (var i = 0; i < counters.length; i++) {
-    counters[i].addEntry(getEntryYear(), getEntryMonth(),
-    counters[i].retrieveValue());
-  }
-  for (var x = 0; x < counters.length; x++) {
-    showResult(counters[x].name, counters[x].retrieveValue());
+  document.getElementById('values').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+
+  for (var i = 0; i < countersList.length; i++) {
+    addEntry(getEntryYear(), getEntryMonth(),
+    countersList[i].counterNumber,
+    retrieveValue(countersList[i].idValues));
+
+    showResult(countersList[i].counterNumber, countersList[i].idRes,
+    retrieveValue(countersList[i].idValues));
   }
 };
