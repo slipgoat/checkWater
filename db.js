@@ -7,5 +7,5 @@ if (!db) {
 db.transaction(function(tx) {
   tx.executeSql
   ('CREATE TABLE IF NOT EXISTS ENTRIES (id INTEGER PRIMARY KEY AUTOINCREMENT,' +
-    'year INTEGER, month INTEGER, counter TEXT, entry INTEGER)');
+    ' year INTEGER, month INTEGER, counter TEXT, entry INTEGER)');
 });
