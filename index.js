@@ -16,6 +16,13 @@ var hotCounter2 = new Counter
 ('hotNumber2', 'hot', 'hotCounter2', 'hotRes2', 'hotInfo2');
 
 var countersList = [coldCounter1, coldCounter2, hotCounter1, hotCounter2];
+var months = [
+    'jan', 'feb',
+    'march', 'apr', 'may',
+    'june', 'jule', 'aug',
+    'sep', 'oct', 'nov',
+    'dec'
+];
 
 var getEntryYear = function() {
   var y = new Date();
