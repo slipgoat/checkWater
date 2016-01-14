@@ -4,12 +4,13 @@
 <meta charset="utf-8">
 <title>Учет воды</title>
 <style>
-	#result {display: none;}
+	#resultView {display: none;}
+  #info {display: none;}
 </style>
 <script src="db.js"></script>
 </head>
 <body>
-<div id="values">
+<div id="enterEntryView">
 	<h1>Внести показания</h1>
 	<h2>Холодная вода:</h2>
 	<p>Счетчик 1: <input type="text" name="coldCounter1" id="coldCounter1"></p>
@@ -19,9 +20,9 @@
 	<p>Счетчик 1: <input type="text" name="hotCounter1" id="hotCounter1"></p>
 	<p>Счетчик 2: <input type="text" name="hotCounter2" id="hotCounter2"></p>
 
-	<button type="submit" name="submit" onclick="submitValues()">Отправить</button>
+	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
 </div>
-<div id="result">
+<div id="resultView">
   <h1 id="h1_res">Результат этого месяца</h1>
 	<h2>Холодная вода</h2>
 	<p id="coldRes1"></p>
@@ -30,14 +31,34 @@
 	<p id="hotRes1"></p>
 	<p id="hotRes2"></p>
 </div>
-<div id="info">
-	<h1 id="h1_info">Результат такого-то месяца</h1>
-	<h2>Холодная вода</h2>
-	<p id="coldInfo1"></p>
-	<p id="coldInfo2"></p>
-	<h2>Горячая вода</h2>
-	<p id="hotInfo1"></p>
-	<p id="hotInfo2"></p>
+<div id="infoView">
+  <div id="params">
+    <p>Выбрать месяц</p>
+    <select name="months", id="months">
+      <option value="jan">Январь</option>
+      <option value="feb">Февраль</option>
+      <option value="march">Март</option>
+      <option value="apr">Апрель</option>
+      <option value="may">Май</option>
+      <option value="june">Июнь</option>
+      <option value="jule">Июль</option>
+      <option value="aug">Август</option>
+      <option value="sep">Сентябрь</option>
+      <option value="oct">Октябрь</option>
+      <option value="nov">Ноябрь</option>
+      <option value="dec">Декабрь</option>
+    </select>
+    <button type="submit" name="submitParams" onclick="submitParams()">Подтвердить</button>
+  </div>
+  <div id="info">
+  	<h1 id="h1_info">Результат такого-то месяца</h1>
+  	<h2>Холодная вода</h2>
+  	<p id="coldInfo1"></p>
+  	<p id="coldInfo2"></p>
+  	<h2>Горячая вода</h2>
+  	<p id="hotInfo1"></p>
+  	<p id="hotInfo2"></p>
+  </div>
 </div>
 <script src="index.js"></script>
 </body>

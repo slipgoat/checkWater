@@ -16,7 +16,7 @@ var hotCounter2 = new Counter
 ('hotNumber2', 'hot', 'hotCounter2', 'hotRes2', 'hotInfo2');
 
 var countersList = [coldCounter1, coldCounter2, hotCounter1, hotCounter2];
-var months = [
+var monthsList = [
     'jan', 'feb',
     'march', 'apr', 'may',
     'june', 'jule', 'aug',
@@ -33,8 +33,12 @@ var getEntryMonth = function() {
   return m.getMonth();
 };
 
-var retrieveValue = function(idValues) {
+var retrieveEntryValue = function(idValues) {
   return document.getElementById(idValues).value;
+};
+
+var retrieveParamsValue = function() {
+  return monthsList.indexOf(document.getElementById('months').value);
 };
 
 var addEntry = function(year, month, counterNumber, entry) {
@@ -51,17 +55,35 @@ var showResult = function(counterNumber, idRes, entry) {
   counterNumber + ': ' + entry + ' м3';
 };
 
+var showInfo = function(month, year) {
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
+    month + '" and year="' + year + '"', [], function(tx, results) {
+      var executeResult = results.rows;
+      for (var i = 0; i < executeResult.length; i++) {
+        document.getElementById(countersList[i].idInfo).innerHTML = 'Счетчик ' +
+        executeResult.item(i).counter + ': ' +
+        executeResult.item(i).entry + ' м3';
+      }
+    });
+  });
+};
+
 var submitValues = function() {
+  document.getElementById('enterEntryView').style.display = 'none';
+  document.getElementById('resultView').style.display = 'block';
 
-  document.getElementById('values').style.display = 'none';
-  document.getElementById('result').style.display = 'block';
-
-  for (var i = 0; i < countersList.length; i++) {
+  for (var i = 0; i < countersList.executeResultgth; i++) {
     addEntry(getEntryYear(), getEntryMonth(),
     countersList[i].counterNumber,
-    retrieveValue(countersList[i].idValues));
+    retrieveEntryValue(countersList[i].idValues));
 
     showResult(countersList[i].counterNumber, countersList[i].idRes,
-    retrieveValue(countersList[i].idValues));
+    retrieveEntryValue(countersList[i].idValues));
   }
+};
+
+var submitParams = function() {
+  document.getElementById('info').style.display = 'block';
+  showInfo(retrieveParamsValue(), 2016);
 };
