@@ -73,7 +73,7 @@ var submitValues = function() {
   document.getElementById('enterEntryView').style.display = 'none';
   document.getElementById('resultView').style.display = 'block';
 
-  for (var i = 0; i < countersList.executeResultgth; i++) {
+  for (var i = 0; i < countersList.length; i++) {
     addEntry(getEntryYear(), getEntryMonth(),
     countersList[i].counterNumber,
     retrieveEntryValue(countersList[i].idValues));
