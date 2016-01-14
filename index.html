@@ -10,9 +10,23 @@
 <script src="db.js"></script>
 </head>
 <body>
-<!--TODO div рабочей области-->
+<!--TODO блок меню-->
 <div id="workarea">
-<!--TODO div view управления счетчиками-->
+<div id="manageView">
+  <div id="addNew">
+  <h1>Управление счетчиками</h1>
+  <h2>Добавить счетчик</h2>
+  <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
+  <select name="type" id="type">
+    <option value="cold">Хол</option>
+    <option value="hot">Гор</option>
+  </select></p>
+  <button type="submit" name="submitEntry" onclick="">Добавить</button>
+  </div>
+  <div id="del">
+    <!--TODO область просмотра/удаления счетчиков-->
+  </div>
+</div>
 <div id="enterEntryView">
 	<h1>Внести показания</h1>
 	<h2>Холодная вода:</h2>
