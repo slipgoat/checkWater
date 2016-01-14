@@ -5,7 +5,7 @@ var Counter = function(counterNumber, temp, idValues, idRes, idInfo) {
   this.idRes = idRes;
   this.idInfo = idInfo;
 };
-
+//TODO динамическое создание объектов счетчиков
 var coldCounter1 = new Counter
 ('coldNumber1', 'cold', 'coldCounter1', 'coldRes1', 'coldInfo1');
 var coldCounter2 = new Counter
@@ -14,7 +14,7 @@ var hotCounter1 = new Counter
 ('hotNumber1', 'hot', 'hotCounter1', 'hotRes1', 'hotInfo1');
 var hotCounter2 = new Counter
 ('hotNumber2', 'hot', 'hotCounter2', 'hotRes2', 'hotInfo2');
-
+//TODO автоматичское добавление счетчиков в массив
 var countersList = [coldCounter1, coldCounter2, hotCounter1, hotCounter2];
 var monthsList = [
     'jan', 'feb',
@@ -54,7 +54,8 @@ var showResult = function(counterNumber, idRes, entry) {
   document.getElementById(idRes).innerHTML = 'Счетчик ' +
   counterNumber + ': ' + entry + ' м3';
 };
-
+//TODO вычисление потребления воды
+//TODO сделать проверку месяца (уже был или нет)
 var showInfo = function(month, year) {
   db.transaction(function(tx) {
     tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
