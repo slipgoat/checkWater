@@ -1,36 +1,31 @@
-﻿var db = openDatabase('dbApp', '0.1', 'Data Base App', 20000);
+﻿var db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
 
 if (!db) {
   alert('Failed to connect to database.');
 }
 
-db.transaction(function(tx) {
-  tx.executeSql
-  ('CREATE TABLE IF NOT EXISTS COUNTERS ' +
-  '(id INTEGER PRIMARY KEY AUTOINCREMENT, counterNumber TEXT, type TEXT, ' +
-  'idValue TEXT, idRes TEXT, idInfo TEXT)');
-});
-
-db.transaction(function(tx) {
-  tx.executeSql
-  ('CREATE TABLE IF NOT EXISTS RAWENTRIES ' +
-  '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
-  'counterId INTEGER, entry INTEGER, ' +
-  'FOREIGN KEY (counterId) REFERENCES (COUNTERS))');
-});
-
-db.transaction(function(tx) {
-  tx.executeSql
-  ('CREATE TABLE IF NOT EXISTS ENTRIES ' +
-  '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
-  'counterId INTEGER, entry INTEGER, ' +
-  'FOREIGN KEY (counterId) REFERENCES (COUNTERS))');
-});
-
-db.transaction(function(tx) {
-  tx.executeSql
-  ('CREATE TABLE IF NOT EXISTS HTML ' +
-  '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-  'counterId INTEGER, entry INTEGER, marking TEXT' +
-  'FOREIGN KEY (counterId) REFERENCES (COUNTERS))');
-});
+var createTables = function() {
+  var statements = [
+    'CREATE TABLE IF NOT EXISTS COUNTERS ' +
+    '(id INTEGER PRIMARY KEY AUTOINCREMENT, counterNumber TEXT, type TEXT, ' +
+    'idValue TEXT, idRes TEXT, idInfo TEXT)',
+    'CREATE TABLE IF NOT EXISTS RAWENTRIES ' +
+    '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
+    'counterId INTEGER, entry INTEGER, ' +
+    'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))',
+    'CREATE TABLE IF NOT EXISTS ENTRIES ' +
+    '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
+    'counterId INTEGER, entry INTEGER, ' +
+    'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))',
+    'CREATE TABLE IF NOT EXISTS HTML ' +
+    '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+    'counterId INTEGER, marking TEXT, ' +
+    'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))'
+  ];
+  db.transaction(function(tx) {
+    for (var i = 0; i < statements.length; i++) {
+      tx.executeSql(statements[i]);
+    }
+  });
+};
+createTables();
