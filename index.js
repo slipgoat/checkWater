@@ -77,24 +77,18 @@ var showResult = function(counterNumber, idRes, entry) {
 };
 
 //TODO вычисление потребления воды (инфо)
-//TODO сделать проверку месяца (уже был или нет)
 var showInfo = function(month, year) {
-  if (retrieveParamsValue() < getEntryMonth()) {
-    db.transaction(function(tx) {
-      tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
-      month + '" and year="' + year + '"', [], function(tx, results) {
-        var reqRes = results.rows;
-        for (var i = 0; i < reqRes.length; i++) {
-          document.getElementById(countersList[i].idInfo)
-          .innerHTML = 'Счетчик ' + reqRes.item(i).counter + ': ' +
-          reqRes.item(i).entry + ' м3';
-        }
-      });
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
+    month + '" and year="' + year + '"', [], function(tx, results) {
+      var reqRes = results.rows;
+      for (var i = 0; i < reqRes.length; i++) {
+        document.getElementById(countersList[i].idInfo)
+        .innerHTML = 'Счетчик ' + reqRes.item(i).counter + ': ' +
+        reqRes.item(i).entry + ' м3';
+      }
     });
-  } else {
-    document.getElementById(countersList[i].idInfo)
-    .innerHTML = 'Месяц еще не наступил!';
-  }
+  });
 };
 
 //TODO вычисление потребления воды (тек. результаты)
@@ -113,6 +107,14 @@ var submitValues = function() {
 };
 
 var submitParams = function() {
-  document.getElementById('info').style.display = 'block';
-  showInfo(retrieveParamsValue(), 2016);
+  document.getElementById('info').style.display = 'none';
+  document.getElementById('invalidMonth').style.display = 'none';
+  if (retrieveParamsValue() <= getEntryMonth()) {
+    document.getElementById('info').style.display = 'block';
+    showInfo(retrieveParamsValue(), 2016);
+  } else {
+    document.getElementById('invalidMonth').style.display = 'block';
+    document.getElementById('errorMsg')
+    .innerHTML = 'Месяц еще не наступил!';
+  }
 };
