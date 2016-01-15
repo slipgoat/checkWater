@@ -41,6 +41,27 @@ var retrieveParamsValue = function() {
   return monthsList.indexOf(document.getElementById('months').value);
 };
 
+/*Функция выбора последней записи из ДБ
+Скорей всего надо реализовать две таблицы: одна для сырых показаний,
+другая для вычисленных показаний потребления.
+Таким образом данная функция преобразуется во что-то другое.
+*/
+/*var getLastEntry = function() {
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('SELECT counter, entry, MAX(month), MAX(year) FROM ENTRIES' +
+    'GROUP BY counter, entry', [], function(tx, results) {
+      var reqRes = results.rows;
+      for (var i = 0; i < reqRes.length; i++) {
+        var counterNumber = reqRes.item(i).counter;
+        var lastEntry = reqRes.item(i).entry;
+        var lastEntryArray = [counterNumber, lastEntry];
+        return lastEntryArray;
+      }
+    });
+  });
+};*/
+
 var addEntry = function(year, month, counterNumber, entry) {
   db.transaction(function(tx) {
     tx.executeSql
@@ -54,22 +75,29 @@ var showResult = function(counterNumber, idRes, entry) {
   document.getElementById(idRes).innerHTML = 'Счетчик ' +
   counterNumber + ': ' + entry + ' м3';
 };
-//TODO вычисление потребления воды
+
+//TODO вычисление потребления воды (инфо)
 //TODO сделать проверку месяца (уже был или нет)
 var showInfo = function(month, year) {
-  db.transaction(function(tx) {
-    tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
-    month + '" and year="' + year + '"', [], function(tx, results) {
-      var executeResult = results.rows;
-      for (var i = 0; i < executeResult.length; i++) {
-        document.getElementById(countersList[i].idInfo).innerHTML = 'Счетчик ' +
-        executeResult.item(i).counter + ': ' +
-        executeResult.item(i).entry + ' м3';
-      }
+  if (retrieveParamsValue() < getEntryMonth()) {
+    db.transaction(function(tx) {
+      tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
+      month + '" and year="' + year + '"', [], function(tx, results) {
+        var reqRes = results.rows;
+        for (var i = 0; i < reqRes.length; i++) {
+          document.getElementById(countersList[i].idInfo)
+          .innerHTML = 'Счетчик ' + reqRes.item(i).counter + ': ' +
+          reqRes.item(i).entry + ' м3';
+        }
+      });
     });
-  });
+  } else {
+    document.getElementById(countersList[i].idInfo)
+    .innerHTML = 'Месяц еще не наступил!';
+  }
 };
 
+//TODO вычисление потребления воды (тек. результаты)
 var submitValues = function() {
   document.getElementById('enterEntryView').style.display = 'none';
   document.getElementById('resultView').style.display = 'block';
