@@ -1,7 +1,45 @@
-var Counter = function(counterNumber, temp, idValues, idRes, idInfo) {
+var assignTypeNumber  = function(type) {
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT id FROM COUNTERS WHERE type="' +
+    type + '"', [], function(tx, results) {
+      var reqRes = results.rows;
+      var typeAmount;
+      if (reqRes.length !== 0) {
+        typeAmount = reqRes.length + 1;
+        return typeAmount.toString();
+      } else {
+        return '1';
+      }
+    });
+  });
+};
+
+var addCounter = function(counterNumber, type) {
+  var idValue;
+  var idRes;
+  var idInfo;
+  if (type === 'cold') {
+    idValue = 'coldValue' + assignTypeNumber(type);
+    idRes = 'coldRes' + assignTypeNumber(type);
+    idInfo = 'coldInfo' + assignTypeNumber(type);
+  } else if (type === 'hot') {
+    idValue = 'hotValue' + assignTypeNumber(type);
+    idRes = 'hotRes' + assignTypeNumber(type);
+    idInfo = 'hotInfo' + assignTypeNumber(type);
+  }
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('INSERT INTO COUNTERS ' +
+    '(id, counterNumber, type, idValue, hotRes, hotInfo) ' +
+    'VALUES (null, ?, ?, ?, ?, ?)',
+    [counterNumber, type, idValue, idRes, idInfo]);
+  });
+};
+
+var Counter = function(counterNumber, temp, idValue, idRes, idInfo) {
   this.counterNumber = counterNumber;
   this.temp = temp;
-  this.idValues = idValues;
+  this.idValue = idValue;
   this.idRes = idRes;
   this.idInfo = idInfo;
 };
@@ -33,8 +71,8 @@ var getEntryMonth = function() {
   return m.getMonth();
 };
 
-var retrieveEntryValue = function(idValues) {
-  return document.getElementById(idValues).value;
+var retrieveEntryValue = function(idValue) {
+  return document.getElementById(idValue).value;
 };
 
 var retrieveParamsValue = function() {
@@ -99,10 +137,10 @@ var submitValues = function() {
   for (var i = 0; i < countersList.length; i++) {
     addEntry(getEntryYear(), getEntryMonth(),
     countersList[i].counterNumber,
-    retrieveEntryValue(countersList[i].idValues));
+    retrieveEntryValue(countersList[i].idValue));
 
     showResult(countersList[i].counterNumber, countersList[i].idRes,
-    retrieveEntryValue(countersList[i].idValues));
+    retrieveEntryValue(countersList[i].idValue));
   }
 };
 
@@ -117,4 +155,9 @@ var submitParams = function() {
     document.getElementById('errorMsg')
     .innerHTML = 'Месяц еще не наступил!';
   }
+};
+//TODO доделать добавление нового счечика
+var submmitNewCounter = function() {
+  addCounter(document.getElementById('newCounter').value,
+  document.getElementById('type').value);
 };
