@@ -18,7 +18,7 @@
   <h1>Управление счетчиками</h1>
   <h2>Добавить счетчик</h2>
   <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
-  <select name="type" id="type">
+  <select name="temp" id="temp">
     <option value="cold">Хол</option>
     <option value="hot">Гор</option>
   </select></p>
@@ -31,13 +31,15 @@
 <div id="enterEntryView">
 	<h1>Внести показания</h1>
 	<h2>Холодная вода:</h2>
-	<p>Счетчик 1: <input type="text" name="coldCounter1" id="coldCounter1"></p>
-	<p>Счетчик 2: <input type="text" name="coldCounter2" id="coldCounter2"></p>
-
+  <div id="coldValues">
+  	<!--<p>Счетчик 1: <input type="text" name="coldCounter1" id="coldCounter1"></p>
+  	<p>Счетчик 2: <input type="text" name="coldCounter2" id="coldCounter2"></p> -->
+  </div>
 	<h2>Горячая вода:</h2>
-	<p>Счетчик 1: <input type="text" name="hotCounter1" id="hotCounter1"></p>
-	<p>Счетчик 2: <input type="text" name="hotCounter2" id="hotCounter2"></p>
-
+  <div id="hotValues">
+  	<p>Счетчик 1: <input type="text" name="hotCounter1" id="hotCounter1"></p>
+  	<p>Счетчик 2: <input type="text" name="hotCounter2" id="hotCounter2"></p>
+  </div>
 	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
 </div>
 <div id="resultView">

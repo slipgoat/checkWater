@@ -7,7 +7,7 @@ if (!db) {
 var createTables = function() {
   var statements = [
     'CREATE TABLE IF NOT EXISTS COUNTERS ' +
-    '(id INTEGER PRIMARY KEY AUTOINCREMENT, counterNumber TEXT, type TEXT, ' +
+    '(id INTEGER PRIMARY KEY AUTOINCREMENT, counterNumber TEXT, temp TEXT, ' +
     'idValue TEXT, idRes TEXT, idInfo TEXT)',
     'CREATE TABLE IF NOT EXISTS RAWENTRIES ' +
     '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
@@ -19,7 +19,7 @@ var createTables = function() {
     'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))',
     'CREATE TABLE IF NOT EXISTS HTML ' +
     '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-    'counterId INTEGER, marking TEXT, ' +
+    'counterId INTEGER, markValue TEXT, markRes TEXT, markInfo TEXT ' +
     'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))'
   ];
   db.transaction(function(tx) {

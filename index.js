@@ -1,18 +1,18 @@
-var addCounter = function(counterNumber, type) {
+var addCounter = function(counterNumber, temp) {
   db.transaction(function(tx) {
-    tx.executeSql('SELECT id FROM COUNTERS WHERE type="' +
-    type + '"', [], function(tx, results) {
-      var typeAmount;
+    tx.executeSql('SELECT id FROM COUNTERS WHERE temp="' +
+    temp + '"', [], function(tx, results) {
+      var tempAmount;
       var idValue;
       var idRes;
       var idInfo;
-      typeAmount = results.rows.length;
-      if (typeAmount === 0) {
-        if (type === 'cold') {
+      tempAmount = results.rows.length;
+      if (tempAmount === 0) {
+        if (temp === 'cold') {
           idValue = 'coldValue1';
           idRes = 'coldRes1';
           idInfo = 'coldInfo1';
-        } else if (type === 'hot') {
+        } else if (temp === 'hot') {
           idValue = 'hotValue1';
           idRes = 'hotRes1';
           idInfo = 'hotInfo1';
@@ -20,42 +20,70 @@ var addCounter = function(counterNumber, type) {
         db.transaction(function(tx) {
           tx.executeSql
           ('INSERT INTO COUNTERS ' +
-          '(id, counterNumber, type, idValue, idRes, idInfo) ' +
+          '(id, counterNumber, temp, idValue, idRes, idInfo) ' +
           'VALUES (null, ?, ?, ?, ?, ?)',
-          [counterNumber, type, idValue, idRes, idInfo]);
+          [counterNumber, temp, idValue, idRes, idInfo]);
         });
       } else {
-        typeNumber = typeAmount + 1;
-        typeNumberTxt = typeNumber.toString();
-        if (type === 'cold') {
+        tempNumber = tempAmount + 1;
+        tempNumberTxt = tempNumber.toString();
+        if (temp === 'cold') {
 
-          idValue = 'coldValue' + typeNumberTxt;
-          idRes = 'coldRes' + typeNumberTxt;
-          idInfo = 'coldInfo' + typeNumberTxt;
-        } else if (type === 'hot') {
-          idValue = 'hotValue' + typeNumberTxt;
-          idRes = 'hotRes' + typeNumberTxt;
-          idInfo = 'hotInfo' + typeNumberTxt;
+          idValue = 'coldValue' + tempNumberTxt;
+          idRes = 'coldRes' + tempNumberTxt;
+          idInfo = 'coldInfo' + tempNumberTxt;
+        } else if (temp === 'hot') {
+          idValue = 'hotValue' + tempNumberTxt;
+          idRes = 'hotRes' + tempNumberTxt;
+          idInfo = 'hotInfo' + tempNumberTxt;
         }
         db.transaction(function(tx) {
           tx.executeSql
           ('INSERT INTO COUNTERS ' +
-          '(id, counterNumber, type, idValue, idRes, idInfo) ' +
+          '(id, counterNumber, temp, idValue, idRes, idInfo) ' +
           'VALUES (null, ?, ?, ?, ?, ?)',
-          [counterNumber, type, idValue, idRes, idInfo]);
+          [counterNumber, temp, idValue, idRes, idInfo]);
         });
       }
+      generateHtml(counterNumber);
     });
   });
 };
 
-//TODO динамическое создание объектов счетчиков
 var Counter = function(counterNumber, temp, idValue, idRes, idInfo) {
   this.counterNumber = counterNumber;
   this.temp = temp;
   this.idValue = idValue;
   this.idRes = idRes;
   this.idInfo = idInfo;
+};
+//TODO доделать генерацию html для других view
+var generateHtml = function(counterNumber) {
+  getCounterObject(counterNumber, function(counterObject) {
+    var div = document.getElementById('coldValues');
+    var element = document.createElement('p');
+    element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
+    ': <input type="text" id="' +
+    counterObject.idValue + '">';
+    //element.appendChild(text);
+    div.appendChild(element);
+  });
+};
+
+//getCounterObject(counterNumber, function(counterObject) {
+//  console.log(counterObject.temp);
+//});
+
+var getCounterObject = function(counterNumber, callback) {
+  return db.transaction(function(tx) {
+    tx.executeSql
+    ('SELECT counterNumber, temp, idValue, idRes, idInfo FROM COUNTERS ' +
+    'WHERE counterNumber = "' + counterNumber + '"',
+    [], function(tx, results) {
+      var counterObject = results.rows.item(0);
+      callback(counterObject);
+    });
+  });
 };
 
 var coldCounter1 = new Counter
@@ -89,8 +117,8 @@ var retrieveNewCounterValue = function() {
   return document.getElementById('newCounter').value;
 };
 
-var retrieveNewCounterTypeValue = function() {
-  return document.getElementById('type').value;
+var retrieveNewCounterTempValue = function() {
+  return document.getElementById('temp').value;
 };
 
 var retrieveEntryValue = function(idValue) {
@@ -180,5 +208,5 @@ var submitParams = function() {
 };
 
 var submmitNewCounter = function() {
-  addCounter(retrieveNewCounterValue(), retrieveNewCounterTypeValue());
+  addCounter(retrieveNewCounterValue(), retrieveNewCounterTempValue());
 };
