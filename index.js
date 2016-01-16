@@ -1,41 +1,55 @@
-var assignTypeNumber  = function(type) {
+var addCounter = function(counterNumber, type) {
   db.transaction(function(tx) {
     tx.executeSql('SELECT id FROM COUNTERS WHERE type="' +
     type + '"', [], function(tx, results) {
-      var reqRes = results.rows;
       var typeAmount;
-      if (reqRes.length !== 0) {
-        typeAmount = reqRes.length + 1;
-        return typeAmount.toString();
+      var idValue;
+      var idRes;
+      var idInfo;
+      typeAmount = results.rows.length;
+      if (typeAmount === 0) {
+        if (type === 'cold') {
+          idValue = 'coldValue1';
+          idRes = 'coldRes1';
+          idInfo = 'coldInfo1';
+        } else if (type === 'hot') {
+          idValue = 'hotValue1';
+          idRes = 'hotRes1';
+          idInfo = 'hotInfo1';
+        }
+        db.transaction(function(tx) {
+          tx.executeSql
+          ('INSERT INTO COUNTERS ' +
+          '(id, counterNumber, type, idValue, idRes, idInfo) ' +
+          'VALUES (null, ?, ?, ?, ?, ?)',
+          [counterNumber, type, idValue, idRes, idInfo]);
+        });
       } else {
-        return '1';
+        typeNumber = typeAmount + 1;
+        typeNumberTxt = typeNumber.toString();
+        if (type === 'cold') {
+
+          idValue = 'coldValue' + typeNumberTxt;
+          idRes = 'coldRes' + typeNumberTxt;
+          idInfo = 'coldInfo' + typeNumberTxt;
+        } else if (type === 'hot') {
+          idValue = 'hotValue' + typeNumberTxt;
+          idRes = 'hotRes' + typeNumberTxt;
+          idInfo = 'hotInfo' + typeNumberTxt;
+        }
+        db.transaction(function(tx) {
+          tx.executeSql
+          ('INSERT INTO COUNTERS ' +
+          '(id, counterNumber, type, idValue, idRes, idInfo) ' +
+          'VALUES (null, ?, ?, ?, ?, ?)',
+          [counterNumber, type, idValue, idRes, idInfo]);
+        });
       }
     });
   });
 };
 
-var addCounter = function(counterNumber, type) {
-  var idValue;
-  var idRes;
-  var idInfo;
-  if (type === 'cold') {
-    idValue = 'coldValue' + assignTypeNumber(type);
-    idRes = 'coldRes' + assignTypeNumber(type);
-    idInfo = 'coldInfo' + assignTypeNumber(type);
-  } else if (type === 'hot') {
-    idValue = 'hotValue' + assignTypeNumber(type);
-    idRes = 'hotRes' + assignTypeNumber(type);
-    idInfo = 'hotInfo' + assignTypeNumber(type);
-  }
-  db.transaction(function(tx) {
-    tx.executeSql
-    ('INSERT INTO COUNTERS ' +
-    '(id, counterNumber, type, idValue, hotRes, hotInfo) ' +
-    'VALUES (null, ?, ?, ?, ?, ?)',
-    [counterNumber, type, idValue, idRes, idInfo]);
-  });
-};
-
+//TODO динамическое создание объектов счетчиков
 var Counter = function(counterNumber, temp, idValue, idRes, idInfo) {
   this.counterNumber = counterNumber;
   this.temp = temp;
@@ -43,7 +57,7 @@ var Counter = function(counterNumber, temp, idValue, idRes, idInfo) {
   this.idRes = idRes;
   this.idInfo = idInfo;
 };
-//TODO динамическое создание объектов счетчиков
+
 var coldCounter1 = new Counter
 ('coldNumber1', 'cold', 'coldCounter1', 'coldRes1', 'coldInfo1');
 var coldCounter2 = new Counter
@@ -69,6 +83,14 @@ var getEntryYear = function() {
 var getEntryMonth = function() {
   var m = new Date();
   return m.getMonth();
+};
+
+var retrieveNewCounterValue = function() {
+  return document.getElementById('newCounter').value;
+};
+
+var retrieveNewCounterTypeValue = function() {
+  return document.getElementById('type').value;
 };
 
 var retrieveEntryValue = function(idValue) {
@@ -156,8 +178,7 @@ var submitParams = function() {
     .innerHTML = 'Месяц еще не наступил!';
   }
 };
-//TODO доделать добавление нового счечика
+
 var submmitNewCounter = function() {
-  addCounter(document.getElementById('newCounter').value,
-  document.getElementById('type').value);
+  addCounter(retrieveNewCounterValue(), retrieveNewCounterTypeValue());
 };
