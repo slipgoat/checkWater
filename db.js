@@ -16,10 +16,6 @@ var createTables = function() {
     'CREATE TABLE IF NOT EXISTS ENTRIES ' +
     '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
     'counterId INTEGER, entry INTEGER, ' +
-    'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))',
-    'CREATE TABLE IF NOT EXISTS HTML ' +
-    '(id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-    'counterId INTEGER, markValue TEXT, markRes TEXT, markInfo TEXT ' +
     'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))'
   ];
   db.transaction(function(tx) {
