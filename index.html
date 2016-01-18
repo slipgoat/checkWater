@@ -9,7 +9,7 @@
   #invalidMonth {display: none;}
 </style>
 </head>
-<body onload="createTables(); getList();">
+<body>
 <!--TODO блок меню-->
 <div id="workarea">
 <button type="submit" name="submitEntry" onclick="loadValuesResHtml()">Загрузить счетчики</button>
@@ -92,7 +92,11 @@
   </div>
 </div>
 </div>
-<script src="db.js"></script>
+<script src="scripts/globals.js"></script>
+<script src="scripts/get.js"></script>
+<script src="scripts/actions.js"></script>
+<script src="scripts/genHtml.js"></script>
+<script src="bin/events.js"></script>
 <script src="index.js"></script>
 </body>
 </html>
