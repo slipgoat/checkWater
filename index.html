@@ -8,11 +8,12 @@
   #info {display: none;}
   #invalidMonth {display: none;}
 </style>
-<script src="db.js"></script>
 </head>
-<body>
+<body onload="createTables(); getList();">
 <!--TODO блок меню-->
 <div id="workarea">
+<button type="submit" name="submitEntry" onclick="loadValuesResHtml()">Загрузить счетчики</button>
+<button type="submit" name="submitEntry" onclick="loadInfoHtml()">Загрузить инфо</button>
 <div id="manageView">
   <div id="addNew">
   <h1>Управление счетчиками</h1>
@@ -28,29 +29,32 @@
     <!--TODO область просмотра/удаления счетчиков-->
   </div>
 </div>
+
 <div id="enterEntryView">
 	<h1>Внести показания</h1>
 	<h2>Холодная вода:</h2>
   <div id="coldValues">
-  	<!--<p>Счетчик 1: <input type="text" name="coldCounter1" id="coldCounter1"></p>
-  	<p>Счетчик 2: <input type="text" name="coldCounter2" id="coldCounter2"></p> -->
   </div>
 	<h2>Горячая вода:</h2>
   <div id="hotValues">
-  	<p>Счетчик 1: <input type="text" name="hotCounter1" id="hotCounter1"></p>
-  	<p>Счетчик 2: <input type="text" name="hotCounter2" id="hotCounter2"></p>
   </div>
 	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
 </div>
+
 <div id="resultView">
   <h1 id="h1_res">Результат этого месяца</h1>
 	<h2>Холодная вода</h2>
-	<p id="coldRes1"></p>
-	<p id="coldRes2"></p>
+  <div id="coldRes">
+	<!--<p id="coldRes1"></p>
+	<p id="coldRes2"></p>-->
+  </div>
 	<h2>Горячая вода</h2>
-	<p id="hotRes1"></p>
-	<p id="hotRes2"></p>
+  <div id="hotRes">
+	<!--<p id="hotRes1"></p>
+	<p id="hotRes2"></p>-->
+  </div>
 </div>
+
 <div id="infoView">
   <h1 id="h1_info">Результат такого-то месяца</h1>
   <div id="params">
@@ -76,14 +80,19 @@
   </div>
   <div id="info">
   	<h2>Холодная вода</h2>
-  	<p id="coldInfo1"></p>
-  	<p id="coldInfo2"></p>
+    <div id="coldInfo">
+  	<!--<p id="coldInfo1"></p>
+  	<p id="coldInfo2"></p>-->
+    </div>
   	<h2>Горячая вода</h2>
-  	<p id="hotInfo1"></p>
-  	<p id="hotInfo2"></p>
+    <div id="hotInfo">
+  	<!--<p id="hotInfo1"></p>
+  	<p id="hotInfo2"></p>-->
+    </div>
   </div>
 </div>
 </div>
+<script src="db.js"></script>
 <script src="index.js"></script>
 </body>
 </html>

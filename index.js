@@ -1,3 +1,27 @@
+var getList = function() {
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('SELECT * FROM COUNTERS', [], function(tx, results) {
+      var reqRes = results.rows;
+      for (var i = 0; i < reqRes.length; i++) {
+        countersList.push(reqRes.item(i));
+      }
+    });
+  });
+};
+var loadValuesResHtml = function() {
+  for (var i = 0; i < countersList.length; i++) {
+    generateHtml(countersList[i].counterNumber, 'idValue');
+    generateHtml(countersList[i].counterNumber, 'idRes');
+  }
+};
+
+var loadInfoHtml = function() {
+  for (var i = 0; i < countersList.length; i++) {
+    generateHtml(countersList[i].counterNumber, 'idInfo');
+  }
+};
+
 var addCounter = function(counterNumber, temp) {
   db.transaction(function(tx) {
     tx.executeSql('SELECT id FROM COUNTERS WHERE temp="' +
@@ -45,29 +69,74 @@ var addCounter = function(counterNumber, temp) {
           [counterNumber, temp, idValue, idRes, idInfo]);
         });
       }
-      generateHtml(counterNumber);
+      generateHtml(counterNumber, 'idValue');
     });
   });
 };
 
-var Counter = function(counterNumber, temp, idValue, idRes, idInfo) {
-  this.counterNumber = counterNumber;
-  this.temp = temp;
-  this.idValue = idValue;
-  this.idRes = idRes;
-  this.idInfo = idInfo;
-};
-//TODO доделать генерацию html для других view
-var generateHtml = function(counterNumber) {
-  getCounterObject(counterNumber, function(counterObject) {
-    var div = document.getElementById('coldValues');
-    var element = document.createElement('p');
-    element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
-    ': <input type="text" id="' +
-    counterObject.idValue + '">';
-    //element.appendChild(text);
-    div.appendChild(element);
-  });
+var generateHtml = function(counterNumber, idType) {
+  var div;
+  var element;
+  switch (idType) {
+    case 'idValue':
+      getCounterObject(counterNumber, function(counterObject) {
+        switch (counterObject.temp) {
+          case 'cold':
+            div = document.getElementById('coldValues');
+            element = document.createElement('p');
+            element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
+            ': <input type="text" id="' +
+            counterObject.idValue + '">';
+            div.appendChild(element);
+            break;
+          case 'hot':
+            div = document.getElementById('hotValues');
+            element = document.createElement('p');
+            element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
+            ': <input type="text" id="' +
+            counterObject.idValue + '">';
+            div.appendChild(element);
+            break;
+        }
+      });
+      break;
+    case 'idRes':
+      getCounterObject(counterNumber, function(counterObject) {
+        switch (counterObject.temp) {
+          case 'cold':
+            div = document.getElementById('coldRes');
+            element = document.createElement('p');
+            element.setAttribute('id', counterObject.idRes);
+            div.appendChild(element);
+            break;
+          case 'hot':
+            div = document.getElementById('hotRes');
+            element = document.createElement('p');
+            element.setAttribute('id', counterObject.idRes);
+            div.appendChild(element);
+            break;
+        }
+      });
+      break;
+    case 'idInfo':
+      getCounterObject(counterNumber, function(counterObject) {
+        switch (counterObject.temp) {
+          case 'cold':
+            div = document.getElementById('coldInfo');
+            element = document.createElement('p');
+            element.setAttribute('id', counterObject.idInfo);
+            div.appendChild(element);
+            break;
+          case 'hot':
+            div = document.getElementById('hotInfo');
+            element = document.createElement('p');
+            element.setAttribute('id', counterObject.idInfo);
+            div.appendChild(element);
+            break;
+        }
+      });
+      break;
+  }
 };
 
 //getCounterObject(counterNumber, function(counterObject) {
@@ -77,8 +146,7 @@ var generateHtml = function(counterNumber) {
 var getCounterObject = function(counterNumber, callback) {
   return db.transaction(function(tx) {
     tx.executeSql
-    ('SELECT counterNumber, temp, idValue, idRes, idInfo FROM COUNTERS ' +
-    'WHERE counterNumber = "' + counterNumber + '"',
+    ('SELECT * FROM COUNTERS WHERE counterNumber = "' + counterNumber + '"',
     [], function(tx, results) {
       var counterObject = results.rows.item(0);
       callback(counterObject);
@@ -86,16 +154,6 @@ var getCounterObject = function(counterNumber, callback) {
   });
 };
 
-var coldCounter1 = new Counter
-('coldNumber1', 'cold', 'coldCounter1', 'coldRes1', 'coldInfo1');
-var coldCounter2 = new Counter
-('coldNumber2', 'cold', 'coldCounter2', 'coldRes2', 'coldInfo2');
-var hotCounter1 = new Counter
-('hotNumber1', 'hot', 'hotCounter1', 'hotRes1', 'hotInfo1');
-var hotCounter2 = new Counter
-('hotNumber2', 'hot', 'hotCounter2', 'hotRes2', 'hotInfo2');
-//TODO автоматичское добавление счетчиков в массив
-var countersList = [coldCounter1, coldCounter2, hotCounter1, hotCounter2];
 var monthsList = [
     'jan', 'feb',
     'march', 'apr', 'may',

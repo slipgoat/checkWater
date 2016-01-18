@@ -1,5 +1,5 @@
 ﻿var db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
-
+var countersList = [];
 if (!db) {
   alert('Failed to connect to database.');
 }
@@ -24,4 +24,3 @@ var createTables = function() {
     }
   });
 };
-createTables();
