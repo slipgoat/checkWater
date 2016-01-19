@@ -1,5 +1,3 @@
-var db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
-
 var countersList = [];
 
 var monthsList = [
@@ -12,7 +10,9 @@ var monthsList = [
 
 var checkDB = function() {
   if (!db) {
-    alert('Failed to connect to database.');
+    console.log('Failed to connect to database.');
+  } else {
+    console.log('WebSql is ready!');
   }
 };
 
@@ -51,7 +51,7 @@ var getCounterObject = function(counterNumber, callback) {
 //  console.log(counterObject.temp);
 //});
 
-var getList = function() {
+var getCountersList = function(callback) {
   db.transaction(function(tx) {
     tx.executeSql
     ('SELECT * FROM COUNTERS', [], function(tx, results) {
@@ -59,6 +59,7 @@ var getList = function() {
       for (var i = 0; i < reqRes.length; i++) {
         countersList.push(reqRes.item(i));
       }
+      callback();
     });
   });
 };

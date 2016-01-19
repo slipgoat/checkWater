@@ -63,15 +63,10 @@ var generateHtml = function(counterNumber, idType) {
   }
 };
 
-var loadValuesResHtml = function() {
+var loadGenHtml = function() {
   for (var i = 0; i < countersList.length; i++) {
     generateHtml(countersList[i].counterNumber, 'idValue');
     generateHtml(countersList[i].counterNumber, 'idRes');
-  }
-};
-
-var loadInfoHtml = function() {
-  for (var i = 0; i < countersList.length; i++) {
     generateHtml(countersList[i].counterNumber, 'idInfo');
   }
 };
