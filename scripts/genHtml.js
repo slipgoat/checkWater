@@ -60,6 +60,14 @@ var generateHtml = function(counterNumber, idType) {
         }
       });
       break;
+    case 'idDel':
+      getCounterObject(counterNumber, function(counterObject) {
+        div = document.getElementById('selectCounter');
+        element = document.createElement('option');
+        element.setAttribute('value', counterObject.counterNumber);
+        element.innerHTML = counterObject.counterNumber;
+        div.appendChild(element);
+      });
   }
 };
 
@@ -68,5 +76,6 @@ var loadGenHtml = function() {
     generateHtml(countersList[i].counterNumber, 'idValue');
     generateHtml(countersList[i].counterNumber, 'idRes');
     generateHtml(countersList[i].counterNumber, 'idInfo');
+    generateHtml(countersList[i].counterNumber, 'idDel');
   }
 };
