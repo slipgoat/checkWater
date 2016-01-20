@@ -50,6 +50,14 @@ var addCounter = function(counterNumber, temp) {
   });
 };
 
+var delCounter = function(counterNumber, callback) {
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('DELETE FROM COUNTERS WHERE counterNumber="' + counterNumber + '"');
+  });
+  showDelResult(counterNumber);
+};
+
 var addEntry = function(year, month, counterNumber, entry) {
   db.transaction(function(tx) {
     tx.executeSql
@@ -57,6 +65,19 @@ var addEntry = function(year, month, counterNumber, entry) {
     'VALUES (null, ?, ?, ?, ?)',
     [year, month, counterNumber, entry]);
   });
+};
+
+var convertTemp = function(temp) {
+  if (temp === 'cold') {
+    return 'Хол';
+  } else if (temp === 'hot') {
+    return 'Гор';
+  }
+};
+
+var showDelResult = function(counterNumber) {
+  document.getElementById('countersList').innerHTML = '<p>Счетчик ' +
+  counterNumber + ' удален</p>';
 };
 
 var showResult = function(counterNumber, idRes, entry) {

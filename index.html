@@ -13,7 +13,7 @@
 <div id="workarea">
 <!-- TODO: добавить блок меню -->
 <div id="manageView">
-  <div id="addNew">
+  <div id="addNewView">
   <h1>Управление счетчиками</h1>
   <h2>Добавить счетчик</h2>
   <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
@@ -21,10 +21,17 @@
     <option value="cold">Хол</option>
     <option value="hot">Гор</option>
   </select></p>
+  <!-- TODO: refresh событие на отрисовку html по новой -->
   <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
   </div>
-  <div id="del">
-    <!--TODO область просмотра/удаления счетчиков-->
+  <div id="delView">
+    <h2>Удаление счетчика</h2>
+    <div id="countersList">
+    <p>Номер счетчика:
+    <select name="selectCounter" id="selectCounter">
+    </select></p>
+    </div>
+    <button type="submit" name="submitDelCounter" onclick="submmitDelCounter()">Удалить</button>
   </div>
 </div>
 
