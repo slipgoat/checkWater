@@ -1,3 +1,5 @@
+db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
+
 var countersList = [];
 
 var monthsList = [
@@ -7,6 +9,9 @@ var monthsList = [
     'sep', 'oct', 'nov',
     'dec'
 ];
+
+var addRefreshHtml = document.getElementById('addRefresh');
+var delRefreshHtml = document.getElementById('delRefresh');
 
 var checkDB = function() {
   if (!db) {

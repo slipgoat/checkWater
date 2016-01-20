@@ -2,6 +2,10 @@ var submmitNewCounter = function() {
   addCounter(retrieveNewCounterValue(), retrieveNewCounterTempValue());
 };
 
+var submmitDelCounter = function() {
+  delCounter(retrieveDelCounter());
+};
+
 //TODO вычисление потребления воды (тек. результаты)
 var submitValues = function() {
   document.getElementById('enterEntryView').style.display = 'none';

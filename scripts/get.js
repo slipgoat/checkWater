@@ -6,6 +6,10 @@ var retrieveNewCounterTempValue = function() {
   return document.getElementById('temp').value;
 };
 
+var retrieveDelCounter = function() {
+  return document.getElementById('selectCounter').value;
+};
+
 var getEntryYear = function() {
   var y = new Date();
   return y.getFullYear();

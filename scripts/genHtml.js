@@ -65,7 +65,8 @@ var generateHtml = function(counterNumber, idType) {
         div = document.getElementById('selectCounter');
         element = document.createElement('option');
         element.setAttribute('value', counterObject.counterNumber);
-        element.innerHTML = counterObject.counterNumber;
+        element.innerHTML = counterObject.counterNumber +
+        ', ' + convertTemp(counterObject.temp);
         div.appendChild(element);
       });
   }
