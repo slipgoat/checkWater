@@ -57,6 +57,7 @@ var getCounterObject = function(counterNumber, callback) {
 //});
 
 var getCountersList = function(callback) {
+  countersList = [];
   db.transaction(function(tx) {
     tx.executeSql
     ('SELECT * FROM COUNTERS', [], function(tx, results) {

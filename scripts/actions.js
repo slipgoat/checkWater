@@ -45,7 +45,11 @@ var addCounter = function(counterNumber, temp) {
           [counterNumber, temp, idValue, idRes, idInfo]);
         });
       }
-      generateHtml(counterNumber, 'idValue');
+      clearHtml();
+      getCountersList(function() {
+        loadGenHtml();
+      });
+      //generateHtml(counterNumber, 'idValue');
     });
   });
 };
@@ -54,6 +58,10 @@ var delCounter = function(counterNumber, callback) {
   db.transaction(function(tx) {
     tx.executeSql
     ('DELETE FROM COUNTERS WHERE counterNumber="' + counterNumber + '"');
+  });
+  clearHtml();
+  getCountersList(function() {
+    loadGenHtml();
   });
   showDelResult(counterNumber);
 };

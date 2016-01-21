@@ -1,3 +1,4 @@
+// TODO: при генерации html, сначала очистить изменямый объект
 var generateHtml = function(counterNumber, idType) {
   var div;
   var element;
@@ -70,6 +71,16 @@ var generateHtml = function(counterNumber, idType) {
         div.appendChild(element);
       });
   }
+};
+
+var clearHtml = function() {
+  document.getElementById('coldValues').innerHTML = '';
+  document.getElementById('hotValues').innerHTML = '';
+  document.getElementById('coldRes').innerHTML = '';
+  document.getElementById('hotRes').innerHTML = '';
+  document.getElementById('coldInfo').innerHTML = '';
+  document.getElementById('hotInfo').innerHTML = '';
+  document.getElementById('selectCounter').innerHTML = '';
 };
 
 var loadGenHtml = function() {
