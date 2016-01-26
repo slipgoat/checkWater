@@ -12,12 +12,12 @@ var submitValues = function() {
   document.getElementById('resultView').style.display = 'block';
 
   for (var i = 0; i < countersList.length; i++) {
-    addEntry(getEntryYear(), getEntryMonth(),
+    addRawEntry(getEntryYear(), getEntryMonth(),
     countersList[i].counterNumber,
     retrieveEntryValue(countersList[i].idValue));
 
-    showResult(countersList[i].counterNumber, countersList[i].idRes,
-    retrieveEntryValue(countersList[i].idValue));
+    //showResult(countersList[i].counterNumber, countersList[i].idRes,
+    //retrieveEntryValue(countersList[i].idValue));
   }
 };
 

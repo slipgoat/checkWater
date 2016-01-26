@@ -53,7 +53,7 @@ var addCounter = function(counterNumber, temp) {
     });
   });
 };
-
+// TODO: доделать удаление из всех таблиц
 var delCounter = function(counterNumber, callback) {
   db.transaction(function(tx) {
     tx.executeSql
@@ -66,13 +66,58 @@ var delCounter = function(counterNumber, callback) {
   showDelResult(counterNumber);
 };
 
-var addEntry = function(year, month, counterNumber, entry) {
+var addRawEntry = function(year, month, counterNumber, rawEntry) {
+  var lastMonth = month - 1;
+  getCounterObject(counterNumber, function(counterObject) {
+    db.transaction(function(tx) {
+      tx.executeSql
+      ('INSERT INTO RAWENTRIES (id, year, month, counterId, entry) ' +
+      'VALUES (null, ?, ?, ?, ?)',
+      [year, month, counterObject.id, rawEntry], function() {
+        getLastRawEntry(year, lastMonth, counterObject.id,
+          function(lastRawEntry) {
+            calculateEntry(lastRawEntry, rawEntry, function(entry) {
+              addEntry(year, month, counterObject.id, entry);
+            });
+          });
+      });
+    });
+  });
+};
+
+var addEntry = function(year, month, counterId, entry) {
   db.transaction(function(tx) {
     tx.executeSql
-    ('INSERT INTO ENTRIES (id, year, month, counter, entry) ' +
+    ('INSERT INTO ENTRIES (id, year, month, counterId, entry) ' +
     'VALUES (null, ?, ?, ?, ?)',
-    [year, month, counterNumber, entry]);
+    [year, month, counterId, entry]);
   });
+};
+
+var getLastRawEntry = function(year, lastMonth, counterId, callback) {
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT entry FROM RAWENTRIES WHERE year="' +
+    year + '" AND month="' + lastMonth + '" AND counterId="' +
+    counterId + '"', [], function(tx, results) {
+      var reqRes = results.rows;
+      var lastRawEntry;
+      if (reqRes.length === 0) {
+        lastRawEntry = 0;
+      } else {
+        lastRawEntry = reqRes.item(0).entry;
+      }
+      callback(lastRawEntry);
+    });
+  });
+};
+var calculateEntry = function(lastRawEntry, rawEntry, callback) {
+  var entry;
+  if (lastRawEntry === 0) {
+    entry = 0;
+  } else {
+    entry = rawEntry - lastRawEntry;
+  }
+  callback(entry);
 };
 
 var convertTemp = function(temp) {

@@ -1,4 +1,3 @@
-// TODO: при генерации html, сначала очистить изменямый объект
 var generateHtml = function(counterNumber, idType) {
   var div;
   var element;
