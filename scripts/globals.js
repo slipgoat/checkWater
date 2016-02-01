@@ -1,13 +1,19 @@
-db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
-
-var countersList = [];
+var db = openDatabase('dbApp', '0.1', 'Data Base', 10 * 1024 * 1024);
 
 var monthsList = [
-    'jan', 'feb',
-    'march', 'apr', 'may',
-    'june', 'jule', 'aug',
-    'sep', 'oct', 'nov',
-    'dec'
+  'jan', 'feb',
+  'march', 'apr', 'may',
+  'june', 'jule', 'aug',
+  'sep', 'oct', 'nov',
+  'dec'
+];
+
+var monthsListFull = [
+  'Январь', 'Февраль',
+  'Март', 'Апрель', 'Май',
+  'Июнь', 'Июль', 'Август',
+  'Сентябрь', 'Октябрь', 'Ноябрь',
+  'Декабрь'
 ];
 
 var addRefreshHtml = document.getElementById('addRefresh');

@@ -53,7 +53,7 @@ var addCounter = function(counterNumber, temp) {
     });
   });
 };
-
+// TODO: доделать удаление из всех таблиц
 var delCounter = function(counterNumber, callback) {
   db.transaction(function(tx) {
     tx.executeSql
@@ -66,13 +66,82 @@ var delCounter = function(counterNumber, callback) {
   showDelResult(counterNumber);
 };
 
-var addEntry = function(year, month, counterNumber, entry) {
+var addRawEntry = function(year, month, counterNumber, rawEntry) {
+  checkRawEntryForMonth(year, month, function() {
+    var lastMonth = month - 1;
+    getCounterObject(counterNumber, function(counterObject) {
+      db.transaction(function(tx) {
+        tx.executeSql
+        ('INSERT INTO RAWENTRIES (id, year, month, counterId, entry) ' +
+        'VALUES (null, ?, ?, ?, ?)',
+        [year, month, counterObject.id, rawEntry], function() {
+          getLastRawEntry(year, lastMonth, counterObject.id,
+          function(lastRawEntry) {
+            calculateEntry(lastRawEntry, rawEntry, function(entry) {
+              showResult(counterObject.counterNumber, counterObject.idRes,
+              entry);
+            },
+            function(entry) {
+              addEntry(year, month, counterObject.id, entry);
+            });
+          });
+        });
+      });
+    });
+  });
+};
+
+var addEntry = function(year, month, counterId, entry) {
   db.transaction(function(tx) {
     tx.executeSql
-    ('INSERT INTO ENTRIES (id, year, month, counter, entry) ' +
+    ('INSERT INTO ENTRIES (id, year, month, counterId, entry) ' +
     'VALUES (null, ?, ?, ?, ?)',
-    [year, month, counterNumber, entry]);
+    [year, month, counterId, entry]);
   });
+};
+
+var checkRawEntryForMonth = function(year, month, callback) {
+  db.transaction(function(tx) {
+    tx.executeSql
+    ('SELECT entry FROM RAWENTRIES WHERE year="' +
+    year + '" AND month="' + month + '"', [], function(tx, results) {
+      var reqRes = results.rows;
+      if (reqRes.length > 0) {
+        var div = document.getElementById('resultView');
+        div.innerHTML = '<h2>Данные за этот месяц уже внесены!</h2>';
+      } else {
+        callback();
+      }
+    });
+  });
+};
+
+var getLastRawEntry = function(year, lastMonth, counterId, callback) {
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT entry FROM RAWENTRIES WHERE year="' +
+    year + '" AND month="' + lastMonth + '" AND counterId="' +
+    counterId + '"', [], function(tx, results) {
+      var reqRes = results.rows;
+      var lastRawEntry;
+      if (reqRes.length === 0) {
+        lastRawEntry = 0;
+      } else {
+        lastRawEntry = reqRes.item(0).entry;
+      }
+      callback(lastRawEntry);
+    });
+  });
+};
+var calculateEntry = function(lastRawEntry, rawEntry,
+callbackShow, callbackAdd) {
+  var entry;
+  if (lastRawEntry === 0) {
+    entry = 0;
+  } else {
+    entry = rawEntry - lastRawEntry;
+  }
+  callbackShow(entry);
+  callbackAdd(entry);
 };
 
 var convertTemp = function(temp) {
@@ -93,15 +162,16 @@ var showResult = function(counterNumber, idRes, entry) {
   counterNumber + ': ' + entry + ' м3';
 };
 
-//TODO вычисление потребления воды (инфо)
-var showInfo = function(month, year) {
+var showInfo = function(month, year, callback) {
+  document.getElementById('h1_info').innerHTML = 'Результат за ' +
+  monthsListFull[month].toLowerCase() + ' месяц';
   db.transaction(function(tx) {
-    tx.executeSql('SELECT counter, entry FROM ENTRIES WHERE month="' +
-    month + '" and year="' + year + '"', [], function(tx, results) {
+    tx.executeSql('SELECT * FROM ENTRIES WHERE month="' +
+    month + '" AND year="' + year + '"', [], function(tx, results) {
       var reqRes = results.rows;
       for (var i = 0; i < reqRes.length; i++) {
         document.getElementById(countersList[i].idInfo)
-        .innerHTML = 'Счетчик ' + reqRes.item(i).counter + ': ' +
+        .innerHTML = 'Счетчик ' + countersList[i].counterNumber + ': ' +
         reqRes.item(i).entry + ' м3';
       }
     });
