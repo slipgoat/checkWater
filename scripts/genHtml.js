@@ -69,6 +69,15 @@ var generateHtml = function(counterNumber, idType) {
         ', ' + convertTemp(counterObject.temp);
         div.appendChild(element);
       });
+      break;
+    case 'idMonth':
+      div = document.getElementById('monthEntry');
+      for (var i = 0; i < getCurrentMonth(); i++) {
+        element = document.createElement('option');
+        element.setAttribute('value', monthsList[i]);
+        element.innerHTML = monthsListFull[i];
+        div.appendChild(element);
+      }
   }
 };
 

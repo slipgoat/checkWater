@@ -10,13 +10,18 @@ var retrieveDelCounter = function() {
   return document.getElementById('selectCounter').value;
 };
 
-var getEntryYear = function() {
-  var y = new Date();
-  return y.getFullYear();
-};
-var getEntryMonth = function() {
+var getCurrentMonth = function() {
   var m = new Date();
   return m.getMonth();
+};
+
+var retrieveEntryMonthValue = function() {
+  var v = document.getElementById('monthEntry').value;
+  if (v === 'none') {
+    return getCurrentMonth();
+  } else {
+    return monthsList.indexOf(v);
+  }
 };
 
 var retrieveEntryValue = function(idValue) {
