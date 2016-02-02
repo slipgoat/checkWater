@@ -11,7 +11,7 @@ var submitValues = function() {
   document.getElementById('resultView').style.display = 'block';
 
   for (var i = 0; i < countersList.length; i++) {
-    addRawEntry(getEntryYear(), 2,
+    addRawEntry(getEntryYear(), getEntryMonth(),
     countersList[i].counterNumber,
     retrieveEntryValue(countersList[i].idValue));
 
@@ -22,12 +22,12 @@ var submitValues = function() {
 var submitParams = function() {
   document.getElementById('info').style.display = 'none';
   document.getElementById('invalidMonth').style.display = 'none';
-//  if (retrieveParamsValue() <= getEntryMonth()) {
+  if (retrieveParamsValue() <= getEntryMonth()) {
     document.getElementById('info').style.display = 'block';
     showInfo(retrieveParamsValue(), 2016);
-  //} else {
-    //document.getElementById('invalidMonth').style.display = 'block';
-    //document.getElementById('errorMsg')
-    //.innerHTML = 'Месяц еще не наступил!';
-  //}
+  } else {
+    document.getElementById('invalidMonth').style.display = 'block';
+    document.getElementById('errorMsg')
+    .innerHTML = 'Месяц еще не наступил!';
+  }
 };
