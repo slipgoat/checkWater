@@ -4,4 +4,5 @@
   getCountersList(function() {
     loadGenHtml();
   });
+  generateHtml('', 'idMonth');
 })();

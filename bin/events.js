@@ -11,7 +11,7 @@ var submitValues = function() {
   document.getElementById('resultView').style.display = 'block';
 
   for (var i = 0; i < countersList.length; i++) {
-    addRawEntry(getEntryYear(), getEntryMonth(),
+    addRawEntry(2016, retrieveEntryMonthValue(),
     countersList[i].counterNumber,
     retrieveEntryValue(countersList[i].idValue));
 
@@ -22,7 +22,7 @@ var submitValues = function() {
 var submitParams = function() {
   document.getElementById('info').style.display = 'none';
   document.getElementById('invalidMonth').style.display = 'none';
-  if (retrieveParamsValue() <= getEntryMonth()) {
+  if (retrieveParamsValue() <= getCurrentMonth()) {
     document.getElementById('info').style.display = 'block';
     showInfo(retrieveParamsValue(), 2016);
   } else {
