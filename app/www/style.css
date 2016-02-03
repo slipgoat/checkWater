@@ -1,13 +1,13 @@
-/*@keyframes pulse {
-    0% { transform: scale(1); left: 0px; }
-    50% { transform: scale(1.05); left: 15px; }
-    100% { transform: scale(1); left: 0px; }
-}*/
-
+@keyframes pulse {
+    0% { transform: scale(0.8, 1) }
+    50% { transform: scale(1, 1.05) }
+    100% { transform: scale(1, 1) }
+}
+#resultView {display: none;}
 #workarea > * {display: none;}
 #workarea > *:target {
   display: block;
-  animation: pulse 0.2s linear 1;
+  animation: pulse 0.3s linear 1;
 }
 #workarea > *:last-child {display: block;}
 #workarea > *:target ~ * {display: none;}
