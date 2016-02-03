@@ -4,19 +4,20 @@
 <meta charset="utf-8">
 <title>Учет воды</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<script src="jquery-2.2.0.min.js"></script>
 </head>
 <body>
-<div id="menu" >
-  <!--<ul>
-    <li><a href='#enterEntryView'>Внести показания</a></li>
-    <li><a href=#infoView>Информаци по месяцам</a></li>
-    <li><a href=#manageView>Управление счетчиками</a></li>
-  </ul>-->
-  <nav>
-    <a href='#enterEntryView'>Внести показания</a> |
-    <a href=#infoView>Информация по месяцам</a> |
-    <a href=#manageView>Управление счетчиками</a> |
-  </nav>
+<div id="topBar">
+  <div id="toggleMenu">
+  <div id="toggleButton"></div>
+  </div>
+  <div id="menu" >
+    <ul>
+      <li><a href='#enterEntryView'>Внести показания</a></li>
+      <li><a href=#infoView>Информаци по месяцам</a></li>
+      <li><a href=#manageView>Управление счетчиками</a></li>
+    </ul>
+  </div>
 </div>
 
 <div id="workarea">
@@ -105,10 +106,7 @@
   </div>
 </div>
 
-<div id="greetView">
-  <p>Начальный экран приложения.<br />
-  Добро пожаловать!</p>
-</div>
+<div id="greetView"></div>
 </div>
 <script src="scripts/globals.js"></script>
 <script src="scripts/get.js"></script>

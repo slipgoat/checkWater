@@ -6,3 +6,9 @@
   });
   generateHtml('', 'idMonth');
 })();
+
+$(document).ready(function() {
+  $('#toggleMenu').click(function() {
+    $('#menu').slideToggle('slow');
+  });
+});

@@ -4,6 +4,9 @@ platforms
 plugins
 config.xml
 
+#jquery
+jquery-2.2.0.min.js
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
