@@ -7,11 +7,16 @@
 </head>
 <body>
 <div id="menu" >
-  <ul>
+  <!--<ul>
     <li><a href='#enterEntryView'>Внести показания</a></li>
     <li><a href=#infoView>Информаци по месяцам</a></li>
     <li><a href=#manageView>Управление счетчиками</a></li>
-  </ul>
+  </ul>-->
+  <nav>
+    <a href='#enterEntryView'>Внести показания</a> |
+    <a href=#infoView>Информация по месяцам</a> |
+    <a href=#manageView>Управление счетчиками</a> |
+  </nav>
 </div>
 
 <div id="workarea">
@@ -20,12 +25,15 @@
   <div id="addNewView">
     <h1>Управление счетчиками</h1>
     <h2>Добавить счетчик</h2>
+    <div id="addNewForm">
     <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
     <select name="temp" id="temp">
       <option value="cold">Хол</option>
       <option value="hot">Гор</option>
     </select></p>
     <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
+    </div>
+    <div id="addNewMsg"></div>
   </div>
   <div id="delView">
     <h2>Удаление счетчика</h2>
@@ -33,34 +41,40 @@
     <p>Номер счетчика:
     <select name="selectCounter" id="selectCounter">
     </select></p>
-    </div>
     <button type="submit" name="submitDelCounter" onclick="submmitDelCounter()">Удалить</button>
+    </div>
+    <div id="delMsg">
+    </div>
   </div>
 </div>
 
 <div id="enterEntryView">
-	<h1>Внести показания</h1>
-	<h2>Холодная вода:</h2>
-  <div id="coldValues"></div>
-	<h2>Горячая вода:</h2>
-  <div id="hotValues"></div>
-  <p>Внести показания за прошлый месяц:
-  <select name="monthEntry" id="monthEntry">
-    <option value="none">Нет</option>
-  </select></p>
-	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
-</div>
-
-<div id="resultView">
-  <h1 id="h1_res">Результат этого месяца</h1>
-	<h2>Холодная вода</h2>
-  <div id="coldRes"></div>
-	<h2>Горячая вода</h2>
-  <div id="hotRes"></div>
+  <div id="addEntry">
+  	<h1>Внести показания</h1>
+  	<h2>Холодная вода:</h2>
+    <div id="coldValues"></div>
+  	<h2>Горячая вода:</h2>
+    <div id="hotValues"></div>
+    <p>Внести показания за прошлый месяц:
+    <select name="monthEntry" id="monthEntry">
+      <option value="none">Нет</option>
+    </select></p>
+  	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
+  </div>
+  <div id="resultView">
+    <div id="resList">
+    <h1 id="h1_res">Результат этого месяца</h1>
+  	<h2>Холодная вода</h2>
+    <div id="coldRes"></div>
+  	<h2>Горячая вода</h2>
+    <div id="hotRes"></div>
+    </div>
+    <button type="submit" name="submitEntry" onclick="anotherEntry()">Внести еще показания</button>
+  </div>
 </div>
 
 <div id="infoView">
-  <h1 id="h1_info"></h1>
+  <h1>Информация по месяцам</h1>
   <div id="params">
     <p>Выбрать месяц</p>
     <select name="months", id="months">
@@ -78,6 +92,7 @@
       <option value="dec">Декабрь</option>
     </select>
     <button type="submit" name="submitParams" onclick="submitParams()">Подтвердить</button>
+    <h2 id="h1_info"></h2>
   </div>
   <div id="invalidMonth">
     <p id="errorMsg"></p>

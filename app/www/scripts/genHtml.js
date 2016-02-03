@@ -9,16 +9,16 @@ var generateHtml = function(counterNumber, idType) {
             div = document.getElementById('coldValues');
             element = document.createElement('p');
             element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
-            ': <input type="text" id="' +
-            counterObject.idValue + '">';
+            ': <input type="number" id="' +
+            counterObject.idValue + '" min="0">';
             div.appendChild(element);
             break;
           case 'hot':
             div = document.getElementById('hotValues');
             element = document.createElement('p');
             element.innerHTML = 'Счетчик ' + counterObject.counterNumber +
-            ': <input type="text" id="' +
-            counterObject.idValue + '">';
+            ': <input type="number" id="' +
+            counterObject.idValue + '" min="0">';
             div.appendChild(element);
             break;
         }

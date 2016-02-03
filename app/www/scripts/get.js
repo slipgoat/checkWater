@@ -1,5 +1,10 @@
 var retrieveNewCounterValue = function() {
-  return document.getElementById('newCounter').value;
+  var v = document.getElementById('newCounter').value;
+  if (!v) {
+    return false;
+  } else {
+    return v;
+  }
 };
 
 var retrieveNewCounterTempValue = function() {
@@ -25,7 +30,12 @@ var retrieveEntryMonthValue = function() {
 };
 
 var retrieveEntryValue = function(idValue) {
-  return document.getElementById(idValue).value;
+  var v = document.getElementById(idValue).value;
+  if (!v) {
+    return false;
+  } else {
+    return v;
+  }
 };
 
 var retrieveParamsValue = function() {

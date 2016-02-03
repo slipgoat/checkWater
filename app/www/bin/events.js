@@ -1,5 +1,6 @@
 var submmitNewCounter = function() {
   addCounter(retrieveNewCounterValue(), retrieveNewCounterTempValue());
+  document.getElementById('newCounter').value = '';
 };
 
 var submmitDelCounter = function() {
@@ -7,15 +8,25 @@ var submmitDelCounter = function() {
 };
 
 var submitValues = function() {
-  document.getElementById('enterEntryView').style.display = 'none';
-  document.getElementById('resultView').style.display = 'block';
+  var v = [];
+  var validate;
+  for (var x = 0; x < countersList.length; x++) {
+    v.push(retrieveEntryValue(countersList[x].idValue));
+    if (v[x] === false) {
+      validate = false;
+      break;
+    }
+  }
+  if (validate === false) {
+    alert('Значение не должно быть пустым!');
+  } else {
+    for (var i = 0; i < countersList.length; i++) {
+      addRawEntry(2016, retrieveEntryMonthValue(),
+      countersList[i].counterNumber,
+      retrieveEntryValue(countersList[i].idValue));
 
-  for (var i = 0; i < countersList.length; i++) {
-    addRawEntry(2016, retrieveEntryMonthValue(),
-    countersList[i].counterNumber,
-    retrieveEntryValue(countersList[i].idValue));
-
-    showResult(countersList[i].counterNumber, countersList[i].idRes);
+      showResult(countersList[i].counterNumber, countersList[i].idRes);
+    }
   }
 };
 
