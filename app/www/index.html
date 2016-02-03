@@ -3,25 +3,29 @@
 <head>
 <meta charset="utf-8">
 <title>Учет воды</title>
-<style>
-	#resultView {display: none;}
-  #info {display: none;}
-  #invalidMonth {display: none;}
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<div id="menu" >
+  <ul>
+    <li><a href='#enterEntryView'>Внести показания</a></li>
+    <li><a href=#infoView>Информаци по месяцам</a></li>
+    <li><a href=#manageView>Управление счетчиками</a></li>
+  </ul>
+</div>
+
 <div id="workarea">
-<!-- TODO: добавить блок меню -->
+
 <div id="manageView">
   <div id="addNewView">
-  <h1>Управление счетчиками</h1>
-  <h2>Добавить счетчик</h2>
-  <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
-  <select name="temp" id="temp">
-    <option value="cold">Хол</option>
-    <option value="hot">Гор</option>
-  </select></p>
-  <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
+    <h1>Управление счетчиками</h1>
+    <h2>Добавить счетчик</h2>
+    <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
+    <select name="temp" id="temp">
+      <option value="cold">Хол</option>
+      <option value="hot">Гор</option>
+    </select></p>
+    <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
   </div>
   <div id="delView">
     <h2>Удаление счетчика</h2>
@@ -37,13 +41,11 @@
 <div id="enterEntryView">
 	<h1>Внести показания</h1>
 	<h2>Холодная вода:</h2>
-  <div id="coldValues">
-  </div>
+  <div id="coldValues"></div>
 	<h2>Горячая вода:</h2>
-  <div id="hotValues">
-  </div>
+  <div id="hotValues"></div>
   <p>Внести показания за прошлый месяц:
-  <select name-"monthEntry" id="monthEntry">
+  <select name="monthEntry" id="monthEntry">
     <option value="none">Нет</option>
   </select></p>
 	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
@@ -52,15 +54,9 @@
 <div id="resultView">
   <h1 id="h1_res">Результат этого месяца</h1>
 	<h2>Холодная вода</h2>
-  <div id="coldRes">
-	<!--<p id="coldRes1"></p>
-	<p id="coldRes2"></p>-->
-  </div>
+  <div id="coldRes"></div>
 	<h2>Горячая вода</h2>
-  <div id="hotRes">
-	<!--<p id="hotRes1"></p>
-	<p id="hotRes2"></p>-->
-  </div>
+  <div id="hotRes"></div>
 </div>
 
 <div id="infoView">
@@ -88,16 +84,15 @@
   </div>
   <div id="info">
   	<h2>Холодная вода</h2>
-    <div id="coldInfo">
-  	<!--<p id="coldInfo1"></p>
-  	<p id="coldInfo2"></p>-->
-    </div>
+    <div id="coldInfo"></div>
   	<h2>Горячая вода</h2>
-    <div id="hotInfo">
-  	<!--<p id="hotInfo1"></p>
-  	<p id="hotInfo2"></p>-->
-    </div>
+    <div id="hotInfo"></div>
   </div>
+</div>
+
+<div id="greetView">
+  <p>Начальный экран приложения.<br />
+  Добро пожаловать!</p>
 </div>
 </div>
 <script src="scripts/globals.js"></script>
