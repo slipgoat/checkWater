@@ -4,110 +4,116 @@
 <meta charset="utf-8">
 <title>Учет воды</title>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script src="jquery-2.2.0.min.js"></script>
 </head>
 <body>
-<div id="topBar">
-  <div id="toggleMenu">
-  <div id="toggleButton"></div>
-  </div>
-  <div id="menu" >
-    <ul>
-      <li><a href='#enterEntryView'>Внести показания</a></li>
-      <li><a href=#infoView>Информаци по месяцам</a></li>
-      <li><a href=#manageView>Управление счетчиками</a></li>
-    </ul>
+
+<ul class="menu">
+  <li><a href="#enterEntryView" class="li_enterEntry">Внести показания</a></li>
+  <li><a href="#infoView" class="li_info">Статистика</a></li>
+  <li><a href="#manageView" class="li_manage">Счетчики</a></li>
+</ul>
+
+<div class="overlay"></div>
+
+
+<div class="top_bar">
+  <div class="headline">Check Tap Water!</div>
+  <div class="toggle_menu_button">
+    <img src="img/ic_menu_white_24dp_1x.png" />
   </div>
 </div>
-
-<div id="workarea">
-
-<div id="manageView">
-  <div id="addNewView">
-    <h1>Управление счетчиками</h1>
-    <h2>Добавить счетчик</h2>
-    <div id="addNewForm">
-    <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
-    <select name="temp" id="temp">
-      <option value="cold">Хол</option>
-      <option value="hot">Гор</option>
-    </select></p>
-    <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
+<div class="container">
+<div class="workarea">
+  <div id="enterEntryView" class="view">
+    <div id="addEntry">
+    	<h4>Внести показания</h4>
+    	<h5>Холодная вода:</h5>
+      <div id="coldValues"></div>
+    	<h5>Горячая вода:</h5>
+      <div id="hotValues"></div>
+      <p>Внести показания за прошлый месяц:
+      <select name="monthEntry" id="monthEntry">
+        <option value="none">Нет</option>
+      </select></p>
+    	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
     </div>
-    <div id="addNewMsg"></div>
-  </div>
-  <div id="delView">
-    <h2>Удаление счетчика</h2>
-    <div id="countersList">
-    <p>Номер счетчика:
-    <select name="selectCounter" id="selectCounter">
-    </select></p>
-    <button type="submit" name="submitDelCounter" onclick="submmitDelCounter()">Удалить</button>
-    </div>
-    <div id="delMsg">
+    <div id="resultView">
+      <div id="resList">
+      <h4 id="h4_res">Результат этого месяца</h4>
+    	<h5>Холодная вода</h5>
+      <div id="coldRes"></div>
+    	<h5>Горячая вода</h5>
+      <div id="hotRes"></div>
+      </div>
+      <button type="submit" name="submitEntry" onclick="anotherEntry()">Внести еще показания</button>
     </div>
   </div>
-</div>
 
-<div id="enterEntryView">
-  <div id="addEntry">
-  	<h1>Внести показания</h1>
-  	<h2>Холодная вода:</h2>
-    <div id="coldValues"></div>
-  	<h2>Горячая вода:</h2>
-    <div id="hotValues"></div>
-    <p>Внести показания за прошлый месяц:
-    <select name="monthEntry" id="monthEntry">
-      <option value="none">Нет</option>
-    </select></p>
-  	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
-  </div>
-  <div id="resultView">
-    <div id="resList">
-    <h1 id="h1_res">Результат этого месяца</h1>
-  	<h2>Холодная вода</h2>
-    <div id="coldRes"></div>
-  	<h2>Горячая вода</h2>
-    <div id="hotRes"></div>
+  <div id="manageView"  class="view">
+    <div id="addNewView">
+      <h4>Управление счетчиками</h4>
+      <h5>Добавить счетчик</h5>
+      <div id="addNewForm">
+      <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
+      <select name="temp" id="temp">
+        <option value="cold">Хол</option>
+        <option value="hot">Гор</option>
+      </select></p>
+      <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
+      </div>
+      <div id="addNewMsg"></div>
     </div>
-    <button type="submit" name="submitEntry" onclick="anotherEntry()">Внести еще показания</button>
+    <div id="delView">
+      <h5>Удаление счетчика</h5>
+      <div id="countersList">
+      <p>Номер счетчика:
+      <select name="selectCounter" id="selectCounter">
+      </select></p>
+      <button type="submit" name="submitDelCounter" onclick="submmitDelCounter()">Удалить</button>
+      </div>
+      <div id="delMsg">
+      </div>
+    </div>
   </div>
-</div>
 
-<div id="infoView">
-  <h1>Информация по месяцам</h1>
-  <div id="params">
-    <p>Выбрать месяц</p>
-    <select name="months", id="months">
-      <option value="jan">Январь</option>
-      <option value="feb">Февраль</option>
-      <option value="march">Март</option>
-      <option value="apr">Апрель</option>
-      <option value="may">Май</option>
-      <option value="june">Июнь</option>
-      <option value="jule">Июль</option>
-      <option value="aug">Август</option>
-      <option value="sep">Сентябрь</option>
-      <option value="oct">Октябрь</option>
-      <option value="nov">Ноябрь</option>
-      <option value="dec">Декабрь</option>
-    </select>
-    <button type="submit" name="submitParams" onclick="submitParams()">Подтвердить</button>
-    <h2 id="h1_info"></h2>
+  <div id="infoView"  class="view">
+    <h4>Информация по месяцам</h4>
+    <div id="params">
+      <p>Выбрать месяц</p>
+      <select name="months", id="months">
+        <option value="jan">Январь</option>
+        <option value="feb">Февраль</option>
+        <option value="march">Март</option>
+        <option value="apr">Апрель</option>
+        <option value="may">Май</option>
+        <option value="june">Июнь</option>
+        <option value="jule">Июль</option>
+        <option value="aug">Август</option>
+        <option value="sep">Сентябрь</option>
+        <option value="oct">Октябрь</option>
+        <option value="nov">Ноябрь</option>
+        <option value="dec">Декабрь</option>
+      </select>
+      <button type="submit" name="submitParams" onclick="submitParams()">Подтвердить</button>
+      <h5 id="h4_info"></h5>
+    </div>
+    <div id="invalidMonth">
+      <p id="errorMsg"></p>
+    </div>
+    <div id="info">
+    	<h5>Холодная вода</h5>
+      <div id="coldInfo"></div>
+    	<h5>Горячая вода</h5>
+      <div id="hotInfo"></div>
+    </div>
   </div>
-  <div id="invalidMonth">
-    <p id="errorMsg"></p>
-  </div>
-  <div id="info">
-  	<h2>Холодная вода</h2>
-    <div id="coldInfo"></div>
-  	<h2>Горячая вода</h2>
-    <div id="hotInfo"></div>
-  </div>
-</div>
 
-<div id="greetView"></div>
+  <div id="greetView"  class="greet_view view">
+    <p>Стартовая страница приложения</p>
+  </div>
 </div>
+</div>
+<script src="jquery-2.2.0.min.js"></script>
 <script src="scripts/globals.js"></script>
 <script src="scripts/get.js"></script>
 <script src="scripts/actions.js"></script>

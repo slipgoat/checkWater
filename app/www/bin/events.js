@@ -1,3 +1,14 @@
+$(document).ready(function() {
+  $('.toggle_menu_button img').click(function() {
+    $('.menu').toggleClass('visible_menu');
+    $('.overlay').fadeToggle();
+  });
+  $('.menu a').click(function() {
+    $('.menu').removeClass('visible_menu');
+    $('.overlay').fadeToggle();
+  });
+});
+
 var submmitNewCounter = function() {
   addCounter(retrieveNewCounterValue(), retrieveNewCounterTempValue());
   document.getElementById('newCounter').value = '';
