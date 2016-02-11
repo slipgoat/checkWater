@@ -16,6 +16,11 @@
 
 <div class="overlay"></div>
 
+<div class="top_bar_min">
+  <div class="toggle_menu_button">
+    <img src="img/ic_menu_white_24dp_1x.png" />
+  </div>
+</div>
 
 <div class="top_bar">
   <div class="headline">Check Tap Water!</div>
@@ -23,6 +28,7 @@
     <img src="img/ic_menu_white_24dp_1x.png" />
   </div>
 </div>
+
 <div class="container">
 <div class="workarea">
   <div id="enterEntryView" class="view">
@@ -36,9 +42,11 @@
       <select name="monthEntry" id="monthEntry">
         <option value="none">Нет</option>
       </select></p>
-    	<button type="submit" name="submitEntry" id="submitEntry">Отправить</button>
+    	<button type="submit" name="submitEntry" id="submitEntry">
+        Отправить
+      </button>
     </div>
-    <div id="resultView">
+    <div id="resultView" class="resultView">
       <div id="resList">
       <h4 id="h4_res">Результат этого месяца</h4>
     	<h5>Холодная вода</h5>
@@ -46,7 +54,9 @@
     	<h5>Горячая вода</h5>
       <div id="hotRes"></div>
       </div>
-      <button type="submit" name="submitAnotherEntry" id="submitAnotherEntry">Внести еще показания</button>
+      <button type="submit" name="submitAnotherEntry" id="submitAnotherEntry">
+        Внести еще показания
+      </button>
     </div>
   </div>
 
@@ -60,7 +70,9 @@
         <option value="cold">Хол</option>
         <option value="hot">Гор</option>
       </select></p>
-      <button type="submit" name="submitNewCounter" id="submitNewCounter">Добавить</button>
+      <button type="submit" name="submitNewCounter" id="submitNewCounter">
+        Добавить
+      </button>
       </div>
       <div id="addNewMsg"></div>
     </div>
@@ -70,7 +82,9 @@
       <p>Номер счетчика:
       <select name="selectCounter" id="selectCounter">
       </select></p>
-      <button type="submit" name="submitDelCounter" id="submitDelCounter">Удалить</button>
+      <button type="submit" name="submitDelCounter" id="submitDelCounter">
+        Удалить
+      </button>
       </div>
       <div id="delMsg">
       </div>
@@ -95,7 +109,9 @@
         <option value="nov">Ноябрь</option>
         <option value="dec">Декабрь</option>
       </select>
-      <button type="submit" name="submitParams" id="submitParams">Подтвердить</button>
+      <button type="submit" name="submitParams" id="submitParams">
+        Подтвердить
+      </button>
       <h5 id="h4_info"></h5>
     </div>
     <div id="invalidMonth">

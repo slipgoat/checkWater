@@ -23,6 +23,19 @@ function(dataBase, counter, entry, foo, html, retrieve, jquery) {
   html.generateHtml('', 'idMonth');
 
   $(document).ready(function() {
+    $(function() {
+      $(window).scroll(function() {
+        var t = 50;
+        if ($(this).scrollTop() >= t) {
+          $('.top_bar').css('display', 'none');
+          $('.top_bar_min').css('display', 'block');
+        } else if ($(this).scrollTop() >= 0) {
+          $('.top_bar').css('display', 'block');
+          $('.top_bar_min').css('display', 'none');
+        }
+      });
+    });
+
     $('.toggle_menu_button img').click(function() {
       $('.menu').toggleClass('visible_menu');
       $('.overlay').fadeToggle();
