@@ -36,11 +36,25 @@ function(dataBase, counter, entry, foo, html, retrieve, jquery) {
       });
     });
 
+    $('.li_enterEntry').click(function() {
+      $('.headline').text('Внести показания');
+    });
+    $('.li_info').click(function() {
+      $('.headline').text('Статистика');
+    });
+    $('.li_manage').click(function() {
+      $('.headline').text('Счетчики');
+    });
+
     $('.toggle_menu_button img').click(function() {
       $('.menu').toggleClass('visible_menu');
       $('.overlay').fadeToggle();
     });
     $('.menu a').click(function() {
+      $('.menu').removeClass('visible_menu');
+      $('.overlay').fadeToggle();
+    });
+    $('.overlay').click(function() {
       $('.menu').removeClass('visible_menu');
       $('.overlay').fadeToggle();
     });
