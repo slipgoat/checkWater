@@ -1,3 +1,26 @@
+define(['./foo'], function(foo) {
+  return {
+    byId: function(id) {
+      var v = document.getElementById(id).value;
+      if (!v) {
+        return false;
+      } else {
+        return v;
+      }
+    },
+
+    entryMonthValue: function() {
+      var v = document.getElementById('monthEntry').value;
+      if (v === 'none') {
+        return foo.getCurrentMonth();
+      } else {
+        return foo.monthsList.indexOf(v);
+      }
+    }
+  };
+});
+
+/*
 var retrieveNewCounterValue = function() {
   var v = document.getElementById('newCounter').value;
   if (!v) {
@@ -41,3 +64,4 @@ var retrieveEntryValue = function(idValue) {
 var retrieveParamsValue = function() {
   return monthsList.indexOf(document.getElementById('months').value);
 };
+*/

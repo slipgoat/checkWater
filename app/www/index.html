@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Учет воды</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<script data-main="index" src="lib/require.js"></script>
 </head>
 <body>
 
@@ -35,7 +36,7 @@
       <select name="monthEntry" id="monthEntry">
         <option value="none">Нет</option>
       </select></p>
-    	<button type="submit" name="submitEntry" onclick="submitValues()">Отправить</button>
+    	<button type="submit" name="submitEntry" id="submitEntry">Отправить</button>
     </div>
     <div id="resultView">
       <div id="resList">
@@ -45,7 +46,7 @@
     	<h5>Горячая вода</h5>
       <div id="hotRes"></div>
       </div>
-      <button type="submit" name="submitEntry" onclick="anotherEntry()">Внести еще показания</button>
+      <button type="submit" name="submitAnotherEntry" id="submitAnotherEntry">Внести еще показания</button>
     </div>
   </div>
 
@@ -59,7 +60,7 @@
         <option value="cold">Хол</option>
         <option value="hot">Гор</option>
       </select></p>
-      <button type="submit" name="submitEntry" onclick="submmitNewCounter()">Добавить</button>
+      <button type="submit" name="submitNewCounter" id="submitNewCounter">Добавить</button>
       </div>
       <div id="addNewMsg"></div>
     </div>
@@ -69,7 +70,7 @@
       <p>Номер счетчика:
       <select name="selectCounter" id="selectCounter">
       </select></p>
-      <button type="submit" name="submitDelCounter" onclick="submmitDelCounter()">Удалить</button>
+      <button type="submit" name="submitDelCounter" id="submitDelCounter">Удалить</button>
       </div>
       <div id="delMsg">
       </div>
@@ -94,7 +95,7 @@
         <option value="nov">Ноябрь</option>
         <option value="dec">Декабрь</option>
       </select>
-      <button type="submit" name="submitParams" onclick="submitParams()">Подтвердить</button>
+      <button type="submit" name="submitParams" id="submitParams">Подтвердить</button>
       <h5 id="h4_info"></h5>
     </div>
     <div id="invalidMonth">
@@ -113,12 +114,5 @@
   </div>
 </div>
 </div>
-<script src="jquery-2.2.0.min.js"></script>
-<script src="scripts/globals.js"></script>
-<script src="scripts/get.js"></script>
-<script src="scripts/actions.js"></script>
-<script src="scripts/genHtml.js"></script>
-<script src="bin/events.js"></script>
-<script src="index.js"></script>
 </body>
 </html>
