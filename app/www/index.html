@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -8,122 +8,173 @@
 </head>
 <body>
 
-<ul class="menu">
-  <li><a href="#enterEntryView" class="li_enterEntry">Внести показания</a></li>
-  <li><a href="#infoView" class="li_info">Статистика</a></li>
-  <li><a href="#manageView" class="li_manage">Счетчики</a></li>
-</ul>
+  <ul class="menu">
+    <li><a href="#add_entry" class="li_enterEntry">Внести показания</a></li>
+    <li><a href="#info_params" class="li_info">Статистика</a></li>
+    <li><a href="#manage_counters" class="li_manage">Счетчики</a></li>
+  </ul>
 
-<div class="overlay"></div>
+  <div class="overlay"></div>
 
-<div class="top_bar_min">
-  <div class="toggle_menu_button">
-    <img src="img/ic_menu_white_24dp_1x.png" />
+  <div class="top_bar_min">
+    <div class="toggle_menu_button">
+      <img src="img/ic_menu_white_24dp_1x.png" />
+    </div>
   </div>
-</div>
 
-<div class="top_bar">
-  <div class="headline">Check Tap Water!</div>
-  <div class="toggle_menu_button">
-    <img src="img/ic_menu_white_24dp_1x.png" />
+  <div class="top_bar">
+    <div class="headline">Check Tap Water!</div>
+    <div class="toggle_menu_button">
+      <img src="img/ic_menu_white_24dp_1x.png" />
+    </div>
   </div>
-</div>
 
 <div class="container">
 <div class="workarea">
-  <div id="enterEntryView" class="view">
-    <div id="addEntry">
-    	<h5>Холодная вода:</h5>
-      <div id="coldValues"></div>
-    	<h5>Горячая вода:</h5>
-      <div id="hotValues"></div>
-      <p>Внести показания за прошлый месяц:
-      <select name="monthEntry" id="monthEntry">
+  <div id="add_entry" class="view">
+    <div class="default">
+      <p>Ой, нет добавленных счетчиков :(<br />
+      <button class="add_counter_popup">Добавить</button></p>
+    </div>
+    <div class="main">
+      <p>Внести показания за прошлый месяц:<br />
+      <select class="months_entry_select">
         <option value="none">Нет</option>
       </select></p>
-    	<button type="submit" name="submitEntry" id="submitEntry">
-        Отправить
-      </button>
-    </div>
-    <div id="resultView" class="resultView">
-      <div id="resList">
-      <h4 id="h4_res">Результат этого месяца</h4>
-    	<h5>Холодная вода</h5>
-      <div id="coldRes"></div>
-    	<h5>Горячая вода</h5>
-      <div id="hotRes"></div>
+      <span>Холодная вода</span>
+      <div class="add_cold_entry">
+        <!--<p>
+          <input type="number" id="" />
+        </p>-->
       </div>
-      <button type="submit" name="submitAnotherEntry" id="submitAnotherEntry">
-        Внести еще показания
-      </button>
+      <span>Горячая вода</span>
+      <div class="add_hot_entry">
+        <!--<p>
+          <input type="number" id="" />
+        </p>-->
+      </div>
+      <button type="submit" class="submit_add_entry">Добавить</button>
     </div>
   </div>
 
-  <div id="manageView"  class="view">
-    <div id="addNewView">
-      <h5>Добавить счетчик</h5>
-      <div id="addNewForm">
-      <p>Номер счетчика: <input type="text" name="newCounter" id="newCounter">
-      <select name="temp" id="temp">
+  <div class="result popup">
+    <div class="default">
+      <p>Default</p>
+    </div>
+    <div class="error_msg">
+      <p>Показания за этот месяц уже внесены!</p>
+    </div>
+    <div class="main">
+      <h4></h4>
+      <span>Холодная вода</span>
+      <div class="result_cold">
+        <!--<p id=""></p>-->
+      </div>
+      <span>Горячая вода</span>
+      <div class="result_hot">
+        <!--<p id=""></p>-->
+      </div>
+    </div>
+  </div>
+
+  <div id="info_params" class="view">
+    <div class="default">
+      <p>Записей нет<br />
+      <a href="#add_entry">Добавить</a></p>
+    </div>
+    <div class="main">
+      <p>Выбрать месяц<br />
+      <select class="months_info_params_select"></select></p>
+      <button class="submit_info_params">Подтвердить</button>
+    </div>
+  </div>
+
+  <div class="info popup">
+    <div class="main">
+      <h4></h4>
+      <span>Холодная вода</span>
+      <div class="info_cold">
+        <!--<p id=""></p>-->
+      </div>
+      <span>Горячая вода</span>
+      <div class="info_hot">
+        <!--<p id=""></p>-->
+      </div>
+    </div>
+  </div>
+
+  <div id="manage_counters" class="view">
+    <div class="default">
+      <p>Ой, нет добавленных счетчиков :(<br />
+      <button class="add_counter_popup">Добавить</button></p>
+    </div>
+    <div class="main">
+      <h4>Список счетчиков</h4>
+      <div class="manage_counters_list">
+        <!--<p></p>-->
+      </div>
+      <p><a href="#" class="add_counter_popup">Добавить новый</a>
+      <a href="#" class="delete_counter_popup">Удалить имеющийся</a></p>
+    </div>
+  </div>
+
+  <div class="add_counter popup">
+    <div class="main">
+      <h4>Добавить счетчик</h4>
+      <table class="add_counter_table">
+        <tbody>
+          <tr>
+            <td><p>Номер счетчика:</p></td>
+            <td><input type="number" id="new_counter_number" min="0" /></td>
+          </tr>
+          <tr>
+            <td><p>Местоположение:</p></td>
+            <td><input type="text" id="new_counter_location" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <select class="add_counter_temp_select">
         <option value="cold">Хол</option>
         <option value="hot">Гор</option>
       </select></p>
-      <button type="submit" name="submitNewCounter" id="submitNewCounter">
-        Добавить
-      </button>
-      </div>
-      <div id="addNewMsg"></div>
+      <button class="submit_add_counter">Добавить</button>
     </div>
-    <div id="delView">
-      <h5>Удаление счетчика</h5>
-      <div id="countersList">
-      <p>Номер счетчика:
-      <select name="selectCounter" id="selectCounter">
-      </select></p>
-      <button type="submit" name="submitDelCounter" id="submitDelCounter">
-        Удалить
-      </button>
+    <div class="add_counter_result">
+      <div class="error_msg">
+        <p>Такой счетчик уже добавлен!</p>
       </div>
-      <div id="delMsg">
+      <div class="add_counter_result_msg">
+        <!--<p></p>-->
       </div>
+      <button class="submit_add_another_counter">Добавить еще</button>
     </div>
   </div>
 
-  <div id="infoView"  class="view">
-    <div id="params">
-      <p>Выбрать месяц</p>
-      <select name="months", id="months">
-        <option value="jan">Январь</option>
-        <option value="feb">Февраль</option>
-        <option value="march">Март</option>
-        <option value="apr">Апрель</option>
-        <option value="may">Май</option>
-        <option value="june">Июнь</option>
-        <option value="jule">Июль</option>
-        <option value="aug">Август</option>
-        <option value="sep">Сентябрь</option>
-        <option value="oct">Октябрь</option>
-        <option value="nov">Ноябрь</option>
-        <option value="dec">Декабрь</option>
-      </select>
-      <button type="submit" name="submitParams" id="submitParams">
-        Подтвердить
-      </button>
-      <h5 id="h4_info"></h5>
+  <div class="delete_counter popup">
+    <div class="main">
+      <h4>Удалить счетчик</h4>
+      <div class="delete_counter_list">
+        <p><select class="delete_counter_select"></select></p>
+        <button class="submit_delete_counter">Удалить</button>
+      </div>
     </div>
-    <div id="invalidMonth">
-      <p id="errorMsg"></p>
-    </div>
-    <div id="info">
-    	<h5>Холодная вода</h5>
-      <div id="coldInfo"></div>
-    	<h5>Горячая вода</h5>
-      <div id="hotInfo"></div>
+    <div class="delete_counter_result">
+      <div class="delete_counter_result_msg">
+        <!--<p></p>-->
+      </div>
+      <button class="submit_delete_another_counter">Удалить еще</button>
     </div>
   </div>
 
-  <div id="greetView"  class="greet_view view">
-    <p>Стартовая страница приложения</p>
+  <div class="greet view">
+    <div class="default">
+      <p>Ой, ни одного счетчика не добавлено :(<br />
+      <button class="add_counter_popup">Добавить</button></p>
+    </div>
+    <div class="main">
+      <p>Рады вас снова видеть!<br />
+      <a href="#add_entry">Внести показания</a></p>
+    </div>
   </div>
 </div>
 </div>
