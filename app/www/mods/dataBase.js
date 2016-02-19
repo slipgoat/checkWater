@@ -4,6 +4,7 @@ define(function() {
 
     init: function(dbName, version, descr, size) {
       this.db = openDatabase(dbName, version, descr, size);
+      return this;
     },
 
     check: function() {
@@ -12,6 +13,7 @@ define(function() {
       } else {
         console.log('WebSql is ready!');
       }
+      return this;
     },
 
     createTables: function(statements) {
@@ -20,6 +22,7 @@ define(function() {
           tx.executeSql(statements[i]);
         }
       });
+      return this;
     },
     insert: function(cols, table, values, insertCallback) {
       var numberCols = [];
@@ -35,6 +38,7 @@ define(function() {
           insertCallback();
         });
       });
+      return this;
     },
     select: function(cols, table, condition, additional, selectCallback) {
       console.log('SELECT ' + cols.join(', ') + ' FROM ' + table + ' ' +
@@ -46,6 +50,7 @@ define(function() {
           selectCallback(tx, results);
         });
       });
+      return this;
     }
   };
 });
