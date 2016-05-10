@@ -1,6 +1,31 @@
 define(['./r', './foo'], function(r, foo) {
   return {
 
+    viewMode: {
+      counters: function(status) {
+        if (status === 0) {
+          r.setCss('.default_counter', 'display', 'block')
+            .setCss('.main_counter', 'display', 'none');
+        } else if (status === 1) {
+          r.setCss('.default_counter', 'display', 'none')
+            .setCss('.main_counter', 'display', 'block');
+        }
+      },
+      entries: function(status) {
+        if (status === 0) {
+          r.setCss('.default_entry', 'display', 'block')
+            .setCss('.main_entry', 'display', 'none');
+        } else if (status === 1) {
+          r.setCss('.default_entry', 'display', 'none')
+            .setCss('.main_entry', 'display', 'block');
+        }
+      },
+      render: function(statusC, statusE) {
+        this.counters(statusC);
+        this.entries(statusE);
+      }
+    },
+
     addEntry: {
       counterNumber: '',
       idValue: '',
@@ -13,6 +38,8 @@ define(['./r', './foo'], function(r, foo) {
         return '<option value="' + monthNum + '">' + monthName + '</option>';
       },
       render: function() {
+        r.setHtml('.add_cold_entry', '')
+         .setHtml('.add_hot_entry', '');
         for (var m = 0; m < foo.getCurrentMonth(); m++) {
           r.addHtml('.months_entry_select',
           this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
@@ -112,6 +139,7 @@ define(['./r', './foo'], function(r, foo) {
               ' (' + foo.convertTemp(this.temp) + ')</p>';
       },
       render: function() {
+        r.setHtml('.manage_counters_list', '');
         for (var i = 0; i < countersList.length; i++) {
           this.counterNumber = countersList[i].counterNumber;
           this.temp = countersList[i].temp;
@@ -153,6 +181,7 @@ define(['./r', './foo'], function(r, foo) {
                 'удален</p>';
       },
       render: function() {
+        r.setHtml('.delete_counter_select', '');
         for (var i = 0; i < countersList.length; i++) {
           this.counterNumber = countersList[i].counterNumber;
           this.temp = countersList[i].temp;

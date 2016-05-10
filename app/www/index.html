@@ -15,6 +15,7 @@
   </ul>
 
   <div class="overlay"></div>
+  <div class="popup_overlay"></div>
 
   <div class="top_bar_min">
     <div class="toggle_menu_button">
@@ -29,14 +30,99 @@
     </div>
   </div>
 
+  <div class="popups">
+    <div class="result popup">
+      <div class="default_entry">
+        <p>Default</p>
+      </div>
+      <div class="error_msg">
+        <p>Показания за этот месяц уже внесены!</p>
+      </div>
+      <div class="main_entry">
+        <h4></h4>
+        <span>Холодная вода</span>
+        <div class="result_cold">
+          <!--<p id=""></p>-->
+        </div>
+        <span>Горячая вода</span>
+        <div class="result_hot">
+          <!--<p id=""></p>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="info popup">
+      <div class="main">
+        <h4></h4>
+        <span>Холодная вода</span>
+        <div class="info_cold">
+          <!--<p id=""></p>-->
+        </div>
+        <span>Горячая вода</span>
+        <div class="info_hot">
+          <!--<p id=""></p>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="add_counter popup">
+      <div class="main">
+        <h4>Добавить счетчик</h4>
+        <table class="add_counter_table">
+          <tbody>
+            <tr>
+              <td><p>Номер счетчика:</p></td>
+              <td><input type="number" id="new_counter_number" min="0" /></td>
+            </tr>
+            <tr>
+              <td><p>Местоположение:</p></td>
+              <td><input type="text" id="new_counter_location" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <select id="add_counter_temp_select">
+          <option value="cold">Хол</option>
+          <option value="hot">Гор</option>
+        </select></p>
+        <button class="submit_add_counter">Добавить</button>
+      </div>
+      <div class="add_counter_result">
+        <div class="error_msg">
+          <p>Такой счетчик уже добавлен!</p>
+        </div>
+        <div class="add_counter_result_msg">
+          <!--<p></p>-->
+        </div>
+        <button class="submit_add_another_counter">Добавить еще</button>
+      </div>
+    </div>
+
+    <div class="delete_counter popup">
+      <div class="main">
+        <h4>Удалить счетчик</h4>
+        <div class="delete_counter_list">
+          <p><select class="delete_counter_select"></select></p>
+          <button class="submit_delete_counter">Удалить</button>
+        </div>
+      </div>
+      <div class="delete_counter_result">
+        <div class="delete_counter_result_msg">
+          <!--<p></p>-->
+        </div>
+        <button class="submit_delete_another_counter">Удалить еще</button>
+      </div>
+    </div>
+  </div>
+
 <div class="container">
 <div class="workarea">
+
   <div id="add_entry" class="view">
-    <div class="default">
+    <div class="default_counter">
       <p>Ой, нет добавленных счетчиков :(<br />
-      <button class="add_counter_popup">Добавить</button></p>
+      <button class="submit_add_counter_popup">Добавить</button></p>
     </div>
-    <div class="main">
+    <div class="main_counter">
       <p>Внести показания за прошлый месяц:<br />
       <select class="months_entry_select">
         <option value="none">Нет</option>
@@ -53,125 +139,43 @@
           <input type="number" id="" />
         </p>-->
       </div>
-      <button type="submit" class="submit_add_entry">Добавить</button>
-    </div>
-  </div>
-
-  <div class="result popup">
-    <div class="default">
-      <p>Default</p>
-    </div>
-    <div class="error_msg">
-      <p>Показания за этот месяц уже внесены!</p>
-    </div>
-    <div class="main">
-      <h4></h4>
-      <span>Холодная вода</span>
-      <div class="result_cold">
-        <!--<p id=""></p>-->
-      </div>
-      <span>Горячая вода</span>
-      <div class="result_hot">
-        <!--<p id=""></p>-->
-      </div>
+      <button class="submit_add_entry">Добавить</button>
     </div>
   </div>
 
   <div id="info_params" class="view">
-    <div class="default">
+    <div class="default_entry">
       <p>Записей нет<br />
       <a href="#add_entry">Добавить</a></p>
     </div>
-    <div class="main">
+    <div class="main_entry">
       <p>Выбрать месяц<br />
       <select class="months_info_params_select"></select></p>
       <button class="submit_info_params">Подтвердить</button>
     </div>
   </div>
 
-  <div class="info popup">
-    <div class="main">
-      <h4></h4>
-      <span>Холодная вода</span>
-      <div class="info_cold">
-        <!--<p id=""></p>-->
-      </div>
-      <span>Горячая вода</span>
-      <div class="info_hot">
-        <!--<p id=""></p>-->
-      </div>
-    </div>
-  </div>
-
   <div id="manage_counters" class="view">
-    <div class="default">
+    <div class="default_counter">
       <p>Ой, нет добавленных счетчиков :(<br />
-      <button class="add_counter_popup">Добавить</button></p>
+      <button class="submit_add_counter_popup">Добавить</button></p>
     </div>
-    <div class="main">
+    <div class="main_counter">
       <h4>Список счетчиков</h4>
       <div class="manage_counters_list">
         <!--<p></p>-->
       </div>
-      <p><a href="#" class="add_counter_popup">Добавить новый</a>
-      <a href="#" class="delete_counter_popup">Удалить имеющийся</a></p>
-    </div>
-  </div>
-
-  <div class="add_counter popup">
-    <div class="main">
-      <h4>Добавить счетчик</h4>
-      <table class="add_counter_table">
-        <tbody>
-          <tr>
-            <td><p>Номер счетчика:</p></td>
-            <td><input type="number" id="new_counter_number" min="0" /></td>
-          </tr>
-          <tr>
-            <td><p>Местоположение:</p></td>
-            <td><input type="text" id="new_counter_location" /></td>
-          </tr>
-        </tbody>
-      </table>
-      <select class="add_counter_temp_select">
-        <option value="cold">Хол</option>
-        <option value="hot">Гор</option>
-      </select></p>
-      <button class="submit_add_counter">Добавить</button>
-    </div>
-    <div class="add_counter_result">
-      <div class="error_msg">
-        <p>Такой счетчик уже добавлен!</p>
-      </div>
-      <div class="add_counter_result_msg">
-        <!--<p></p>-->
-      </div>
-      <button class="submit_add_another_counter">Добавить еще</button>
-    </div>
-  </div>
-
-  <div class="delete_counter popup">
-    <div class="main">
-      <h4>Удалить счетчик</h4>
-      <div class="delete_counter_list">
-        <p><select class="delete_counter_select"></select></p>
-        <button class="submit_delete_counter">Удалить</button>
-      </div>
-    </div>
-    <div class="delete_counter_result">
-      <div class="delete_counter_result_msg">
-        <!--<p></p>-->
-      </div>
-      <button class="submit_delete_another_counter">Удалить еще</button>
+      <p><button class="submit_add_counter_popup">Добавить новый</button>
+      <button class="submit_delete_counter_popup">Удалить имеющийся</button></p>
     </div>
   </div>
 
   <div class="greet view">
-    <div class="default">
+    <div class="default_counter">
       <p>Ой, ни одного счетчика не добавлено :(<br />
-      <button class="add_counter_popup">Добавить</button></p>
+      <button class="submit_add_counter_popup">Добавить</button></p>
     </div>
-    <div class="main">
+    <div class="main_counter">
       <p>Рады вас снова видеть!<br />
       <a href="#add_entry">Внести показания</a></p>
     </div>

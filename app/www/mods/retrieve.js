@@ -1,4 +1,4 @@
-define(['./foo'], function(foo) {
+define(['../lib/jquery', './foo'], function(jquery, foo) {
   return {
     byId: function(id) {
       var v = document.getElementById(id).value;
@@ -10,7 +10,7 @@ define(['./foo'], function(foo) {
     },
 
     entryMonthValue: function() {
-      var v = document.getElementById('monthEntry').value;
+      var v = $('.months_entry_select').val();
       if (v === 'none') {
         return foo.getCurrentMonth();
       } else {

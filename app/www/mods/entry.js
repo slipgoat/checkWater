@@ -1,10 +1,23 @@
 define(['./dataBase', './counter', './foo'], function(dataBase, counter, foo) {
   return {
+    entriesList: [],
+    getEntriesList: function(callback) {
+      var that = this;
+      dataBase.select(['*'], 'ENTRIES', '', '', function(tx, results) {
+        var reqRes = results.rows;
+        console.log(reqRes);
+        for (var i = 0; i < reqRes.length; i++) {
+          that.entriesList.push(reqRes.item(i));
+        }
+        callback();
+      });
+    },
+
     // Adds raw entry into data base.
     // Also calculates difference between last month raw entry and
     // current month raw entry. Adds this entry into data base (addEntry)
     addRawEntry: function(year, month, counterNumber, rawEntry) {
-      debugger;
+      //debugger;
       var that = this;
       this.checkRawEntryForMonth(year, month, function() {
         var lastMonth = month - 1;
@@ -14,8 +27,8 @@ define(['./dataBase', './counter', './foo'], function(dataBase, counter, foo) {
             that.getLastRawEntry(year, lastMonth, counterObject.id,
             function(lastRawEntry) {
               that.calculateEntry(lastRawEntry, rawEntry, function(entry) {
-                that.showResult(counterObject.counterNumber, counterObject.idRes,
-                entry);
+                that.showResult(counterObject.counterNumber,
+                counterObject.idRes, entry);
               },
               function(entry) {
                 that.addEntry(year, month, counterObject.id, entry);
@@ -26,8 +39,8 @@ define(['./dataBase', './counter', './foo'], function(dataBase, counter, foo) {
           document.getElementById('monthEntry').value = 'none';
         });
       });
-      document.getElementById('addEntry').style.display = 'none';
-      document.getElementById('resultView').style.display = 'block';
+      //document.getElementById('addEntry').style.display = 'none';
+      //document.getElementById('resultView').style.display = 'block';
     },
 
     // Adds calculated entry into data base

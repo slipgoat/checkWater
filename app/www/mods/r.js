@@ -43,6 +43,7 @@ define(['../lib/jquery'], function(jquery) {
     setCss: function(target, property, val) {
       //
       $(target).css(property, val);
+      return this;
     },
     setAttr: function(target, attr, val) {
       //
@@ -55,7 +56,7 @@ define(['../lib/jquery'], function(jquery) {
     },
     setHtml: function(target, html) {
       //
-      $(taget).html(html);
+      $(target).html(html);
       return this;
     },
     setVal: function(target, val) {

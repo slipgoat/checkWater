@@ -18,8 +18,8 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
     },
 
     // Adds new counter into data base
-    addCounter: function(counterNumber, temp, htmlCallback) {
-      debugger;
+    addCounter: function(counterNumber, location, temp, htmlCallback) {
+      //debugger;
       if (counterNumber === false) {
         alert('Необходимо ввести номер счетчика!');
       } else {
@@ -49,14 +49,14 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
           }
           dataBase.insert
           (['counterNumber', 'temp', 'idValue', 'idRes', 'idInfo'],
-          'COUNTERS', [counterNumber, temp, idValue, idRes, idInfo], function() {});
+          'COUNTERS', [counterNumber + ', ' + location, temp, idValue, idRes, idInfo], function() {});
           htmlCallback();
           /*html.clearHtml();
           this.getCountersList(function() {
             html.loadGenHtml();
           });*/
         });
-        this.showAddCounterResult(counterNumber, temp);
+        // this.showAddCounterResult(counterNumber, temp);
       }
     },
 

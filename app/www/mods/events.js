@@ -1,4 +1,5 @@
-define(['../lib/jquery'], function(jquery) {
+define(['../lib/jquery', './app', './retrieve', './entry', './counter'],
+function(jquery, app, retrieve, entry, counter) {
   return $(document).ready(function() {
 
     $(window).scroll(function() {
@@ -30,20 +31,26 @@ define(['../lib/jquery'], function(jquery) {
       $('.menu').removeClass('visible_menu');
       $('.overlay').fadeToggle();
     });
+
     $('.overlay').click(function() {
       $('.menu').removeClass('visible_menu');
       $('.overlay').fadeToggle();
     });
 
-    $('#submitNewCounter').click(function() {
-      counter.addCounter(retrieve.byId('newCounter'), retrieve.byId('temp'),
-      function() {
-        html.clearHtml();
+    $('.popup_overlay').click(function() {
+      $('.popups *').removeClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
+    });
+
+    $('.submit_add_counter').click(function() {
+      counter.addCounter(retrieve.byId('new_counter_number'), retrieve.byId('new_counter_location'),
+      retrieve.byId('add_counter_temp_select'), function() {
         counter.getCountersList(function() {
-          html.loadGenHtml();
+          debugger;
+          app.renderHtml();
         });
       });
-      document.getElementById('newCounter').value = '';
+      document.getElementById('new_counter_number').value = '';
     });
 
     $('#submitDelCounter').click(function() {
@@ -51,12 +58,12 @@ define(['../lib/jquery'], function(jquery) {
       function() {
         html.clearHtml();
         counter.getCountersList(function() {
-          html.loadGenHtml();
+          app.renderHtml();
         });
       });
     });
 
-    $('#submitEntry').click(function() {
+    $('.submit_add_entry').click(function() {
       var v = [];
       var validate;
       for (var x = 0; x < countersList.length; x++) {
@@ -69,17 +76,22 @@ define(['../lib/jquery'], function(jquery) {
       if (validate === false) {
         alert('Значение не должно быть пустым!');
       } else {
+        $('.result').addClass('visible_popup');
+        $('.popup_overlay').fadeToggle();
         for (var i = 0; i < countersList.length; i++) {
           entry.addRawEntry(2016, retrieve.entryMonthValue(),
           countersList[i].counterNumber,
           retrieve.byId(countersList[i].idValue));
-          entry.showResult(countersList[i].counterNumber,
-          countersList[i].idRes);
+          //entry.showResult(countersList[i].counterNumber,
+          //countersList[i].idRes);
         }
       }
     });
 
-    $('#submitParams').click(function() {
+    $('.submit_info_params').click(function() {
+      $('.info').addClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
+      /*
       document.getElementById('info').style.display = 'none';
       document.getElementById('invalidMonth').style.display = 'none';
       if (foo.monthsList.indexOf(retrieve.byId('months')) <= foo.getCurrentMonth()) {
@@ -89,20 +101,23 @@ define(['../lib/jquery'], function(jquery) {
         document.getElementById('invalidMonth').style.display = 'block';
         document.getElementById('errorMsg')
         .innerHTML = 'Месяц еще не наступил!';
-      }
+      }*/
     });
 
-    $(document).on('click', '#submitAnotherNewCounter', function() {
-      $('#addNewMsg').css('display', 'none');
-      $('#addNewForm').css('display', 'block');
-      //document.getElementById('addNewMsg').style.display = 'none';
-      //document.getElementById('addNewForm').style.display = 'block';
+    $('.submit_add_counter_popup').click(function() {
+      $('.add_counter').addClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
     });
 
-    $(document).on('click', '#submitAnotherDelCounter', function() {
+    $('.submit_delete_counter_popup').click(function() {
+      $('.delete_counter').addClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
+    });
+
+    $(document).click(function() {
       $('#delMsg').css('display', 'none');
       $('#countersList').css('display', 'block');
-      //document.getElementById('delMsg').style.display = 'none';
+      //document.getEleme1ntById('delMsg').style.display = 'none';
       //document.getElementById('countersList').style.display = 'block';
     });
 
