@@ -126,24 +126,18 @@ function(jquery, app, e, retrieve, entry, counter) {
     $('.submit_add_another_counter').click(function() {
       $('.add_counter_result').css('display', 'none');
       $('.add_counter .main').css('display', 'block');
-      //document.getEleme1ntById('delMsg').style.display = 'none';
-      //document.getElementById('countersList').style.display = 'block';
     });
 
     // Another counter delete button
     $('.submit_delete_another_counter').click(function() {
       $('.delete_counter_result').css('display', 'none');
       $('.delete_counter .main').css('display', 'block');
-      //document.getEleme1ntById('delMsg').style.display = 'none';
-      //document.getElementById('countersList').style.display = 'block';
     });
 
     // Another entry add button
     $(document).on('click', '#submitAnotherEntry', function() {
       $('#resultView').css('display', 'none');
       $('#addEntry').css('display', 'block');
-      //document.getElementById('resultView').style.display = 'none';
-      //document.getElementById('addEntry').style.display = 'block';
     });
   });
 });

@@ -19,7 +19,6 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
 
     // Adds new counter into data base
     addCounter: function(counterNumber, location, temp, htmlCallback) {
-      //debugger;
       if (counterNumber === false) {
         alert('Необходимо ввести номер счетчика!');
       } else {
@@ -72,23 +71,6 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
         var counterObject = results.rows.item(0);
         callback(counterObject);
       });
-    },
-
-    // Shows result for added counter
-    showAddCounterResult: function(counterNumber, temp) {
-      document.getElementById('addNewForm').style.display = 'none';
-      document.getElementById('addNewMsg').style.display = 'block';
-      document.getElementById('addNewMsg').innerHTML = '<p>Счетчик ' +
-      counterNumber + ' (' + foo.convertTemp(temp).toLowerCase() +
-      ') добавлен</p><button type="submit" id="submitAnotherNewCounter">Добавить еще</button>';
-    },
-
-    // Shows result for deleted counter
-    showDelResult: function(counterNumber) {
-      document.getElementById('countersList').style.display = 'none';
-      document.getElementById('delMsg').style.display = 'block';
-      document.getElementById('delMsg').innerHTML = '<p>Счетчик ' + counterNumber +
-      ' удален</p><button type="submit" id="submitAnotherDelCounter">Удалить еще</button>';
     }
   };
 });

@@ -17,7 +17,6 @@ define(['./dataBase', './counter', './foo'], function(dataBase, counter, foo) {
     // Also calculates difference between last month raw entry and
     // current month raw entry. Adds this entry into data base (addEntry)
     addRawEntry: function(year, month, counterNumber, rawEntry) {
-      //debugger;
       var that = this;
       this.checkRawEntryForMonth(year, month, function() {
         var lastMonth = month - 1;
