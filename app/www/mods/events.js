@@ -1,7 +1,8 @@
-define(['../lib/jquery', './app', './retrieve', './entry', './counter'],
-function(jquery, app, retrieve, entry, counter) {
+define(['../lib/jquery', './app', './e', './retrieve', './entry', './counter'],
+function(jquery, app, e, retrieve, entry, counter) {
   return $(document).ready(function() {
 
+    // Minimize top bar while scrolling
     $(window).scroll(function() {
       var t = 50;
       if ($(this).scrollTop() >= t) {
@@ -13,6 +14,7 @@ function(jquery, app, retrieve, entry, counter) {
       }
     });
 
+    // Modify headline
     $('.li_enterEntry').click(function() {
       $('.headline').text('Внести показания');
     });
@@ -23,6 +25,7 @@ function(jquery, app, retrieve, entry, counter) {
       $('.headline').text('Счетчики');
     });
 
+    // Handle menu
     $('.toggle_menu_button img').click(function() {
       $('.menu').toggleClass('visible_menu');
       $('.overlay').fadeToggle();
@@ -32,37 +35,38 @@ function(jquery, app, retrieve, entry, counter) {
       $('.overlay').fadeToggle();
     });
 
+    // Handle menu overlay
     $('.overlay').click(function() {
       $('.menu').removeClass('visible_menu');
       $('.overlay').fadeToggle();
     });
 
+    // Handle popup overlay
     $('.popup_overlay').click(function() {
       $('.popups *').removeClass('visible_popup');
       $('.popup_overlay').fadeToggle();
     });
 
+    // Add new counter button
     $('.submit_add_counter').click(function() {
       counter.addCounter(retrieve.byId('new_counter_number'), retrieve.byId('new_counter_location'),
       retrieve.byId('add_counter_temp_select'), function() {
-        counter.getCountersList(function() {
-          debugger;
-          app.renderHtml();
-        });
+        app.checkStatus();
       });
       document.getElementById('new_counter_number').value = '';
+      document.getElementById('new_counter_location').value = '';
     });
 
-    $('#submitDelCounter').click(function() {
-      counter.delCounter(retrieve.byId('selectCounter'),
+    // Delete counter button
+    $('.submit_delete_counter').click(function() {
+      counter.delCounter(retrieve.byId('delete_counter_select'),
       function() {
-        html.clearHtml();
-        counter.getCountersList(function() {
-          app.renderHtml();
-        });
+        app.checkStatus();
+        e.deleteCounter.renderRes();
       });
     });
 
+    // Add new entry button
     $('.submit_add_entry').click(function() {
       var v = [];
       var validate;
@@ -88,6 +92,7 @@ function(jquery, app, retrieve, entry, counter) {
       }
     });
 
+    // Submit monthly info parameters button
     $('.submit_info_params').click(function() {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
@@ -104,23 +109,27 @@ function(jquery, app, retrieve, entry, counter) {
       }*/
     });
 
+    // Visible add new counter popup
     $('.submit_add_counter_popup').click(function() {
       $('.add_counter').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
     });
 
+    // Visible delete counter popup
     $('.submit_delete_counter_popup').click(function() {
       $('.delete_counter').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
     });
 
-    $(document).click(function() {
-      $('#delMsg').css('display', 'none');
-      $('#countersList').css('display', 'block');
+    // Another counter delete button
+    $('.submit_delete_another_counter').click(function() {
+      $('.delete_counter_result').css('display', 'none');
+      $('.delete_counter .main').css('display', 'block');
       //document.getEleme1ntById('delMsg').style.display = 'none';
       //document.getElementById('countersList').style.display = 'block';
     });
 
+    // Another entry add button
     $(document).on('click', '#submitAnotherEntry', function() {
       $('#resultView').css('display', 'none');
       $('#addEntry').css('display', 'block');

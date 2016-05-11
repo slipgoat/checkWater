@@ -51,12 +51,7 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
           (['counterNumber', 'temp', 'idValue', 'idRes', 'idInfo'],
           'COUNTERS', [counterNumber + ', ' + location, temp, idValue, idRes, idInfo], function() {});
           htmlCallback();
-          /*html.clearHtml();
-          this.getCountersList(function() {
-            html.loadGenHtml();
-          });*/
         });
-        // this.showAddCounterResult(counterNumber, temp);
       }
     },
 
@@ -68,14 +63,9 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
         ('DELETE FROM COUNTERS WHERE counterNumber="' + counterNumber + '"');
       });
       htmlCallback();
-      /*html.clearHtml();
-      this.getCountersList(function() {
-        html.loadGenHtml();
-      });*/
-      this.showDelResult(counterNumber);
     },
 
-    //Gets counter object from table's row in COUNTERS table
+    // Gets counter object from table's row in COUNTERS table
     getCounterObject: function(counterNumber, callback) {
       return dataBase.select(['*'], 'COUNTERS',
       'WHERE counterNumber="' + counterNumber + '"', '', function(tx, results) {

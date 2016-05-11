@@ -177,21 +177,20 @@ define(['./r', './foo'], function(r, foo) {
                   '</option>';
       },
       htmlDelRes: function() {
-        return '<p>Счетчик ' + this.counterNumber + ' (' + this.temp + ')' +
-                'удален</p>';
+        return '<p>Счетчик удален</p>';
       },
       render: function() {
-        r.setHtml('.delete_counter_select', '');
+        r.setHtml('#delete_counter_select', '');
         for (var i = 0; i < countersList.length; i++) {
           this.counterNumber = countersList[i].counterNumber;
           this.temp = countersList[i].temp;
-          r.addHtml('.delete_counter_select', this.htmlDel());
+          r.addHtml('#delete_counter_select', this.htmlDel());
         }
       },
-      renderRes: function(counterNumber, temp) {
-        this.counterNumber = counterNumber;
-        this.temp = temp;
-        r.addHtml('.delete_counter_result_msg', this.htmlDelRes());
+      renderRes: function() {
+        r.setCss('.delete_counter .main', 'display', 'none')
+          .setCss('.delete_counter_result', 'display', 'block')
+          .addHtml('.delete_counter_result_msg', this.htmlDelRes());
       }
     }
   };

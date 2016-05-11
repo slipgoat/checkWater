@@ -26,10 +26,12 @@ body
   display: none;
 }
 
-.main_entry, .default_entry {
+.main_entry, .default_entry
+{
   display: none;
 }
-.error_msg {
+.error_msg, .delete_counter_result, .add_counter_result
+{
   display: none;
 }
 
