@@ -41,7 +41,7 @@ define(['./r', './foo'], function(r, foo) {
         r.setHtml('.add_cold_entry', '')
          .setHtml('.add_hot_entry', '');
         for (var m = 0; m < foo.getCurrentMonth(); m++) {
-          r.addHtml('.months_entry_select',
+          r.addHtml('#months_entry_select',
           this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
         }
         for (var i = 0; i < countersList.length; i++) {
@@ -74,8 +74,8 @@ define(['./r', './foo'], function(r, foo) {
         this.counterNumber = counterNumber;
         this.idRes = idRes;
         this.val = val;
-        this.month = month;
-        r.setText('#result .main h4', this.txtMonth());
+        this.month = foo.monthsListFull[month];
+        r.setText('.result .main h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.result_cold', 'p', 'id', this.idRes)
           .setText('#' + this.idRes, this.txtResult());
@@ -83,6 +83,10 @@ define(['./r', './foo'], function(r, foo) {
           r.addEl('.result_hot', 'p', 'id', this.idRes)
           .setText('#' + this.idRes, this.txtResult());
         }
+      },
+      renderErr: function() {
+        r.setCss('.result .main', 'display', 'none')
+          .setCss('.result .error_msg', 'display', 'block');
       },
       events: {
         click: 'click'

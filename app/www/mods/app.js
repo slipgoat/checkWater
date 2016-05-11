@@ -28,9 +28,9 @@ function(r, e, dataBase, counter, entry) {
         }
         entry.getEntriesList(function() {
           if (entry.entriesList.length !== 0) {
-            that.status.entry = 1;
+            that.status.entries = 1;
           } else if (entry.entriesList.length === 0) {
-            that.status.entry = 0;
+            that.status.entries = 0;
           }
           that.renderHtml();
         });

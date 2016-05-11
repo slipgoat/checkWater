@@ -10,7 +10,7 @@ define(['../lib/jquery', './foo'], function(jquery, foo) {
     },
 
     entryMonthValue: function() {
-      var v = $('.months_entry_select').val();
+      var v = $('#months_entry_select').val();
       if (v === 'none') {
         return foo.getCurrentMonth();
       } else {

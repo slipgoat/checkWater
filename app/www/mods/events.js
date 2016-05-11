@@ -79,16 +79,17 @@ function(jquery, app, e, retrieve, entry, counter) {
         }
       }
       if (validate === false) {
-        alert('Значение не должно быть пустым!');
+        alert('Заполните показания полностью!');
       } else {
         $('.result').addClass('visible_popup');
         $('.popup_overlay').fadeToggle();
         for (var i = 0; i < countersList.length; i++) {
           entry.addRawEntry(2016, retrieve.entryMonthValue(),
           countersList[i].counterNumber,
-          retrieve.byId(countersList[i].idValue));
-          //entry.showResult(countersList[i].counterNumber,
-          //countersList[i].idRes);
+          retrieve.byId(countersList[i].idValue),
+          function() {
+            app.checkStatus();
+          });
         }
       }
     });
