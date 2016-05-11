@@ -52,6 +52,7 @@ function(jquery, app, e, retrieve, entry, counter) {
       counter.addCounter(retrieve.byId('new_counter_number'), retrieve.byId('new_counter_location'),
       retrieve.byId('add_counter_temp_select'), function() {
         app.checkStatus();
+        e.addCounter.render();
       });
       document.getElementById('new_counter_number').value = '';
       document.getElementById('new_counter_location').value = '';
@@ -119,6 +120,14 @@ function(jquery, app, e, retrieve, entry, counter) {
     $('.submit_delete_counter_popup').click(function() {
       $('.delete_counter').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
+    });
+
+    // Another counter add button
+    $('.submit_add_another_counter').click(function() {
+      $('.add_counter_result').css('display', 'none');
+      $('.add_counter .main').css('display', 'block');
+      //document.getEleme1ntById('delMsg').style.display = 'none';
+      //document.getElementById('countersList').style.display = 'block';
     });
 
     // Another counter delete button

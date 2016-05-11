@@ -155,13 +155,12 @@ define(['./r', './foo'], function(r, foo) {
       counterNumber: '',
       temp: '',
       html: function() {
-        return '<p>Счетчик ' + this.counterNumber +
-        ' (' + foo.convertTemp(this.temp) + ') добавлен!</p>';
+        return '<p>Счетчик добавлен!</p>';
       },
-      render: function(counterNumber, temp) {
-        this.counterNumber = counterNumber;
-        this.temp = temp;
-        r.addHtml('.add_counter_result_msg', this.html());
+      render: function() {
+        r.setCss('.add_counter .main', 'display', 'none')
+          .setCss('.add_counter_result', 'display', 'block')
+          .addHtml('.add_counter_result_msg', this.html());
       },
       events: {
         click: 'click'
