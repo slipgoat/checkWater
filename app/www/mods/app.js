@@ -17,9 +17,9 @@ function(r, e, dataBase, counter, entry) {
     checkStatus: function() {
       var that = this;
       counter.getCountersList(function() {
-        if (countersList.length !== 0) {
+        if (counter.countersList.length !== 0) {
           that.status.counters = 1;
-        } else if (countersList.length === 0) {
+        } else if (counter.countersList.length === 0) {
           that.status.counters = 0;
         }
         entry.getEntriesList(function() {

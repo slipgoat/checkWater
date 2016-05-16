@@ -1,17 +1,17 @@
 // Module for counters and actions with them
 define(['./dataBase', './foo'], function(dataBase, foo) {
   return {
-    //countersList: null,
+    countersList: [],
 
     // Sets counters list
     getCountersList: function(callback) {
-      countersList = [];
+      var that = this;
       dataBase.select(['*'], 'COUNTERS', '', '', function(tx, results) {
-        //this.countersList = [];
+        that.countersList = [];
         var reqRes = results.rows;
         console.log(reqRes);
         for (var i = 0; i < reqRes.length; i++) {
-          countersList.push(reqRes.item(i));
+          that.countersList.push(reqRes.item(i));
         }
         callback();
       });

@@ -5,6 +5,7 @@ define(['./dataBase', './e', './counter', './foo'],
     getEntriesList: function(callback) {
       var that = this;
       dataBase.select(['*'], 'ENTRIES', '', '', function(tx, results) {
+        that.entriesList = [];
         var reqRes = results.rows;
         console.log(reqRes);
         for (var i = 0; i < reqRes.length; i++) {
@@ -101,8 +102,8 @@ define(['./dataBase', './e', './counter', './foo'],
           e.info.renderErr(month);
         } else {
           for (var i = 0; i < reqRes.length; i++) {
-            e.info.render(countersList[i].counterNumber,
-            countersList[i].temp, countersList[i].idInfo, reqRes.item(i).entry,
+            e.info.render(counter.countersList[i].counterNumber,
+            counter.countersList[i].temp, counter.countersList[i].idInfo, reqRes.item(i).entry,
             reqRes.item(i).rawEntry, month);
           }
         }

@@ -1,4 +1,4 @@
-define(['./r', './foo'], function(r, foo) {
+define(['./r', './foo', './counter'], function(r, foo, counter) {
   return {
 
     viewMode: {
@@ -39,17 +39,18 @@ define(['./r', './foo'], function(r, foo) {
       },
       render: function() {
         r.setHtml('.add_cold_entry', '')
-         .setHtml('.add_hot_entry', '');
+         .setHtml('.add_hot_entry', '')
+            .setHtml('#months_entry_select', '<option value="none">Нет</option>');
         for (var m = 0; m < foo.getCurrentMonth(); m++) {
           r.addHtml('#months_entry_select',
           this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
         }
-        for (var i = 0; i < countersList.length; i++) {
-          this.counterNumber = countersList[i].counterNumber;
-          this.idValue = countersList[i].idValue;
-          if (countersList[i].temp === 'cold') {
+        for (var i = 0; i < counter.countersList.length; i++) {
+          this.counterNumber = counter.countersList[i].counterNumber;
+          this.idValue = counter.countersList[i].idValue;
+          if (counter.countersList[i].temp === 'cold') {
             r.addHtml('.add_cold_entry', this.htmlInput());
-          } else if (countersList[i].temp === 'hot') {
+          } else if (counter.countersList[i].temp === 'hot') {
             r.addHtml('.add_hot_entry', this.htmlInput());
           }
         }
@@ -100,6 +101,7 @@ define(['./r', './foo'], function(r, foo) {
         return '<option value="' + monthNum + '">' + monthName + '</option>';
       },
       render: function() {
+        r.setHtml('#months_info_params_select', '');
         for (var m = 0; m <= foo.getCurrentMonth(); m++) {
           r.addHtml('#months_info_params_select',
           this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
@@ -157,9 +159,9 @@ define(['./r', './foo'], function(r, foo) {
       },
       render: function() {
         r.setHtml('.manage_counters_list', '');
-        for (var i = 0; i < countersList.length; i++) {
-          this.counterNumber = countersList[i].counterNumber;
-          this.temp = countersList[i].temp;
+        for (var i = 0; i < counter.countersList.length; i++) {
+          this.counterNumber = counter.countersList[i].counterNumber;
+          this.temp = counter.countersList[i].temp;
           r.addHtml('.manage_counters_list', this.html());
         }
       },
@@ -197,9 +199,9 @@ define(['./r', './foo'], function(r, foo) {
       },
       render: function() {
         r.setHtml('#delete_counter_select', '');
-        for (var i = 0; i < countersList.length; i++) {
-          this.counterNumber = countersList[i].counterNumber;
-          this.temp = countersList[i].temp;
+        for (var i = 0; i < counter.countersList.length; i++) {
+          this.counterNumber = counter.countersList[i].counterNumber;
+          this.temp = counter.countersList[i].temp;
           r.addHtml('#delete_counter_select', this.htmlDel());
         }
       },

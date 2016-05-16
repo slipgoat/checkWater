@@ -68,12 +68,11 @@ function(jquery, app, e, retrieve, entry, counter) {
     });
 
     // Add new entry button
-    // TODO: после добавления дублируется рендер html
     $('.submit_add_entry').click(function() {
       var v = [];
       var validate;
-      for (var x = 0; x < countersList.length; x++) {
-        v.push(retrieve.byId(countersList[x].idValue));
+      for (var x = 0; x < counter.countersList.length; x++) {
+        v.push(retrieve.byId(counter.countersList[x].idValue));
         if (v[x] === false) {
           validate = false;
           break;
@@ -84,14 +83,12 @@ function(jquery, app, e, retrieve, entry, counter) {
       } else {
         $('.result').addClass('visible_popup');
         $('.popup_overlay').fadeToggle();
-        for (var i = 0; i < countersList.length; i++) {
+        for (var i = 0; i < counter.countersList.length; i++) {
           entry.addEntry(2016, retrieve.entryMonthValue(),
-          countersList[i].counterNumber,
-          retrieve.byId(countersList[i].idValue),
-          function() {
-            app.checkStatus();
-          });
+          counter.countersList[i].counterNumber,
+          retrieve.byId(counter.countersList[i].idValue), function() {app.checkStatus();});
         }
+
       }
     });
 
