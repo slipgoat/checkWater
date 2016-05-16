@@ -68,6 +68,7 @@ function(jquery, app, e, retrieve, entry, counter) {
     });
 
     // Add new entry button
+    // TODO: после добавления дублируется рендер html
     $('.submit_add_entry').click(function() {
       var v = [];
       var validate;
@@ -84,7 +85,7 @@ function(jquery, app, e, retrieve, entry, counter) {
         $('.result').addClass('visible_popup');
         $('.popup_overlay').fadeToggle();
         for (var i = 0; i < countersList.length; i++) {
-          entry.addRawEntry(2016, retrieve.entryMonthValue(),
+          entry.addEntry(2016, retrieve.entryMonthValue(),
           countersList[i].counterNumber,
           retrieve.byId(countersList[i].idValue),
           function() {
@@ -98,6 +99,7 @@ function(jquery, app, e, retrieve, entry, counter) {
     $('.submit_info_params').click(function() {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
+      entry.showInfo(retrieve.byId('months_info_params_select'), 2016);
       /*
       document.getElementById('info').style.display = 'none';
       document.getElementById('invalidMonth').style.display = 'none';

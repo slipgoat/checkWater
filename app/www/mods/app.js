@@ -4,13 +4,9 @@ function(r, e, dataBase, counter, entry) {
     'CREATE TABLE IF NOT EXISTS COUNTERS ' +
     '(id INTEGER PRIMARY KEY AUTOINCREMENT, counterNumber TEXT, temp TEXT, ' +
     'idValue TEXT, idRes TEXT, idInfo TEXT)',
-    'CREATE TABLE IF NOT EXISTS RAWENTRIES ' +
-    '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
-    'counterId INTEGER, entry INTEGER, ' +
-    'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))',
     'CREATE TABLE IF NOT EXISTS ENTRIES ' +
     '(id INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, month INTEGER, ' +
-    'counterId INTEGER, entry INTEGER, ' +
+    'counterId INTEGER, entry INTEGER, rawEntry INTEGER, ' +
     'FOREIGN KEY (counterId) REFERENCES COUNTERS(id))'
   ];
   return {

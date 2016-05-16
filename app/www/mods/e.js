@@ -75,7 +75,9 @@ define(['./r', './foo'], function(r, foo) {
         this.idRes = idRes;
         this.val = val;
         this.month = foo.monthsListFull[month];
-        r.setText('.result .main h4', this.txtMonth());
+        r.setCss('.result .main', 'display', 'block')
+        .setCss('.result .error_msg', 'display', 'none')
+        .setText('.result .main h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.result_cold', 'p', 'id', this.idRes)
           .setText('#' + this.idRes, this.txtResult());
@@ -86,7 +88,7 @@ define(['./r', './foo'], function(r, foo) {
       },
       renderErr: function() {
         r.setCss('.result .main', 'display', 'none')
-          .setCss('.result .error_msg', 'display', 'block');
+        .setCss('.result .error_msg', 'display', 'block');
       },
       events: {
         click: 'click'
@@ -99,7 +101,7 @@ define(['./r', './foo'], function(r, foo) {
       },
       render: function() {
         for (var m = 0; m <= foo.getCurrentMonth(); m++) {
-          r.addHtml('.months_info_params_select',
+          r.addHtml('#months_info_params_select',
           this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
         }
       },
@@ -112,19 +114,24 @@ define(['./r', './foo'], function(r, foo) {
       counterNumber: '',
       idInfo: '',
       val: 0,
+      rawVal: 0,
       month: '',
       txtInfo: function() {
-        return 'Счетчик ' + this.counterNumber + ': ' + this.val + ' м3';
+        return 'Счетчик ' + this.counterNumber + ': ' + this.val +
+              ' (' + this.rawVal +')' + ' м3';
       },
       txtMonth: function() {
-        return 'Информация за ' + this.month.toLowerCase() + ' месяц';
+        return 'Информация за ' + foo.monthsListFull[this.month].toLowerCase() + ' месяц';
       },
-      render: function(counterNumber, temp, idInfo, val, month) {
+      render: function(counterNumber, temp, idInfo, val, rawVal, month) {
         this.counterNumber = counterNumber;
         this.idInfo = idInfo;
         this.val = val;
+        this.rawVal = rawVal;
         this.month = month;
-        r.setText('#info .main h4', this.txtMonth());
+        r.setCss('.info .main', 'display', 'block')
+        .setCss('.info .error_msg', 'display', 'none')
+        .setText('.info h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.info_cold', 'p', 'id', this.idInfo)
           .setText('#' + this.idInfo, this.txtInfo());
@@ -132,6 +139,12 @@ define(['./r', './foo'], function(r, foo) {
           r.addEl('.info_hot', 'p', 'id', this.idInfo)
           .setText('#' + this.idInfo, this.txtInfo());
         }
+      },
+      renderErr: function(month) {
+        this.month = month;
+        r.setCss('.info .main', 'display', 'none')
+        .setCss('.info .error_msg', 'display', 'block')
+        .setText('.info h4', this.txtMonth());
       }
     },
 
