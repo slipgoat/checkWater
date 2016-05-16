@@ -35,8 +35,8 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
           } else {
             tempAmount = reqRes.item(i - 1).id;
           }
-          tempNumber = tempAmount + 1;
-          tempNumberTxt = tempNumber.toString();
+          var tempNumber = tempAmount + 1;
+          var tempNumberTxt = tempNumber.toString();
           if (temp === 'cold') {
             idValue = 'coldValue' + tempNumberTxt;
             idRes = 'coldRes' + tempNumberTxt;
