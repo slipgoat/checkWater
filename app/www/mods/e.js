@@ -179,7 +179,7 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
       render: function() {
         r.setCss('.add_counter .main', 'display', 'none')
           .setCss('.add_counter_result', 'display', 'block')
-          .addHtml('.add_counter_result_msg', this.html());
+          .setHtml('.add_counter_result_msg', this.html());
       },
       events: {
         click: 'click'
