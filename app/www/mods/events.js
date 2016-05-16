@@ -100,17 +100,6 @@ function(jquery, app, e, retrieve, entry, counter) {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
       entry.showInfo(retrieve.byId('months_info_params_select'), 2016);
-      /*
-      document.getElementById('info').style.display = 'none';
-      document.getElementById('invalidMonth').style.display = 'none';
-      if (foo.monthsList.indexOf(retrieve.byId('months')) <= foo.getCurrentMonth()) {
-        document.getElementById('info').style.display = 'block';
-        entry.showInfo(foo.monthsList.indexOf(retrieve.byId('months')), 2016);
-      } else {
-        document.getElementById('invalidMonth').style.display = 'block';
-        document.getElementById('errorMsg')
-        .innerHTML = 'Месяц еще не наступил!';
-      }*/
     });
 
     // Visible add new counter popup
