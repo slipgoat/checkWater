@@ -27,7 +27,7 @@ define(['./dataBase', './e', './counter', './foo'],
             function(lastRawEntry) {
               that.calculateEntry(lastRawEntry, rawEntry, function(entry) {
                 e.result.render(counterNumber, counterObject.temp,
-                counterObject.id, entry, month);
+                counterObject.id, entry, rawEntry, month);
               },
               function(entry) {
                 that.insertEntry(year, month, counterObject.id, entry, rawEntry,

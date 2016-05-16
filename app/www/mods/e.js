@@ -64,17 +64,19 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
       counterNumber: '',
       idRes: '',
       val: 0,
+      rawVal: 0,
       month: '',
       txtResult: function() {
-        return 'Счетчик ' + this.counterNumber + ': ' + this.val + ' м3';
+        return 'Счетчик ' + this.counterNumber + ': ' + this.val + ' (' + this.rawVal + ') м3';
       },
       txtMonth: function() {
         return 'Результат за ' + this.month.toLowerCase() + ' месяц';
       },
-      render: function(counterNumber, temp, idRes, val, month) {
+      render: function(counterNumber, temp, idRes, val, rawVal, month) {
         this.counterNumber = counterNumber;
         this.idRes = idRes;
         this.val = val;
+        this.rawVal = rawVal;;
         this.month = foo.monthsListFull[month];
         r.setCss('.result .main', 'display', 'block')
         .setCss('.result .error_msg', 'display', 'none')
