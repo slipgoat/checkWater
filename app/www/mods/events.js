@@ -15,11 +15,11 @@ function(jquery, app, e, retrieve, entry, counter) {
     });
 
     // Modify headline
-    $('.li_enterEntry').click(function() {
+    $('.li_enterEntry, .a_enterEntry').click(function() {
       $('.headline').text('Внести показания');
     });
     $('.li_info').click(function() {
-      $('.headline').text('Статистика');
+      $('.headline').text('История показаний');
     });
     $('.li_manage').click(function() {
       $('.headline').text('Счетчики');
