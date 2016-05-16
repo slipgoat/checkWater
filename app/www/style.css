@@ -1,0 +1,249 @@
+@font-face
+{
+  font-family: roboto_lite;
+  src: url('font/Roboto-Light.woff');
+}
+
+@font-face
+{
+  font-family: roboto_medium;
+  src: url('font/Roboto-Medium.woff');
+}
+
+html
+{
+  color: rgb(50, 50, 50);
+  font-size: 16px;
+  font-family: roboto_lite, sans-serif, serif;
+}
+body
+{
+    background-color: #e3f2fd;
+}
+
+.main_counter, .default_counter
+{
+  display: none;
+}
+
+.main_entry, .default_entry
+{
+  display: none;
+}
+.error_msg, .delete_counter_result, .add_counter_result
+{
+  display: none;
+}
+
+.container
+{
+    z-index: 0;
+}
+/*** Overlay layer ***/
+.overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .5;
+}
+.popup_overlay
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: .3;
+}
+
+/*** Menu ***/
+.menu
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    height: 100%;
+}
+.menu
+{
+    position: fixed;
+    left: -70%;
+    margin: 0;
+    padding: 0;
+    width: 70%;
+    background-color: #FAFAFA;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+    list-style: none;
+    transition: left 0.3s ease-out;
+}
+.visible_menu
+{
+  left: 0;
+  transition: left 0.3s ease-out;
+}
+.menu li
+{
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.menu li:first-child
+{
+  display: block;
+  border-top: 1px solid #ccc;
+}
+.menu li a
+{
+    display: block;
+    margin-left: 25px;
+    padding-left: 50px;
+    color: rgb(50, 50, 50);
+    text-decoration: none;
+}
+.menu li:active
+{
+  background: #BBDEFB;
+}
+.li_enterEntry
+{
+  background-image: url("img/ic_create_black_24dp_1x.png");
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.li_info
+{
+  background-image: url("img/ic_timeline_black_24dp_1x.png");
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.li_manage
+{
+    background: url("img/ic_opacity_black_24dp_1x.png") no-repeat left;
+}
+ /*** Top bar ***/
+.top_bar
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    height: 75px;
+    background-color: #2196f3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+    line-height: 75px;
+}
+.top_bar_min
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: none;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #2196f3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+    line-height: 30px;
+}
+.toggle_menu_button
+{
+    position: absolute;
+    right: 20px;
+    display: inline-block;
+}
+.toggle_menu_button img
+{
+    vertical-align: middle;
+    cursor: pointer;
+}
+.headline
+{
+    position: absolute;
+    left: 20px;
+    display: inline-block;
+    color: #fff;
+    font-size: 1.6rem;
+}
+ /*** Work Area **/
+.workarea
+{
+    position: relative;
+    top: 75px;
+    display: block;
+    margin: auto;
+    padding: 1rem;
+}
+.workarea > div.view {
+  display: none;
+}
+.workarea > div:last-child {
+  display: block;
+}
+.workarea > div:target {
+  display: block;
+  animation: switch 0.5s linear;
+}
+.workarea > div:target ~ div.view {
+  display: none;
+}
+
+/*** Views ***/
+.view
+{
+  margin: auto;
+  padding: 10px;
+  background-color: #FFF;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2), 0 3px 10px 0 rgba(0, 0, 0, .19);
+  text-align: center;
+}
+
+/*** PopUps ***/
+.popups
+{
+    position: absolute;
+    top: 75px;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1rem;
+}
+.popup
+{
+  display: none;
+  margin: auto;
+  padding: 10px;
+  max-width: 80%;
+  background-color: #FFF;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2), 0 3px 10px 0 rgba(0, 0, 0, .19);
+  text-align: center;
+}
+.visible_popup {
+  display: block;
+  animation: switch 0.5s linear;
+}
+
+/*** Animation ***/
+@keyframes switch
+{
+  0% {opacity: 0;}
+  50% {opacity: 0.5;}
+  100% {opacity: 1;}
+}
