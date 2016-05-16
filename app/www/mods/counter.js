@@ -1,25 +1,24 @@
 // Module for counters and actions with them
 define(['./dataBase', './foo'], function(dataBase, foo) {
   return {
-    //countersList: null,
+    countersList: [],
 
     // Sets counters list
     getCountersList: function(callback) {
-      countersList = [];
+      var that = this;
       dataBase.select(['*'], 'COUNTERS', '', '', function(tx, results) {
-        //this.countersList = [];
+        that.countersList = [];
         var reqRes = results.rows;
         console.log(reqRes);
         for (var i = 0; i < reqRes.length; i++) {
-          countersList.push(reqRes.item(i));
+          that.countersList.push(reqRes.item(i));
         }
         callback();
       });
     },
 
     // Adds new counter into data base
-    addCounter: function(counterNumber, temp, htmlCallback) {
-      debugger;
+    addCounter: function(counterNumber, location, temp, htmlCallback) {
       if (counterNumber === false) {
         alert('Необходимо ввести номер счетчика!');
       } else {
@@ -49,14 +48,9 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
           }
           dataBase.insert
           (['counterNumber', 'temp', 'idValue', 'idRes', 'idInfo'],
-          'COUNTERS', [counterNumber, temp, idValue, idRes, idInfo], function() {});
+          'COUNTERS', [counterNumber + ', ' + location, temp, idValue, idRes, idInfo], function() {});
           htmlCallback();
-          /*html.clearHtml();
-          this.getCountersList(function() {
-            html.loadGenHtml();
-          });*/
         });
-        this.showAddCounterResult(counterNumber, temp);
       }
     },
 
@@ -68,37 +62,15 @@ define(['./dataBase', './foo'], function(dataBase, foo) {
         ('DELETE FROM COUNTERS WHERE counterNumber="' + counterNumber + '"');
       });
       htmlCallback();
-      /*html.clearHtml();
-      this.getCountersList(function() {
-        html.loadGenHtml();
-      });*/
-      this.showDelResult(counterNumber);
     },
 
-    //Gets counter object from table's row in COUNTERS table
+    // Gets counter object from table's row in COUNTERS table
     getCounterObject: function(counterNumber, callback) {
       return dataBase.select(['*'], 'COUNTERS',
       'WHERE counterNumber="' + counterNumber + '"', '', function(tx, results) {
         var counterObject = results.rows.item(0);
         callback(counterObject);
       });
-    },
-
-    // Shows result for added counter
-    showAddCounterResult: function(counterNumber, temp) {
-      document.getElementById('addNewForm').style.display = 'none';
-      document.getElementById('addNewMsg').style.display = 'block';
-      document.getElementById('addNewMsg').innerHTML = '<p>Счетчик ' +
-      counterNumber + ' (' + foo.convertTemp(temp).toLowerCase() +
-      ') добавлен</p><button type="submit" id="submitAnotherNewCounter">Добавить еще</button>';
-    },
-
-    // Shows result for deleted counter
-    showDelResult: function(counterNumber) {
-      document.getElementById('countersList').style.display = 'none';
-      document.getElementById('delMsg').style.display = 'block';
-      document.getElementById('delMsg').innerHTML = '<p>Счетчик ' + counterNumber +
-      ' удален</p><button type="submit" id="submitAnotherDelCounter">Удалить еще</button>';
     }
   };
 });
