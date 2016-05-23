@@ -15,6 +15,11 @@ define(['./dataBase', './e', './counter', './foo'],
       });
     },
 
+    // Deletes entry
+    deleteEntry: function(year, month, callback) {
+      //
+    },
+
     // Adds raw entry into data base.
     // Also calculates difference between last month raw entry and
     // current month raw entry. Adds this entry into data base (addEntry)
@@ -95,19 +100,19 @@ define(['./dataBase', './e', './counter', './foo'],
     // Shows information for specific month
     showInfo: function(month, year) {
       month = foo.monthsList.indexOf(month);
-      dataBase.select(['*'], 'ENTRIES', 'WHERE month="' + month +
-      '" AND year="' + year + '"', '', function(tx, results) {
-        var reqRes = results.rows;
-        if (reqRes.length === 0) {
-          e.info.renderErr(month);
-        } else {
-          for (var i = 0; i < reqRes.length; i++) {
-            e.info.render(counter.countersList[i].counterNumber,
-            counter.countersList[i].temp, counter.countersList[i].idInfo, reqRes.item(i).entry,
-            reqRes.item(i).rawEntry, month);
-          }
+      var that = this;
+      var entriesByYear = foo.getObjectsFromArrayByProperty(that.entriesList, 'year', 2016);
+      var entriesByMonth = foo.getObjectsFromArrayByProperty(entriesByYear, 'month', month);
+
+      if (entriesByMonth.length === 0) {
+        e.info.renderErr(month);
+      } else {
+        for (var i = 0, len = entriesByMonth.length; i < len; i++) {
+            var currentCounter = foo.getObjectsFromArrayByProperty(counter.countersList, 'id', entriesByMonth[i].counterId);
+            e.info.render(currentCounter[0].counterNumber, currentCounter[0].temp, currentCounter[0].idInfo,
+            entriesByMonth[i].entry, entriesByMonth[i].rawEntry, month);
         }
-      });
+      }
     }
   };
 });

@@ -27,6 +27,16 @@ define(function() {
       } else if (temp === 'hot') {
         return 'Гор';
       }
+    },
+
+    getObjectsFromArrayByProperty: function(array, property, value) {
+      var len = array.length;
+      var newArray = [];
+
+      for (var i = 0; i < len; i++) {
+        if (array[i][property] === value) newArray.push(array[i]);
+      }
+      return newArray;
     }
   };
 });
