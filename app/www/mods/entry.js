@@ -2,6 +2,12 @@ define(['./dataBase', './e', './counter', './foo'],
   function(dataBase, e, counter, foo) {
   return {
     entriesList: [],
+
+    entriesByMonth: function(year, month) {
+      var entriesByYear =  foo.getObjectsFromArrayByProperty(this.entriesList, 'year', year);
+      return foo.getObjectsFromArrayByProperty(entriesByYear, 'month', month);
+    },
+
     getEntriesList: function(callback) {
       var that = this;
       dataBase.select(['*'], 'ENTRIES', '', '', function(tx, results) {
@@ -56,31 +62,27 @@ define(['./dataBase', './e', './counter', './foo'],
 
     // Checks last month value in data base
     checkRawEntryForMonth: function(year, month, callback) {
-      dataBase.select(['entry'], 'ENTRIES', 'WHERE year="' +
-      year + '" AND month="' + month + '"', '', function(tx, results) {
-        var reqRes = results.rows;
-        if (reqRes.length > 0) {
-          e.result.renderErr();
-        } else {
-          callback();
-        }
-      });
+      var entriesByMonth = this.entriesByMonth(year, month);
+      if (entriesByMonth.length > 0) {
+        e.result.renderErr();
+      } else {
+        callback();
+      }
     },
 
     // Gets last raw entry from data base
     getLastRawEntry: function(year, lastMonth, counterId, callback) {
-      dataBase.select(['rawEntry'], 'ENTRIES', 'WHERE year="' +
-      year + '" AND month="' + lastMonth + '" AND counterId="' +
-      counterId + '"', '', function(tx, results) {
-        var reqRes = results.rows;
-        var lastRawEntry;
-        if (reqRes.length === 0) {
-          lastRawEntry = 0;
-        } else {
-          lastRawEntry = reqRes.item(0).rawEntry;
+      var entriesByMonth = this.entriesByMonth(year, lastMonth);
+      var len = entriesByMonth.length;
+      var lastRawEntry = 0;
+      if (len !== 0) {
+        for (var i = 0; i < len; i++) {
+          if (entriesByMonth[i].year === year && entriesByMonth[i].month === lastMonth && entriesByMonth[i].counterId === counterId) {
+            lastRawEntry = entriesByMonth[i].rawEntry;
+          }
         }
-        callback(lastRawEntry);
-      });
+      }
+      callback(lastRawEntry);
     },
 
     // Also calculates difference between last month raw entry and current
@@ -100,9 +102,7 @@ define(['./dataBase', './e', './counter', './foo'],
     // Shows information for specific month
     showInfo: function(month, year) {
       month = foo.monthsList.indexOf(month);
-      var that = this;
-      var entriesByYear = foo.getObjectsFromArrayByProperty(that.entriesList, 'year', 2016);
-      var entriesByMonth = foo.getObjectsFromArrayByProperty(entriesByYear, 'month', month);
+      var entriesByMonth = this.entriesByMonth(year, month);
 
       if (entriesByMonth.length === 0) {
         e.info.renderErr(month);
