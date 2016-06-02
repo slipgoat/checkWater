@@ -76,7 +76,7 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
         this.counterNumber = counterNumber;
         this.idRes = idRes;
         this.val = val;
-        this.rawVal = rawVal;;
+        this.rawVal = rawVal;
         this.month = foo.monthsListFull[month];
         r.setCss('.result .main', 'display', 'block')
         .setCss('.result .error_msg', 'display', 'none')

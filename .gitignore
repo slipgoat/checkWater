@@ -7,6 +7,10 @@ config.xml
 #js
 jquery.js
 require.js
+Gruntfile.js
+package.json
+test/
+node_modules/
 
 #font
 font

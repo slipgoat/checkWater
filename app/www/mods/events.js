@@ -1,5 +1,5 @@
-define(['../lib/jquery', './app', './e', './retrieve', './entry', './counter'],
-function(jquery, app, e, retrieve, entry, counter) {
+define(['./app', './e', './retrieve', './entry', './counter', './foo'],
+function(app, e, retrieve, entry, counter, foo) {
   return $(document).ready(function() {
 
     // Minimize top bar while scrolling
@@ -49,22 +49,24 @@ function(jquery, app, e, retrieve, entry, counter) {
 
     // Add new counter button
     $('.submit_add_counter').click(function() {
-      counter.addCounter(retrieve.byId('new_counter_number'), retrieve.byId('new_counter_location'),
-      retrieve.byId('add_counter_temp_select'), function() {
+      var counterRecord = counter.addCounter(retrieve.byId('new_counter_number'),
+        retrieve.byId('new_counter_location'), retrieve.byId('add_counter_temp_select'));
+      if (counterRecord === null) {
+        alert('Необходимо ввести номер счетчика!');
+      } else {
+        foo.setItem('counters', counterRecord);
         app.checkStatus();
         e.addCounter.render();
-      });
-      document.getElementById('new_counter_number').value = '';
-      document.getElementById('new_counter_location').value = '';
+        document.getElementById('new_counter_number').value = '';
+        document.getElementById('new_counter_location').value = '';
+      }
     });
 
     // Delete counter button
     $('.submit_delete_counter').click(function() {
-      counter.delCounter(retrieve.byId('delete_counter_select'),
-      function() {
-        app.checkStatus();
-        e.deleteCounter.renderRes();
-      });
+      foo.setItem('counters', counter.delCounter(retrieve.byId('delete_counter_select')));
+      app.checkStatus();
+      e.deleteCounter.renderRes();
     });
 
     // Add new entry button
@@ -73,7 +75,7 @@ function(jquery, app, e, retrieve, entry, counter) {
       var validate;
       for (var x = 0; x < counter.countersList.length; x++) {
         v.push(retrieve.byId(counter.countersList[x].idValue));
-        if (v[x] === false) {
+        if (v[x] === null) {
           validate = false;
           break;
         }
@@ -83,12 +85,26 @@ function(jquery, app, e, retrieve, entry, counter) {
       } else {
         $('.result').addClass('visible_popup');
         $('.popup_overlay').fadeToggle();
-        for (var i = 0; i < counter.countersList.length; i++) {
-          entry.addEntry(2016, retrieve.entryMonthValue(),
-          counter.countersList[i].counterNumber,
-          retrieve.byId(counter.countersList[i].idValue), function() {app.checkStatus();});
-        }
+        var month = retrieve.entryMonthValue();
+        var checkMonth = entry.checkRawEntryForMonth(2016, month);
 
+        if (checkMonth === true) {
+          e.result.renderErr();
+        }
+         else {
+          for (var i = 0; i < counter.countersList.length; i++) {
+            var currentCounter = counter.countersList[i];
+            var entryRecord = entry.getDataOfNewEntry(2016, month,
+              currentCounter.counterNumber,
+              retrieve.byId(currentCounter.idValue));
+            for (var y = 0; y < entryRecord.length; y++) {
+              e.result.render(currentCounter.counterNumber, currentCounter.temp,
+                currentCounter.idRes, entryRecord[y].entry, entryRecord[y].rawEntry, month);
+            }
+          }
+          foo.setItem('entries', entryRecord);
+        }
+        app.checkStatus();
       }
     });
 
@@ -96,7 +112,20 @@ function(jquery, app, e, retrieve, entry, counter) {
     $('.submit_info_params').click(function() {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
-      entry.showInfo(retrieve.byId('months_info_params_select'), 2016);
+      var month = foo.monthsList.indexOf(retrieve.byId('months_info_params_select'));
+      var entriesByMonth = entry.getEntriesByMonth
+      (2016, month);
+
+      if (entriesByMonth === null) {
+        e.info.renderErr(month);
+      } else {
+        for (var i = 0, len = entriesByMonth.length; i < len; i++) {
+          var currentCounter = foo.getObjectsFromArrayByProperty
+          (counter.countersList, 'counterId', entriesByMonth[i].counterId);
+          e.info.render(currentCounter[0].counterNumber, currentCounter[0].temp, currentCounter[0].idInfo,
+          entriesByMonth[i].entry, entriesByMonth[i].rawEntry, entriesByMonth[i].month);
+        }
+      }
     });
 
     // Visible add new counter popup

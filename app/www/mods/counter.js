@@ -1,76 +1,84 @@
 // Module for counters and actions with them
-define(['./dataBase', './foo'], function(dataBase, foo) {
+define(['./foo'], function(foo) {
   return {
     countersList: [],
 
     // Sets counters list
     getCountersList: function(callback) {
-      var that = this;
-      dataBase.select(['*'], 'COUNTERS', '', '', function(tx, results) {
-        that.countersList = [];
-        var reqRes = results.rows;
-        console.log(reqRes);
-        for (var i = 0; i < reqRes.length; i++) {
-          that.countersList.push(reqRes.item(i));
-        }
-        callback();
-      });
+      this.countersList = [];
+      var countersLc = foo.getItem('counters');
+      if (countersLc !== []) {
+        this.countersList = foo.getItem('counters');
+      }
+      callback();
     },
 
     // Adds new counter into data base
-    addCounter: function(counterNumber, location, temp, htmlCallback) {
-      if (counterNumber === false) {
-        alert('Необходимо ввести номер счетчика!');
+    addCounter: function(counterNumber, location, temp) {
+      if (counterNumber === null) {
+        return null;
       } else {
-        dataBase.select(['id'], 'COUNTERS', 'WHERE temp="' + temp + '"', '',
-        function(tx, results) {
-          var reqRes = results.rows;
-          var i = reqRes.length;
-          var tempAmount = 0;
-          var idValue = '';
-          var idRes = '';
-          var idInfo = '';
-          if (i === 0) {
-            tempAmount = 0;
-          } else {
-            tempAmount = reqRes.item(i - 1).id;
-          }
-          var tempNumber = tempAmount + 1;
-          var tempNumberTxt = tempNumber.toString();
-          if (temp === 'cold') {
-            idValue = 'coldValue' + tempNumberTxt;
-            idRes = 'coldRes' + tempNumberTxt;
-            idInfo = 'coldInfo' + tempNumberTxt;
-          } else if (temp === 'hot') {
-            idValue = 'hotValue' + tempNumberTxt;
-            idRes = 'hotRes' + tempNumberTxt;
-            idInfo = 'hotInfo' + tempNumberTxt;
-          }
-          dataBase.insert
-          (['counterNumber', 'temp', 'idValue', 'idRes', 'idInfo'],
-          'COUNTERS', [counterNumber + ', ' + location, temp, idValue, idRes, idInfo], function() {});
-          htmlCallback();
-        });
+        var record,
+            len,
+            len1,
+            counterByTemp,
+            tempAmount,
+            counterId,
+            idValue,
+            idRes,
+            idInfo;
+
+        len1 = this.countersList.length;
+        if (len1 === 0) {
+          counterId = 0;
+        } else {
+          counterId = this.countersList[len1 - 1].counterId;
+        }
+
+        counterByTemp = foo.getObjectsFromArrayByProperty(this.countersList, 'temp', temp);
+        len = counterByTemp.length;
+
+        if (len === 0) {
+          tempAmount = 0;
+        } else {
+          tempAmount = this.countersList[len - 1].counterId;
+        }
+
+        counterId += 1;
+        var tempNumber = tempAmount + 1;
+        var tempNumberTxt = tempNumber.toString();
+        if (temp === 'cold') {
+          idValue = 'coldValue' + tempNumberTxt;
+          idRes = 'coldRes' + tempNumberTxt;
+          idInfo = 'coldInfo' + tempNumberTxt;
+        } else if (temp === 'hot') {
+          idValue = 'hotValue' + tempNumberTxt;
+          idRes = 'hotRes' + tempNumberTxt;
+          idInfo = 'hotInfo' + tempNumberTxt;
+        }
+
+        record = {
+          counterId: counterId,
+          counterNumber: counterNumber + ', ' + location,
+          temp: temp,
+          idValue: idValue,
+          idRes: idRes,
+          idInfo: idInfo
+        };
+        this.countersList.push(record);
+        return this.countersList;
       }
     },
 
     // Deletes counter from data base
     // TODO: доделать удаление из всех таблиц
-    delCounter: function(counterNumber, htmlCallback) {
-      dataBase.db.transaction(function(tx) {
-        tx.executeSql
-        ('DELETE FROM COUNTERS WHERE counterNumber="' + counterNumber + '"');
-      });
-      htmlCallback();
-    },
+    delCounter: function(counterNumber) {
+      var indexOfCounterByNumber;
+      indexOfCounterByNumber = foo.getIndexOfObjectFromArrayByProperty
+      (this.countersList, 'counterNumber', counterNumber);
 
-    // Gets counter object from table's row in COUNTERS table
-    getCounterObject: function(counterNumber, callback) {
-      return dataBase.select(['*'], 'COUNTERS',
-      'WHERE counterNumber="' + counterNumber + '"', '', function(tx, results) {
-        var counterObject = results.rows.item(0);
-        callback(counterObject);
-      });
+      this.countersList.splice(indexOfCounterByNumber, 1);
+      return this.countersList;
     }
   };
 });
