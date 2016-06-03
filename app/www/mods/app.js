@@ -13,15 +13,15 @@ function(r, e, counter, entry, foo) {
         } else if (counter.countersList.length === 0) {
           that.status.counters = 0;
         }
-        entry.getEntriesList(function() {
-          if (entry.entriesList.length !== 0) {
-            that.status.entries = 1;
-          } else if (entry.entriesList.length === 0) {
-            that.status.entries = 0;
-          }
-          that.renderHtml();
-        });
       });
+      entry.getEntriesList(function() {
+        if (entry.entriesList.length !== 0) {
+          that.status.entries = 1;
+        } else if (entry.entriesList.length === 0) {
+          that.status.entries = 0;
+        }
+      });
+      this.renderHtml();
       return this;
     },
     renderHtml: function() {
