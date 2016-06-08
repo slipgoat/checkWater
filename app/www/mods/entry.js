@@ -20,6 +20,17 @@ define(['./e', './counter', './foo'],
     // Deletes entry
     deleteEntry: function(year, month, callback) {
       //
+      var len = this.entriesList.length;
+      var indexes = [];
+      for (var i = 0; i < len; i++) {
+        if (this.entriesList[i].year === year && this.entriesList[i].month === month) {
+          indexes.push(i);
+        }
+      }
+      for (var x = indexes.length - 1; x >= 0; x--) {
+        this.entriesList.splice(indexes[x], 1);
+      }
+      return this.entriesList;
     },
 
     // Adds raw entry into data base.
@@ -80,6 +91,11 @@ define(['./e', './counter', './foo'],
       }
       callback(entry);
       return entry;
+    },
+
+currentEntry: {
+      year: '',
+      month: ''
     },
 
     // Shows information for specific month

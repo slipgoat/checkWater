@@ -1,5 +1,5 @@
-define(['./app', './e', './retrieve', './entry', './counter', './foo'],
-function(app, e, retrieve, entry, counter, foo) {
+define(['./app', './e', './r', './retrieve', './entry', './counter', './foo'],
+function(app, e, r, retrieve, entry, counter, foo) {
   return $(document).ready(function() {
 
     // Minimize top bar while scrolling
@@ -112,7 +112,9 @@ function(app, e, retrieve, entry, counter, foo) {
     $('.submit_info_params').click(function() {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
-      var month = foo.monthsList.indexOf(retrieve.byId('months_info_params_select'));
+      entry.currentEntry.year = 2016;
+      entry.currentEntry.month = foo.monthsList.indexOf(retrieve.byId('months_info_params_select'));
+      var month = entry.currentEntry.month;
       var entriesByMonth = entry.getEntriesByMonth
       (2016, month);
 
@@ -126,6 +128,13 @@ function(app, e, retrieve, entry, counter, foo) {
           entriesByMonth[i].entry, entriesByMonth[i].rawEntry, entriesByMonth[i].month);
         }
       }
+    });
+
+    $('.submit_delete_entry').click(function() {
+      r.setCss('.info .main', 'display', 'none');
+      r.setCss('.delete_entry_msg', 'display', 'block');
+      foo.setItem('entries', entry.deleteEntry(entry.currentEntry.year, entry.currentEntry.month));
+      app.checkStatus();
     });
 
     // Visible add new counter popup

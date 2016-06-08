@@ -135,6 +135,7 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
         this.month = month;
         r.setCss('.info .main', 'display', 'block')
         .setCss('.info .error_msg', 'display', 'none')
+        .setCss('.delete_entry_msg', 'display', 'none')
         .setText('.info h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.info_cold', 'p', 'id', this.idInfo)
@@ -148,6 +149,7 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
         this.month = month;
         r.setCss('.info .main', 'display', 'none')
         .setCss('.info .error_msg', 'display', 'block')
+        .setCss('.delete_entry_msg', 'display', 'none')
         .setText('.info h4', this.txtMonth());
       }
     },
