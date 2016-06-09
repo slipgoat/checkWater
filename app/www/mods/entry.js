@@ -18,7 +18,7 @@ define(['./e', './counter', './foo'],
     },
 
     // Deletes entry
-    deleteEntry: function(year, month, callback) {
+    deleteEntry: function(year, month) {
       //
       var len = this.entriesList.length;
       var indexes = [];
