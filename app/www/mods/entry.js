@@ -107,6 +107,11 @@ currentEntry: {
       } else {
         return entriesByMonth;
       }
+    },
+
+    getLastMonth: function() {
+      var len = this.entriesList.length;
+      return this.entriesList[len - 1].month;
     }
   };
 });

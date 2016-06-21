@@ -131,8 +131,9 @@ function(app, e, r, retrieve, entry, counter, foo) {
     });
 
     $('.submit_delete_entry').click(function() {
-      r.setCss('.info .main', 'display', 'none');
-      r.setCss('.delete_entry_msg', 'display', 'block');
+      r.setCss('.info .main', 'display', 'none')
+      .setCss('.delete_entry_msg', 'display', 'block')
+      .setCss('.submit_delete_entry', 'display', 'none');
       foo.setItem('entries', entry.deleteEntry(entry.currentEntry.year, entry.currentEntry.month));
       app.checkStatus();
     });

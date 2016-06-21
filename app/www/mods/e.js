@@ -1,4 +1,4 @@
-define(['./r', './foo', './counter'], function(r, foo, counter) {
+define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry) {
   return {
 
     viewMode: {
@@ -133,6 +133,10 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
         this.val = val;
         this.rawVal = rawVal;
         this.month = month;
+        r.setCss('.submit_delete_entry', 'display', 'none');
+        if (this.month === entry.getLastMonth()) {
+          r.setCss('.submit_delete_entry', 'display', 'block');
+        }
         r.setCss('.info .main', 'display', 'block')
         .setCss('.info .error_msg', 'display', 'none')
         .setCss('.delete_entry_msg', 'display', 'none')
@@ -150,6 +154,7 @@ define(['./r', './foo', './counter'], function(r, foo, counter) {
         r.setCss('.info .main', 'display', 'none')
         .setCss('.info .error_msg', 'display', 'block')
         .setCss('.delete_entry_msg', 'display', 'none')
+        .setCss('.submit_delete_entry', 'display', 'none')
         .setText('.info h4', this.txtMonth());
       }
     },
