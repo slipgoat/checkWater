@@ -45,8 +45,8 @@ define(['./foo'], function(foo) {
         }
 
         counterId += 1;
-        var tempNumber = tempAmount + 1;
-        var tempNumberTxt = tempNumber.toString();
+        //var tempNumber = tempAmount + 1;
+        var tempNumberTxt = counterId.toString();
         if (temp === 'cold') {
           idValue = 'coldValue' + tempNumberTxt;
           idRes = 'coldRes' + tempNumberTxt;
@@ -66,6 +66,40 @@ define(['./foo'], function(foo) {
           idInfo: idInfo
         };
         this.countersList.push(record);
+        return this.countersList;
+      }
+    },
+
+    current: {
+      number: '',
+      temp: ''
+    },
+
+    // Changes name and temperature of counter
+    changeCounter: function(counterNumber, temp, newCounterNumber, newLocation, newTemp) {
+      if (newCounterNumber === null) {
+        return null;
+      } else {
+        var len = this.countersList.length;
+        var index, currentCounter;
+
+        for (var i = 0; i < len; i++) {
+          if (this.countersList[i].counterNumber === counterNumber) {
+            index = i;
+            break;
+          }
+        }
+        currentCounter = this.countersList[index];
+
+        currentCounter.counterNumber = newCounterNumber;
+        if (newLocation) {
+          currentCounter.counterNumber += ', ' + newLocation;
+        }
+        currentCounter.temp = newTemp;
+        currentCounter.idInfo = newTemp + 'Info' + currentCounter.counterId;
+        currentCounter.idValue = newTemp + 'Value' + currentCounter.counterId;
+        currentCounter.idRes = newTemp + 'Res' + currentCounter.counterId;
+
         return this.countersList;
       }
     },

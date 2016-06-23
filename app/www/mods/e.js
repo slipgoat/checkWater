@@ -164,7 +164,8 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       temp: '',
       html: function() {
         return '<p>Счетчик ' + this.counterNumber +
-              ' (' + foo.convertTemp(this.temp) + ')</p>';
+              ' (' + foo.convertTemp(this.temp) + ') <button class="submit_change_counter_popup" data-counter-number="'+
+              this.counterNumber + '" data-temp="' + this.temp + '">Изменить</button></p>';
       },
       render: function() {
         r.setHtml('.manage_counters_list', '');
@@ -189,6 +190,33 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
         r.setCss('.add_counter .main', 'display', 'none')
           .setCss('.add_counter_result', 'display', 'block')
           .setHtml('.add_counter_result_msg', this.html());
+      },
+      events: {
+        click: 'click'
+      }
+    },
+
+    changeCounter: {
+      counterNumber: '',
+      temp: '',
+      header: function() {
+        return '<h4 data-counter-number="'+ this.counterNumber +'" data-temp="' + this.temp +'">Изменение счетчика ' +
+        this.counterNumber + ', (' + foo.convertTemp(this.temp) + ')</h4>';
+      },
+      htmlChangeRes: function() {
+        return '<p>Счетчик изменен!</p>';
+      },
+      render: function(counterNumber, temp) {
+        this.counterNumber = counterNumber;
+        this.temp = temp;
+        r.setCss('.change_counter .main', 'display', 'block')
+        .setCss('.change_counter_result', 'display', 'none')
+        .setHtml('.change_counter .main .change_header', this.header());
+      },
+      renderRes: function() {
+        r.setCss('.change_counter .main', 'display', 'none')
+          .setCss('.change_counter_result', 'display', 'block')
+          .setHtml('.change_counter_result_msg', this.htmlChangeRes());
       },
       events: {
         click: 'click'

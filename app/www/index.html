@@ -95,6 +95,29 @@
       </div>
     </div>
 
+    <div class="change_counter popup">
+      <div class="main">
+      <div class="change_header"><!--<h4> Переименовать счетчик такой-то </h4>--></div>
+        <p>Номер счетчика:<br>
+          <input type="number" id="change_counter_number" min="0" /><br><br>
+          Местоположение:<br>
+          <input type="text" id="change_counter_location" /><br><br>
+          <select id="change_counter_temp_select">
+            <option value="cold">Хол</option>
+            <option value="hot">Гор</option>
+          </select></p>
+        <button class="submit_change_counter">Изменить</button>
+      </div>
+      <div class="change_counter_result">
+        <div class="error_msg">
+          <p>Изменения не внесены!</p>
+        </div>
+        <div class="change_counter_result_msg">
+          <!--<p></p>-->
+        </div>
+      </div>
+    </div>
+
     <div class="delete_counter popup">
       <div class="main">
         <h4>Удалить счетчик</h4>

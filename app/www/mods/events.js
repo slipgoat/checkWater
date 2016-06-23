@@ -62,6 +62,26 @@ function(app, e, r, retrieve, entry, counter, foo) {
       }
     });
 
+    //Change counter button
+    $('.submit_change_counter').click(function() {
+      var oldCounterNumber = retrieve.byAttr('.change_counter .main .change_header h4', 'data-counter-number');
+      var oldTemp = retrieve.byAttr('.change_counter .main .change_header h4', 'data-temp');
+      var newCounterNumber = retrieve.byId('change_counter_number');
+      var newLocation = retrieve.byId('change_counter_location');
+      var newTemp = retrieve.byId('change_counter_temp_select');
+
+      var counterRecord = counter.changeCounter(oldCounterNumber, oldTemp, newCounterNumber, newLocation, newTemp);
+      if (counterRecord === null) {
+        alert('Необходимо ввести номер счетчика!');
+      } else {
+        foo.setItem('counters', counterRecord);
+        app.checkStatus();
+        e.changeCounter.renderRes();
+        document.getElementById('change_counter_number').value = '';
+        document.getElementById('change_counter_location').value = '';
+      }
+    });
+
     // Delete counter button
     $('.submit_delete_counter').click(function() {
       foo.setItem('counters', counter.delCounter(retrieve.byId('delete_counter_select')));
@@ -142,6 +162,15 @@ function(app, e, r, retrieve, entry, counter, foo) {
     $('.submit_add_counter_popup').click(function() {
       $('.add_counter').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
+    });
+
+    // Visible change new counter popup
+    $(document).on('click', '.submit_change_counter_popup', function() {
+      $('.change_counter').addClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
+      counter.current.number = retrieve.byAttr(this, 'data-counter-number');
+      counter.current.temp = retrieve.byAttr(this, 'data-temp');
+      e.changeCounter.render(counter.current.number, counter.current.temp);
     });
 
     // Visible delete counter popup

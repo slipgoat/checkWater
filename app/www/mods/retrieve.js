@@ -9,6 +9,10 @@ define(['../lib/jquery', './foo'], function(jquery, foo) {
       }
     },
 
+    byAttr: function(target, attribute) {
+      return $(target).attr(attribute);
+    },
+
     entryMonthValue: function() {
       var v = $('#months_entry_select').val();
       if (v === 'none') {
