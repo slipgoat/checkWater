@@ -3,10 +3,14 @@ define(['../lib/jquery', './foo'], function(jquery, foo) {
     byId: function(id) {
       var v = document.getElementById(id).value;
       if (!v) {
-        return false;
+        return null;
       } else {
         return v;
       }
+    },
+
+    byAttr: function(target, attribute) {
+      return $(target).attr(attribute);
     },
 
     entryMonthValue: function() {

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Учет воды</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="style.css">
 <script data-main="index" src="lib/require.js"></script>
 </head>
@@ -63,23 +64,21 @@
           <!--<p id=""></p>-->
         </div>
       </div>
+      <div class="delete_entry">
+        <div class="delete_entry_msg">
+          <p>Запись удалена!</p>
+        </div>
+        <a class="submit_delete_entry" href="#info_params">Удалить показание</a>
+      </div>
     </div>
 
     <div class="add_counter popup">
       <div class="main">
         <h4>Добавить счетчик</h4>
-        <table class="add_counter_table">
-          <tbody>
-            <tr>
-              <td><p>Номер счетчика:</p></td>
-              <td><input type="number" id="new_counter_number" min="0" /></td>
-            </tr>
-            <tr>
-              <td><p>Местоположение:</p></td>
-              <td><input type="text" id="new_counter_location" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <p>Номер счетчика:<br>
+        <input type="number" id="new_counter_number" min="0" /><br><br>
+         Местоположение:<br>
+        <input type="text" id="new_counter_location" /><br><br>
         <select id="add_counter_temp_select">
           <option value="cold">Хол</option>
           <option value="hot">Гор</option>
@@ -94,6 +93,29 @@
           <!--<p></p>-->
         </div>
         <button class="submit_add_another_counter">Добавить еще</button>
+      </div>
+    </div>
+
+    <div class="change_counter popup">
+      <div class="main">
+      <div class="change_header"><!--<h4> Переименовать счетчик такой-то </h4>--></div>
+        <p>Номер счетчика:<br>
+          <input type="number" id="change_counter_number" min="0" /><br><br>
+          Местоположение:<br>
+          <input type="text" id="change_counter_location" /><br><br>
+          <select id="change_counter_temp_select">
+            <option value="cold">Хол</option>
+            <option value="hot">Гор</option>
+          </select></p>
+        <button class="submit_change_counter">Изменить</button>
+      </div>
+      <div class="change_counter_result">
+        <div class="error_msg">
+          <p>Изменения не внесены!</p>
+        </div>
+        <div class="change_counter_result_msg">
+          <!--<p></p>-->
+        </div>
       </div>
     </div>
 
@@ -175,7 +197,7 @@
       <button class="submit_add_counter_popup">Добавить</button></p>
     </div>
     <div class="main_counter">
-      <p>Рады вас снова видеть!<br />
+      <p>Рады вас снова видеть<br />
       <a href="#add_entry" class="a_enterEntry">Внести показания</a></p>
     </div>
   </div>

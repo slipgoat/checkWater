@@ -35,6 +35,11 @@ body
   display: none;
 }
 
+.submit_delete_entry
+{
+  display: none;
+}
+
 .container
 {
     z-index: 0;

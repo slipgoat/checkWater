@@ -1,4 +1,4 @@
-define(['../lib/jquery'], function(jquery) {
+define([], function() {
   return {
     addFirst: function(target, element, attr, val) {
       //

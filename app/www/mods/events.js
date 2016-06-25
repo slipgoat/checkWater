@@ -1,5 +1,5 @@
-define(['../lib/jquery', './app', './e', './retrieve', './entry', './counter'],
-function(jquery, app, e, retrieve, entry, counter) {
+define(['./app', './e', './r', './retrieve', './entry', './counter', './foo'],
+function(app, e, r, retrieve, entry, counter, foo) {
   return $(document).ready(function() {
 
     // Minimize top bar while scrolling
@@ -49,22 +49,44 @@ function(jquery, app, e, retrieve, entry, counter) {
 
     // Add new counter button
     $('.submit_add_counter').click(function() {
-      counter.addCounter(retrieve.byId('new_counter_number'), retrieve.byId('new_counter_location'),
-      retrieve.byId('add_counter_temp_select'), function() {
+      var counterRecord = counter.addCounter(retrieve.byId('new_counter_number'),
+        retrieve.byId('new_counter_location'), retrieve.byId('add_counter_temp_select'));
+      if (counterRecord === null) {
+        alert('Необходимо ввести номер счетчика!');
+      } else {
+        foo.setItem('counters', counterRecord);
         app.checkStatus();
         e.addCounter.render();
-      });
-      document.getElementById('new_counter_number').value = '';
-      document.getElementById('new_counter_location').value = '';
+        document.getElementById('new_counter_number').value = '';
+        document.getElementById('new_counter_location').value = '';
+      }
+    });
+
+    //Change counter button
+    $('.submit_change_counter').click(function() {
+      var oldCounterNumber = retrieve.byAttr('.change_counter .main .change_header h4', 'data-counter-number');
+      var oldTemp = retrieve.byAttr('.change_counter .main .change_header h4', 'data-temp');
+      var newCounterNumber = retrieve.byId('change_counter_number');
+      var newLocation = retrieve.byId('change_counter_location');
+      var newTemp = retrieve.byId('change_counter_temp_select');
+
+      var counterRecord = counter.changeCounter(oldCounterNumber, oldTemp, newCounterNumber, newLocation, newTemp);
+      if (counterRecord === null) {
+        alert('Необходимо ввести номер счетчика!');
+      } else {
+        foo.setItem('counters', counterRecord);
+        app.checkStatus();
+        e.changeCounter.renderRes();
+        document.getElementById('change_counter_number').value = '';
+        document.getElementById('change_counter_location').value = '';
+      }
     });
 
     // Delete counter button
     $('.submit_delete_counter').click(function() {
-      counter.delCounter(retrieve.byId('delete_counter_select'),
-      function() {
-        app.checkStatus();
-        e.deleteCounter.renderRes();
-      });
+      foo.setItem('counters', counter.delCounter(retrieve.byId('delete_counter_select')));
+      app.checkStatus();
+      e.deleteCounter.renderRes();
     });
 
     // Add new entry button
@@ -73,7 +95,7 @@ function(jquery, app, e, retrieve, entry, counter) {
       var validate;
       for (var x = 0; x < counter.countersList.length; x++) {
         v.push(retrieve.byId(counter.countersList[x].idValue));
-        if (v[x] === false) {
+        if (v[x] === null) {
           validate = false;
           break;
         }
@@ -83,12 +105,26 @@ function(jquery, app, e, retrieve, entry, counter) {
       } else {
         $('.result').addClass('visible_popup');
         $('.popup_overlay').fadeToggle();
-        for (var i = 0; i < counter.countersList.length; i++) {
-          entry.addEntry(2016, retrieve.entryMonthValue(),
-          counter.countersList[i].counterNumber,
-          retrieve.byId(counter.countersList[i].idValue), function() {app.checkStatus();});
-        }
+        var month = retrieve.entryMonthValue();
+        var checkMonth = entry.checkRawEntryForMonth(2016, month);
 
+        if (checkMonth === true) {
+          e.result.renderErr();
+        }
+         else {
+          for (var i = 0; i < counter.countersList.length; i++) {
+            var currentCounter = counter.countersList[i];
+            var entryRecord = entry.getDataOfNewEntry(2016, month,
+              currentCounter.counterNumber,
+              retrieve.byId(currentCounter.idValue));
+            for (var y = 0; y < entryRecord.length; y++) {
+              e.result.render(currentCounter.counterNumber, currentCounter.temp,
+                currentCounter.idRes, entryRecord[y].entry, entryRecord[y].rawEntry, month);
+            }
+          }
+          foo.setItem('entries', entryRecord);
+        }
+        app.checkStatus();
       }
     });
 
@@ -96,13 +132,45 @@ function(jquery, app, e, retrieve, entry, counter) {
     $('.submit_info_params').click(function() {
       $('.info').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
-      entry.showInfo(retrieve.byId('months_info_params_select'), 2016);
+      entry.currentEntry.year = 2016;
+      entry.currentEntry.month = foo.monthsList.indexOf(retrieve.byId('months_info_params_select'));
+      var month = entry.currentEntry.month;
+      var entriesByMonth = entry.getEntriesByMonth
+      (2016, month);
+
+      if (entriesByMonth === null) {
+        e.info.renderErr(month);
+      } else {
+        for (var i = 0, len = entriesByMonth.length; i < len; i++) {
+          var currentCounter = foo.getObjectsFromArrayByProperty
+          (counter.countersList, 'counterId', entriesByMonth[i].counterId);
+          e.info.render(currentCounter[0].counterNumber, currentCounter[0].temp, currentCounter[0].idInfo,
+          entriesByMonth[i].entry, entriesByMonth[i].rawEntry, entriesByMonth[i].month);
+        }
+      }
+    });
+
+    $('.submit_delete_entry').click(function() {
+      r.setCss('.info .main', 'display', 'none')
+      .setCss('.delete_entry_msg', 'display', 'block')
+      .setCss('.submit_delete_entry', 'display', 'none');
+      foo.setItem('entries', entry.deleteEntry(entry.currentEntry.year, entry.currentEntry.month));
+      app.checkStatus();
     });
 
     // Visible add new counter popup
     $('.submit_add_counter_popup').click(function() {
       $('.add_counter').addClass('visible_popup');
       $('.popup_overlay').fadeToggle();
+    });
+
+    // Visible change new counter popup
+    $(document).on('click', '.submit_change_counter_popup', function() {
+      $('.change_counter').addClass('visible_popup');
+      $('.popup_overlay').fadeToggle();
+      counter.current.number = retrieve.byAttr(this, 'data-counter-number');
+      counter.current.temp = retrieve.byAttr(this, 'data-temp');
+      e.changeCounter.render(counter.current.number, counter.current.temp);
     });
 
     // Visible delete counter popup
