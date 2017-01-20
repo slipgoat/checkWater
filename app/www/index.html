@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Учет воды</title>
+  <meta charset="utf-8">
+  <title>Учет воды</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="style.css">
-<script data-main="index" src="lib/require.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script data-main="index" src="lib/require.js"></script>
 </head>
+
 <body>
 
   <ul class="menu">
@@ -76,10 +78,10 @@
       <div class="main">
         <h4>Добавить счетчик</h4>
         <p>Номер счетчика:<br>
-        <input type="number" id="new_counter_number" min="0" /><br><br>
-         Местоположение:<br>
-        <input type="text" id="new_counter_location" /><br><br>
-        <select id="add_counter_temp_select">
+          <input type="number" id="new_counter_number" min="0" /><br><br> Местоположение:
+          <br>
+          <input type="text" id="new_counter_location" /><br><br>
+          <select id="add_counter_temp_select">
           <option value="cold">Хол</option>
           <option value="hot">Гор</option>
         </select></p>
@@ -98,10 +100,12 @@
 
     <div class="change_counter popup">
       <div class="main">
-      <div class="change_header"><!--<h4> Переименовать счетчик такой-то </h4>--></div>
+        <div class="change_header">
+          <!--<h4> Переименовать счетчик такой-то </h4>-->
+        </div>
         <p>Номер счетчика:<br>
-          <input type="number" id="change_counter_number" min="0" /><br><br>
-          Местоположение:<br>
+          <input type="number" id="change_counter_number" min="0" /><br><br> Местоположение:
+          <br>
           <input type="text" id="change_counter_location" /><br><br>
           <select id="change_counter_temp_select">
             <option value="cold">Хол</option>
@@ -136,72 +140,76 @@
     </div>
   </div>
 
-<div class="container">
-<div class="workarea">
+  <div class="container">
+    <div class="workarea">
 
-  <div id="add_entry" class="view">
-    <div class="default_counter">
-      <p>Ой, нет добавленных счетчиков :(<br />
-      <button class="submit_add_counter_popup">Добавить</button></p>
-    </div>
-    <div class="main_counter">
-      <p>Внести показания за прошлый месяц:<br />
-      <select id="months_entry_select">
-      </select></p>
-      <span>Холодная вода</span>
-      <div class="add_cold_entry">
-        <!--<p>
+      <div id="add_entry" class="view">
+        <div class="default_counter">
+          <p>Ой, нет добавленных счетчиков :(<br />
+            <button class="submit_add_counter_popup">Добавить</button></p>
+        </div>
+        <div class="main_counter">
+          <p>Выбор года и месяца:<br />
+            <select id="years_entry_select">
+            </select><br/>
+            <select id="months_entry_select">
+            </select></p>
+          <span>Холодная вода</span>
+          <div class="add_cold_entry">
+            <!--<p>
           <input type="number" id="" />
         </p>-->
-      </div>
-      <span>Горячая вода</span>
-      <div class="add_hot_entry">
-        <!--<p>
+          </div>
+          <span>Горячая вода</span>
+          <div class="add_hot_entry">
+            <!--<p>
           <input type="number" id="" />
         </p>-->
+          </div>
+          <button class="submit_add_entry">Добавить</button>
+        </div>
       </div>
-      <button class="submit_add_entry">Добавить</button>
-    </div>
-  </div>
 
-  <div id="info_params" class="view">
-    <div class="default_entry">
-      <p>Записей нет<br />
-      <a href="#add_entry" class="a_enterEntry">Добавить</a></p>
-    </div>
-    <div class="main_entry">
-      <p>Выбрать месяц<br />
-      <select id="months_info_params_select"></select></p>
-      <button class="submit_info_params">Подтвердить</button>
-    </div>
-  </div>
-
-  <div id="manage_counters" class="view">
-    <div class="default_counter">
-      <p>Ой, нет добавленных счетчиков :(<br />
-      <button class="submit_add_counter_popup">Добавить</button></p>
-    </div>
-    <div class="main_counter">
-      <h4>Список счетчиков</h4>
-      <div class="manage_counters_list">
-        <!--<p></p>-->
+      <div id="info_params" class="view">
+        <div class="default_entry">
+          <p>Записей нет<br />
+            <a href="#add_entry" class="a_enterEntry">Добавить</a></p>
+        </div>
+        <div class="main_entry">
+          <p>Выбрать года и месяца<br />
+            <select id="years_info_params_select"></select><br />
+            <select id="months_info_params_select"></select></p>
+          <button class="submit_info_params">Подтвердить</button>
+        </div>
       </div>
-      <p><button class="submit_add_counter_popup">Добавить новый</button>
-      <button class="submit_delete_counter_popup">Удалить имеющийся</button></p>
-    </div>
-  </div>
 
-  <div class="greet view">
-    <div class="default_counter">
-      <p>Ой, ни одного счетчика не добавлено :(<br />
-      <button class="submit_add_counter_popup">Добавить</button></p>
-    </div>
-    <div class="main_counter">
-      <p>Рады вас снова видеть<br />
-      <a href="#add_entry" class="a_enterEntry">Внести показания</a></p>
+      <div id="manage_counters" class="view">
+        <div class="default_counter">
+          <p>Ой, нет добавленных счетчиков :(<br />
+            <button class="submit_add_counter_popup">Добавить</button></p>
+        </div>
+        <div class="main_counter">
+          <h4>Список счетчиков</h4>
+          <div class="manage_counters_list">
+            <!--<p></p>-->
+          </div>
+          <p><button class="submit_add_counter_popup">Добавить новый</button>
+            <button class="submit_delete_counter_popup">Удалить имеющийся</button></p>
+        </div>
+      </div>
+
+      <div class="greet view">
+        <div class="default_counter">
+          <p>Ой, ни одного счетчика не добавлено :(<br />
+            <button class="submit_add_counter_popup">Добавить</button></p>
+        </div>
+        <div class="main_counter">
+          <p>Рады вас снова видеть<br />
+            <a href="#add_entry" class="a_enterEntry">Внести показания</a></p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 </body>
+
 </html>

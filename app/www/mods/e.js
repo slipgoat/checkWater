@@ -31,19 +31,51 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       idValue: '',
       htmlInput: function() {
         return '<p>Счетчик ' + this.counterNumber + ': ' +
-                '<input type="number" id="' + this.idValue + '" min="0" /> м3' +
-              '</p>';
+          '<input type="number" id="' + this.idValue + '" min="0" /> м3' +
+          '</p>';
       },
-      htmlMonths: function(monthNum, monthName) {
-        return '<option value="' + monthNum + '">' + monthName + '</option>';
+      htmlMonths: function(monthNum, monthName, selected) {
+        var selectedSign = '';
+
+        if (selected) {
+          selectedSign = 'selected';
+        }
+
+        return '<option value="' + monthNum + '" ' + selectedSign + '>' + monthName + '</option>';
+      },
+      htmlYears: function(year, selected) {
+        var selectedSign = '';
+
+        if (selected) {
+          selectedSign = 'selected';
+        }
+        return '<option value="' + year + '" ' + selectedSign + '>' + year + '</option>';
       },
       render: function() {
+        var selected = false;
+
+
         r.setHtml('.add_cold_entry', '')
-         .setHtml('.add_hot_entry', '')
-            .setHtml('#months_entry_select', '<option value="none">Нет</option>');
-        for (var m = 0; m < foo.getCurrentMonth(); m++) {
+          .setHtml('.add_hot_entry', '')
+          .setHtml('#months_entry_select', '')
+          .setHtml('#years_entry_select', '');
+        for (var y = 0; y < foo.yearsList.length; y++) {
+          if (foo.yearsList[y] === foo.getCurrentYear()) {
+            selected = true;
+          }
+          r.addHtml('#years_entry_select',
+            this.htmlYears(foo.yearsList[y], selected));
+
+          selected = false;
+        }
+        for (var m = 0; m < foo.monthsList.length; m++) {
+          if (m === foo.getCurrentMonth()) {
+            selected = true;
+          }
           r.addHtml('#months_entry_select',
-          this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
+            this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m], selected));
+
+          selected = false;
         }
         for (var i = 0; i < counter.countersList.length; i++) {
           this.counterNumber = counter.countersList[i].counterNumber;
@@ -66,32 +98,34 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       val: 0,
       rawVal: 0,
       month: '',
+      year: 0,
       txtResult: function() {
         return 'Счетчик ' + this.counterNumber + ': ' + this.val + ' (' + this.rawVal + ') м3';
       },
       txtMonth: function() {
-        return 'Результат за ' + this.month.toLowerCase() + ' месяц';
+        return 'Результат за ' + this.month.toLowerCase() + ' месяц ' + this.year + ' года';
       },
-      render: function(counterNumber, temp, idRes, val, rawVal, month) {
+      render: function(counterNumber, temp, idRes, val, rawVal, month, year) {
         this.counterNumber = counterNumber;
         this.idRes = idRes;
         this.val = val;
         this.rawVal = rawVal;
         this.month = foo.monthsListFull[month];
+        this.year = year;
         r.setCss('.result .main', 'display', 'block')
-        .setCss('.result .error_msg', 'display', 'none')
-        .setText('.result .main h4', this.txtMonth());
+          .setCss('.result .error_msg', 'display', 'none')
+          .setText('.result .main h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.result_cold', 'p', 'id', this.idRes)
-          .setText('#' + this.idRes, this.txtResult());
+            .setText('#' + this.idRes, this.txtResult());
         } else if (temp === 'hot') {
           r.addEl('.result_hot', 'p', 'id', this.idRes)
-          .setText('#' + this.idRes, this.txtResult());
+            .setText('#' + this.idRes, this.txtResult());
         }
       },
       renderErr: function() {
         r.setCss('.result .main', 'display', 'none')
-        .setCss('.result .error_msg', 'display', 'block');
+          .setCss('.result .error_msg', 'display', 'block');
       },
       events: {
         click: 'click'
@@ -99,14 +133,47 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
     },
 
     infoParams: {
-      htmlMonths: function(monthNum, monthName) {
-        return '<option value="' + monthNum + '">' + monthName + '</option>';
+      htmlYears: function(year, selected) {
+        var selectedSign = '';
+
+        if (selected) {
+          selectedSign = 'selected';
+        }
+
+        return '<option value="' + year + '" ' + selectedSign + '>' + year + '</option>';
+      },
+      htmlMonths: function(monthNum, monthName, selected) {
+        var selectedSign = '';
+
+        if (selected) {
+          selectedSign = 'selected';
+        }
+
+        return '<option value="' + monthNum + '" ' + selectedSign + '>' + monthName + '</option>';
       },
       render: function() {
-        r.setHtml('#months_info_params_select', '');
-        for (var m = 0; m <= foo.getCurrentMonth(); m++) {
+        var selected = false;
+
+        r.setHtml('#months_info_params_select', '')
+          .setHtml('#years_info_params_select', '');
+        for (var y = 0; y < foo.yearsList.length; y++) {
+          if (foo.yearsList[y] === foo.getCurrentYear()) {
+            selected = true;
+          }
+          r.addHtml('#years_info_params_select',
+            this.htmlYears(foo.yearsList[y], selected));
+
+          selected = false;
+        }
+        for (var m = 0; m < foo.monthsList.length; m++) {
+          if (m === foo.getCurrentMonth()) {
+            selected = true;
+          }
+
           r.addHtml('#months_info_params_select',
-          this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m]));
+            this.htmlMonths(foo.monthsList[m], foo.monthsListFull[m], selected));
+
+          selected = false;
         }
       },
       events: {
@@ -120,42 +187,45 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       val: 0,
       rawVal: 0,
       month: '',
+      year: 0,
       txtInfo: function() {
         return 'Счетчик ' + this.counterNumber + ': ' + this.val +
-              ' (' + this.rawVal +')' + ' м3';
+          ' (' + this.rawVal + ')' + ' м3';
       },
       txtMonth: function() {
-        return 'Информация за ' + foo.monthsListFull[this.month].toLowerCase() + ' месяц';
+        return 'Информация за ' + foo.monthsListFull[this.month].toLowerCase() + ' месяц ' + this.year + ' ';
       },
-      render: function(counterNumber, temp, idInfo, val, rawVal, month) {
+      render: function(counterNumber, temp, idInfo, val, rawVal, month, year) {
         this.counterNumber = counterNumber;
         this.idInfo = idInfo;
         this.val = val;
         this.rawVal = rawVal;
         this.month = month;
+        this.year = year;
         r.setCss('.submit_delete_entry', 'display', 'none');
         if (this.month === entry.getLastMonth()) {
           r.setCss('.submit_delete_entry', 'display', 'block');
         }
         r.setCss('.info .main', 'display', 'block')
-        .setCss('.info .error_msg', 'display', 'none')
-        .setCss('.delete_entry_msg', 'display', 'none')
-        .setText('.info h4', this.txtMonth());
+          .setCss('.info .error_msg', 'display', 'none')
+          .setCss('.delete_entry_msg', 'display', 'none')
+          .setText('.info h4', this.txtMonth());
         if (temp === 'cold') {
           r.addEl('.info_cold', 'p', 'id', this.idInfo)
-          .setText('#' + this.idInfo, this.txtInfo());
+            .setText('#' + this.idInfo, this.txtInfo());
         } else if (temp === 'hot') {
           r.addEl('.info_hot', 'p', 'id', this.idInfo)
-          .setText('#' + this.idInfo, this.txtInfo());
+            .setText('#' + this.idInfo, this.txtInfo());
         }
       },
-      renderErr: function(month) {
+      renderErr: function(month, year) {
         this.month = month;
+        this.year = year;
         r.setCss('.info .main', 'display', 'none')
-        .setCss('.info .error_msg', 'display', 'block')
-        .setCss('.delete_entry_msg', 'display', 'none')
-        .setCss('.submit_delete_entry', 'display', 'none')
-        .setText('.info h4', this.txtMonth());
+          .setCss('.info .error_msg', 'display', 'block')
+          .setCss('.delete_entry_msg', 'display', 'none')
+          .setCss('.submit_delete_entry', 'display', 'none')
+          .setText('.info h4', this.txtMonth());
       }
     },
 
@@ -164,8 +234,8 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       temp: '',
       html: function() {
         return '<p>Счетчик ' + this.counterNumber +
-              ' (' + foo.convertTemp(this.temp) + ') <button class="submit_change_counter_popup" data-counter-number="'+
-              this.counterNumber + '" data-temp="' + this.temp + '">Изменить</button></p>';
+          ' (' + foo.convertTemp(this.temp) + ') <button class="submit_change_counter_popup" data-counter-number="' +
+          this.counterNumber + '" data-temp="' + this.temp + '">Изменить</button></p>';
       },
       render: function() {
         r.setHtml('.manage_counters_list', '');
@@ -200,8 +270,8 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       counterNumber: '',
       temp: '',
       header: function() {
-        return '<h4 data-counter-number="'+ this.counterNumber +'" data-temp="' + this.temp +'">Изменение счетчика ' +
-        this.counterNumber + ', (' + foo.convertTemp(this.temp) + ')</h4>';
+        return '<h4 data-counter-number="' + this.counterNumber + '" data-temp="' + this.temp + '">Изменение счетчика ' +
+          this.counterNumber + ', (' + foo.convertTemp(this.temp) + ')</h4>';
       },
       htmlChangeRes: function() {
         return '<p>Счетчик изменен!</p>';
@@ -210,8 +280,8 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
         this.counterNumber = counterNumber;
         this.temp = temp;
         r.setCss('.change_counter .main', 'display', 'block')
-        .setCss('.change_counter_result', 'display', 'none')
-        .setHtml('.change_counter .main .change_header', this.header());
+          .setCss('.change_counter_result', 'display', 'none')
+          .setHtml('.change_counter .main .change_header', this.header());
       },
       renderRes: function() {
         r.setCss('.change_counter .main', 'display', 'none')
@@ -228,8 +298,8 @@ define(['./r', './foo', './counter', './entry'], function(r, foo, counter, entry
       temp: '',
       htmlDel: function() {
         return '<option value="' + this.counterNumber + '">' +
-                  this.counterNumber + '(' + foo.convertTemp(this.temp) + ')' +
-                  '</option>';
+          this.counterNumber + '(' + foo.convertTemp(this.temp) + ')' +
+          '</option>';
       },
       htmlDelRes: function() {
         return '<p>Счетчик удален</p>';

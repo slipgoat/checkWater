@@ -15,11 +15,14 @@ define(['../lib/jquery', './foo'], function(jquery, foo) {
 
     entryMonthValue: function() {
       var v = $('#months_entry_select').val();
-      if (v === 'none') {
-        return foo.getCurrentMonth();
-      } else {
-        return foo.monthsList.indexOf(v);
-      }
+
+      return foo.monthsList.indexOf(v);
+    },
+
+    entryYearValue: function() {
+      var v = $('#years_entry_select').val();
+
+      return Number(v);
     }
   };
 });

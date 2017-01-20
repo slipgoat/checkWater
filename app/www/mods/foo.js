@@ -14,9 +14,14 @@ define(function() {
       'Сентябрь', 'Октябрь', 'Ноябрь',
       'Декабрь'
     ],
+    yearsList: [2016, 2017],
     getCurrentMonth: function() {
       var m = new Date();
       return m.getMonth();
+    },
+    getCurrentYear: function() {
+      var currentDate = new Date();
+      return currentDate.getFullYear();
     },
     convertTemp: function(temp) {
       if (temp === 'cold') {
